@@ -1,0 +1,53 @@
+<style>
+    .huge {
+        font-size: 40px;
+    }
+</style>
+<section class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><?php echo $titulo ?></h1>
+    </div>
+</section>
+
+<?php
+$this->Widget('ext.highcharts.HighchartsWidget', array(
+   'options' => array(
+
+      'title'    => array( 'text' => $titulo ),
+      'subtitle' => array( 'text' => $subtitulo ),
+
+      'chart' => array(
+          'type' => 'bar',
+          'height' => 700 ),
+
+      'xAxis' => array(
+        'categories' => $categorias,
+        /*'labels' => array ('formatter' =>
+                'js:function() { return "--<a href=\'"+this.value+"hola.com\' ><b>"+this.value+"</b></a>--%"}',
+                'useHTML'  => true,
+              ),*/
+      ),
+
+  'tooltip' => array(
+    'formatter' => 'js:function(){ return "El valor para <b>" + this.x + "</b> es <b>" + this.y + "</b>, que representa el <b>" + Highcharts.numberFormat((this.y*100/1000), 2) + "%</b> del <b>"+ this.series.name+"</b>"; }'
+  ),
+
+      'yAxis' => array(
+        'title' => array('text' =>  "Total: $total")
+      ),
+
+      'series' => array(
+        array('name' => "Total: $total", 'data' => $series )
+      ),
+
+      'plotOptions' => array(
+        'bar' => array( 'dataLabels' => array( 'enabled' => true, 'style' => array ( 'fontSize' => '14px' ) ) ),
+        'series' => array( 'cursor' =>'pointer',
+        'point'=>array( 'events'=> array( 'click'=> 'js:function() {location.href= this.options.url;}' ) )
+        )
+       ),
+      'credits' => array( 'enabled' => true, 'text' => 'Generado por Sistema de Protocolización en fecha: '.date("d/m/Y h:m A") ),
+   )
+));
+
+?>
