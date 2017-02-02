@@ -85,7 +85,7 @@ class EstadisticasController extends Controller {
         $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
 
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true));
     }
 
     public function actionDesarrollosUbicacionMunicipios($id) {
@@ -116,7 +116,7 @@ class EstadisticasController extends Controller {
 
         $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true));
     }
 
 //Fin desarrollosUbicacionMunicipios
@@ -150,7 +150,7 @@ class EstadisticasController extends Controller {
         $event = array('events' => false);
 
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true));
     }
 
 //Fin desarrollosUbicacionMunicipios
@@ -159,6 +159,7 @@ class EstadisticasController extends Controller {
         $titulo1 = "Cantidad de Beneficiarios Por Ubicación Geografica";
         $titulo = "Cantidad de Beneficiarios por Estado";
         $subtitulo = "Fecha " . date("d/m/Y");
+        //$subtitulo = date("d/m/Y");
 
         $consulta = Yii::app()->db->createCommand('SELECT sec.cod_estado, sec.estado,
                         (SELECT COUNT(des.id_beneficiario)
@@ -179,7 +180,7 @@ class EstadisticasController extends Controller {
 
         $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>false));
     }
 
     public function actionBeneficiariosUbicacionMunicipios($id) {
@@ -210,7 +211,7 @@ class EstadisticasController extends Controller {
 
         $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true));
     }
 
 //Fin desarrollosUbicacionMunicipios
@@ -244,7 +245,7 @@ class EstadisticasController extends Controller {
         $event = array('events' => false);
 
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true));
     }
 
 //Fin desarrollosUbicacionMunicipios
