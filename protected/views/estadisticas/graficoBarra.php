@@ -20,17 +20,21 @@ $this->widget('booster.widgets.TbHighCharts', array(
 
    'title' => array(
      'text' => $titulo,
-     'x' => -20 //center
+     //'x' => -20 //center
+      // 'y' => 100,
    ),
    'subtitle' => array(
      'text' => $subtitulo,
-     'x' -20
+     //'x' -20
+    'y' => 190,
   ),
 
 
   'chart' => array(
       //'type' => 'bar',
       'type' => 'column',
+      'marginTop'=>250,
+      //'spacingTop'=>200,
       //'marginBottom' => -10,
       /*'options3d' => array(
           'enabled' => true,
@@ -39,7 +43,7 @@ $this->widget('booster.widgets.TbHighCharts', array(
                 'depth' => 50,
               'viewDistance'=> 25),*/
 
-      //'height' => 900
+      'height' => 720
       ),
   'xAxis' => array( 'categories'=> $categorias  ),
 
@@ -51,41 +55,31 @@ $this->widget('booster.widgets.TbHighCharts', array(
     'useHTML'  => true
   ),
 
-  'legend' => array(
-      'layout' => 'vertical',
-      'align' => 'right',
-      'verticalAlign' => 'top',
-      'x' => -40,
-      'y' => 80,
-      'floating' => true,
-      'borderWidth' => 1,
-      /*backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-      shadow: true*/
-      //'y' =>  120,
-      //'marginBottom' => -320,
-      //'spacingBottom' => 50,
-  ),
-  'plotOptions' => array(
-      'pie' => array(
-          'allowPointSelect' => 'true',
-          'cursor' => 'pointer',
-          'dataLabels' => array(
-            'enabled' => true,
-            'format' => '<b>{point.name}</b>: {point.y} - {point.percentage:.1f} %',
-            'style' => array (
-              'fontSize' => '16px',
-              'padding-top' => '50px'
-              )
-            ),
-      ),
-      'showInLegend' => true,
-   ),
+//  'legend' => array(
+//      'layout' => 'vertical',
+//      'align' => 'right',
+//      'verticalAlign' => 'top',
+//      'x' => -40,
+//      'y' => 80,
+//      'floating' => true,
+//      'borderWidth' => 1,
+//      /*backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+//      shadow: true*/
+//      //'y' =>  120,
+//      //'marginBottom' => -320,
+//      //'spacingBottom' => 50,
+//  ),
+
 
   'series' => array( array('name' => $tituloSerie, 'data' => $data )  ),
 
   'credits' => array( 'enabled' => TRUE, 'text' => 'Generado por Sistema de Protocolización en fecha: '.date("d/m/Y h:m A") ),
 
-  )
+  ),
+  'options2' => 'setTitle({
+            useHTML: true,
+            text:  "<img src=\''.Yii::app()->baseUrl.'/images/cintillo.jpg\' class=\'cintillo_responsive\' /><br><center><h3>'.$titulo.'</h3></center>"
+            })'  
 
     )
     );
