@@ -47,6 +47,9 @@ class TbHighCharts extends CWidget
 	 * @var array $htmlOptions the HTML tag attributes
 	 */
 	public $htmlOptions = array();
+        
+        //Nuevo
+        public $options2 = array();
 
 	/**
 	 * Renders the widget.
@@ -91,9 +94,21 @@ class TbHighCharts extends CWidget
 
 		$options = CJavaScript::encode($this->options);
 
-		$assets->registerScript(
+		if(!empty($this->options2))
+                {
+                    $assets->registerScript(
+			__CLASS__ . '#' . $this->getId(),
+			"var highchart{$this->getId()} = new Highcharts.Chart({$options});highchart{$this->getId()}.$this->options2"
+		);
+                }
+                else
+                {
+                    $assets->registerScript(
 			__CLASS__ . '#' . $this->getId(),
 			"var highchart{$this->getId()} = new Highcharts.Chart({$options});"
 		);
+                }
+                
+                
 	}
 }

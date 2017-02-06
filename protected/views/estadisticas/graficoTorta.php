@@ -28,6 +28,7 @@ $this->widget('booster.widgets.TbHighCharts', array(
   'chart' => array(
       //'type' => 'bar',
       'type' => 'pie',
+      'marginTop'=>220,
       //'marginBottom' => -10,
       /*'options3d' => array(
           'enabled' => true,
@@ -36,7 +37,7 @@ $this->widget('booster.widgets.TbHighCharts', array(
                 'depth' => 50,
               'viewDistance'=> 25),*/
 
-      //'height' => 900
+      'height' => 700
       ),
 /*  'xAxis' => array(
       'categories'=> $categorias ),
@@ -85,13 +86,16 @@ $this->widget('booster.widgets.TbHighCharts', array(
 
   'credits' => array( 'enabled' => true, 'text' => 'Generado por Sistema de Protocolización en fecha: '.date("d/m/Y h:m A") ),
 
-  )
+  ),
+  'options2' => 'setTitle({
+            useHTML: true,
+            text:  "<img src=\''.Yii::app()->baseUrl.'/images/cintillo.jpg\' class=\'cintillo_responsive\' /><br><center><h3>'.$titulo.'</h3></center>"
+            })'
 
     )
     );
 
 ?>
-
 
 <div class="form-actions">
     <div class="pull-left">

@@ -77,6 +77,9 @@ class HighchartsWidget extends CWidget
     public $scripts = array();
     public $callback = false;
     public $scriptPosition = null;
+    
+    //Nuevo
+    public $options2 = array();
 
     /**
      * Renders the widget.
@@ -98,11 +101,23 @@ class HighchartsWidget extends CWidget
                 throw new CException('The options parameter is not valid JSON.');
             }
         }
+        
+        // check if options2 parameter is a json string, nuevo
+//        if (is_string($this->options2)) {
+//            if (!$this->options2 = CJSON::decode($this->options2)) {
+//                throw new CException('The options parameter is not valid JSON.');
+//            }
+//        }
 
         // merge options with default values
         $defaultOptions = array('chart' => array('renderTo' => $this->id));
         $this->options = CMap::mergeArray($defaultOptions, $this->options);
         array_unshift($this->scripts, $this->_baseScript);
+        
+        // merge options with default values, nuevo
+//        $defaultOptions = array('chart' => array('renderTo' => $this->id));
+//        $this->options2 = CMap::mergeArray($defaultOptions, $this->options2);
+//        array_unshift($this->scripts, $this->_baseScript);
 
         $this->registerAssets();
     }
@@ -131,8 +146,13 @@ class HighchartsWidget extends CWidget
 
         // prepare and register JavaScript code block
         $jsOptions = CJavaScript::encode($this->options);
+        //$jsOptions2 = CJavaScript::encode($this->options2); //nuevo
+        $jsOptions2 = $this->options2; //nuevo
         $setupOptions = CJavaScript::encode($this->setupOptions);
-        $js = "Highcharts.setOptions($setupOptions); var chart = new Highcharts.{$this->_constr}($jsOptions);";
+        if($jsOptions2)
+            $js = "Highcharts.setOptions($setupOptions); var chart = new Highcharts.{$this->_constr}($jsOptions);chart.$jsOptions2;";
+        else
+            $js = "Highcharts.setOptions($setupOptions); var chart = new Highcharts.{$this->_constr}($jsOptions);";
         $key = __CLASS__ . '#' . $this->id;
         if (is_string($this->callback)) {
             $callbackScript = "function {$this->callback}(data) {{$js}}";
