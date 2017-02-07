@@ -110,11 +110,11 @@ $this->widget(
                     'header' => 'Listado de Registro Publico',
                     'value' => '$data->nombre_registro_publico',
                 ),
-                array(
+               /* array(
                     'name' => 'parroquia_id',
                     'header' => 'Estados',
                     'value' => '$data->fkParroquia->clvmunicipio0->clvestado0->strdescripcion',
-                ),
+                ),*/
                 array(
                     'name' => 'estatus',
                     'header' => 'Estatus',
