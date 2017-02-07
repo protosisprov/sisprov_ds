@@ -170,6 +170,7 @@ class EstadisticasController extends Controller {
                         GROUP BY sec.cod_estado, sec.estado
                         ORDER BY sec.estado')->queryAll();
         $total = "0";
+        $urlPdf = Yii::app()->createAbsoluteUrl('estadisticas/beneficiariosUbicacionGeograficaPdf',array("pdf" => 'pdf'));
         foreach ($consulta as $id => $estado) {
             $categorias[$id] = $estado["estado"];
             $url = Yii::app()->createAbsoluteUrl("estadisticas/beneficiariosUbicacionMunicipios/", array("id" => $estado["cod_estado"]));
@@ -179,7 +180,7 @@ class EstadisticasController extends Controller {
 
         $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true, 'urlPdf'=>$urlPdf));
     }
 
     public function actionBeneficiariosUbicacionMunicipios($id) {
@@ -453,7 +454,7 @@ class EstadisticasController extends Controller {
         }
     }
     
-    public function actionBeneficiariosUbicacionGeograficaPdf($id)
+    public function actionBeneficiariosUbicacionGeograficaPdf()
     {
         $titulo1 = "Cantidad de Beneficiarios Por Ubicación Geografica";
         $titulo = "Cantidad de Beneficiarios por Estado";
@@ -576,6 +577,11 @@ class EstadisticasController extends Controller {
                     ";
         //die('Llegue');
         $pdfEstadisticas = new PdfEstadisticas();
+//        $pdfEstadisticas->orientacion = 'horizontal';
+//        $pdfEstadisticas->nombreArchivo = 'Estadistica';
+//        echo $pdfEstadisticas->orientacion;die;
+        //$pdfEstadisticas->setOrientacion('horizontal');
+        //$pdfEstadisticas->setNombreArchivo('Estadistica');
         //$pdf->imprimirPdf($titulo, $contenido,'horizontal');
         $pdfEstadisticas->imprimirPdf($titulo, $contenido);
          

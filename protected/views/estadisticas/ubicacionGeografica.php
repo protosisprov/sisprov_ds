@@ -140,17 +140,23 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
         ?>
         
         <?php
+        if(isset($urlPdf))
+        {
             $this->widget('booster.widgets.TbButton', array(
                 'label' => 'Generar PDF',
                 'icon' => 'glyphicon glyphicon-file',
                 'size' => 'large',
                 'context' => 'info',
                 'buttonType' => 'link',
-                'url' => Yii::app()->createUrl('estadisticas/beneficiariosUbicacionGeograficaPdf',array('id'=>3)),
+                //'url' => Yii::app()->createUrl('estadisticas/beneficiariosUbicacionGeograficaPdf'),
+                //'url' => Yii::app()->createUrl('estadisticas/beneficiariosUbicacionGeograficaPdf',array('id'=>3)),
+                'url' => $urlPdf,
 //                'htmlOptions' => array(
 //                    'onClick' => 'goBack()'
 //                )
             ));
+        }
+            
         ?>
     </div>    
 </div>
