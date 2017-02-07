@@ -33,9 +33,7 @@ $html.="<table align='right' width='100%' border='0'>
                                 <b> Nombre de la Unidad Multifamiliar:</b> " . $model->unidadHabitacional->nombre .
         "<br/></p>
                             </blockquote>
-                </td>
-                <td colspan='1' align='right'><img src='" . Yii::app()->baseUrl . "/images/LOGO_BANAVIH-1.jpg' style='width: 25%;'/>
-                </td>
+                
             </tr>
             <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
             <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>

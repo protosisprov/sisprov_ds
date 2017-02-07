@@ -23,9 +23,7 @@
                    <b>Jefe Asignado:</b> <?php echo nombre('PRIMER_NOMBRE', $model->persona_id_jefe)." ".apellido('PRIMER_APELLIDO', $model->persona_id_jefe) ?><br/>
                 </p>
     </div>
-        <div class='col-md-6'>
-                <div class='text-right' style='margin-right: 1em;'><img src="<?php echo Yii::app()->baseUrl; ?>/images/LOGO_BANAVIH-1.jpg" style="width: 25%;"/></div>
-            </div>
+        
         </div>
     
     <div class="col-md-12">
