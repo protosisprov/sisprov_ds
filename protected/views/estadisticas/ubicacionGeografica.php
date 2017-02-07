@@ -23,8 +23,6 @@
     </div>
 </section>
 
-
-
 <?php
 if($br)
     $marginTop=225;
@@ -140,5 +138,25 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
             'url' => CHtml::normalizeUrl(array('index')),
         ));
         ?>
-    </div>
+        
+        <?php
+            $this->widget('booster.widgets.TbButton', array(
+                'label' => 'Generar PDF',
+                'icon' => 'glyphicon glyphicon-file',
+                'size' => 'large',
+                'context' => 'info',
+                'buttonType' => 'link',
+                'url' => Yii::app()->createUrl('estadisticas/beneficiariosUbicacionGeograficaPdf',array('id'=>3)),
+//                'htmlOptions' => array(
+//                    'onClick' => 'goBack()'
+//                )
+            ));
+        ?>
+    </div>    
 </div>
+
+<?php 
+//Yii::app()->createUrl("desarrollo/pdf/", array("id"=>$data->id_desarrollo)) 
+
+?>
+
