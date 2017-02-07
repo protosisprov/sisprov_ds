@@ -66,7 +66,7 @@ foreach ($recordBeneTemp as $model) {
             . "Adjudicado:</font><font size='5'> " . nombre('PRIMER_NOMBRE', $model->persona_id) . " " . apellido('PRIMER_APELLIDO', $model->persona_id) . " <br/>Fecha de Adjudicación: " . date('d/m/Y', strtotime($model->fecha_creacion)) .
             "<br/>Fecha de Censo: _______________________ " . " <br/>Condición Unidad Familiar:</font> <font size='3'><br/><label>Organo Estadal de Vivienda<input type='checkbox'></label>&nbsp;&nbsp;<label>Censo Refugiados<input type='checkbox'>&nbsp;&nbsp;Censo GMVV</label><label><input type='checkbox'></label>&nbsp;&nbsp;<label>Caso Especial<input type='checkbox'></label></font>"
             . "</td>"
-            . "<td align='right'><img src='" . Yii::app()->baseUrl . "/images/LOGO_BANAVIH-1.jpg' style='width: 25%;'/></td>"
+
             . "</tr>"
             . "</table>"
             . "</div>"

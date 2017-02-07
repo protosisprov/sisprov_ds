@@ -46,7 +46,7 @@ $html.="<table align='right' width='100%' border='0'>
                             <span class='subtitulo'>Teléfono Celular:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$persona->TELEFONOMOVIL."<br>
                             <span class='subtitulo'>Correo Electrónico:</span> &nbsp;&nbsp;&nbsp;".$persona->CORREO."<br>
                     </td>
-                    <td colspan='2' align='right'><img src='" . Yii::app()->baseUrl . "/images/LOGO_BANAVIH-1.jpg' style='width: 25%;'/></td>
+                    
             </tr>
              <tr>
                     <td colspan='3' align='center'><b>Desarrollo</b></td>

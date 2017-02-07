@@ -54,7 +54,7 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
             'type' => 'bar',
             'height' => 700,
             //'plotBackgroundImage' => 'https://www.highcharts.com/samples/graphics/skies.jpg'
-            //'plotBackgroundImage' => 'http://localhost/logo_banavih2.png',
+            //'plotBackgroundImage' => 'http://localhost/.png',
             //'backgroundColor' => '#000'
             //'spacingTop' => 200,
             'marginTop' => $marginTop,

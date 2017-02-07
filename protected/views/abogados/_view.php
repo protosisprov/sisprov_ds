@@ -29,9 +29,6 @@ function nacionalidadCedula($selec, $select2, $iD) {
 
                 </blockquote>
             </div>
-            <div class='col-md-6'>
-                <div class='text-right' style='margin-right: 1em;'><img src="<?php echo Yii::app()->baseUrl; ?>/images/LOGO_BANAVIH-1.jpg" style="width: 25%;"/></div>
-            </div>
         </div>
     </div>
     <div class="col-md-12">
