@@ -159,7 +159,6 @@ class EstadisticasController extends Controller {
         $titulo1 = "Cantidad de Beneficiarios Por Ubicación Geografica";
         $titulo = "Cantidad de Beneficiarios por Estado";
         $subtitulo = "Fecha " . date("d/m/Y");
-        //$subtitulo = date("d/m/Y");
 
         $consulta = Yii::app()->db->createCommand('SELECT sec.cod_estado, sec.estado,
                         (SELECT COUNT(des.id_beneficiario)
@@ -171,6 +170,7 @@ class EstadisticasController extends Controller {
                         GROUP BY sec.cod_estado, sec.estado
                         ORDER BY sec.estado')->queryAll();
         $total = "0";
+        $urlPdf = Yii::app()->createAbsoluteUrl('estadisticas/beneficiariosUbicacionGeograficaPdf',array("pdf" => 'pdf'));
         foreach ($consulta as $id => $estado) {
             $categorias[$id] = $estado["estado"];
             $url = Yii::app()->createAbsoluteUrl("estadisticas/beneficiariosUbicacionMunicipios/", array("id" => $estado["cod_estado"]));
@@ -180,7 +180,7 @@ class EstadisticasController extends Controller {
 
         $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
         $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
-            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>false));
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true, 'urlPdf'=>$urlPdf));
     }
 
     public function actionBeneficiariosUbicacionMunicipios($id) {
@@ -452,6 +452,164 @@ class EstadisticasController extends Controller {
             else
                 $this->render('error', $error);
         }
+    }
+    
+    public function actionBeneficiariosUbicacionGeograficaPdf()
+    {
+        $titulo1 = "Cantidad de Beneficiarios Por Ubicación Geografica";
+        $titulo = "Cantidad de Beneficiarios por Estado";
+        $subtitulo = "Fecha " . date("d/m/Y");
+
+        $consulta = Yii::app()->db->createCommand('SELECT sec.cod_estado, sec.estado,
+                        (SELECT COUNT(des.id_beneficiario)
+                        FROM beneficiario des
+                        JOIN vsw_sector sec1 ON sec1.cod_parroquia = des.parroquia_id
+                        WHERE sec.cod_estado = sec1.cod_estado
+                       /* AND NOT des.estatus = 222 censado o 223 en proceso*/) AS cantidad
+                        FROM vsw_sector sec
+                        GROUP BY sec.cod_estado, sec.estado
+                        ORDER BY sec.estado')->queryAll();
+        $total = "0";
+        foreach ($consulta as $id => $estado) {
+            $categorias[$id] = $estado["estado"];
+            $url = Yii::app()->createAbsoluteUrl("estadisticas/beneficiariosUbicacionMunicipios/", array("id" => $estado["cod_estado"]));
+            $series[$id] = array('y' => (int) $estado["cantidad"], 'url' => $url);
+            $total = $total + $estado["cantidad"];
+        }//fin foreach resultados consulta
+
+        /*$event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
+        $this->render('ubicacionGeografica', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
+            'categorias' => $categorias, 'series' => $series, 'total' => $total, 'event' => $event, 'br'=>true));*/
+
+//        echo '<pre>';
+ //var_dump($categorias);
+//var_dump($series);
+//echo '</pre>';
+        //echo count($categorias);
+//        foreach($series as $serie){
+//            //echo $serie[0]." - ".$serie[1]."<br>";
+//            echo $serie['y']."<br>";
+//        }
+//        die;
+        //SE CREA LA IMAGEN CON EL GRAFICO
+        Yii::import('application.vendors.pChart.*');
+        require_once 'class/pData.class.php';
+        require_once 'class/pDraw.class.php';
+        require_once 'class/pImage.class.php';
+
+        $fonts = Yii::import('application.vendors.pChart.fonts.*');
+        //echo $fonts;die;
+         define("FONT_PATH", $fonts);
+         
+       // $graficos_img = "/var/www/sisprov_ds/images/estadisticas_temp/";
+        $graficos_img = "images/estadisticas_temp/";//echo $graficos_img;die;
+         //var_dump($categorias);die;
+         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /* Create and populate the pData object */ 
+        $MyData = new pData();   
+        //$MyData->addPoints(array(13251,4118,3087,1460,1248,156,26,9,8),"Cantidad");
+        foreach($series as $serie){
+             $MyData->addPoints($serie['y'],"Total"); 
+        }
+       
+        $MyData->setAxisName(0,"Total"); 
+        $MyData->addPoints($categorias,"Estados"); 
+        $MyData->setSerieDescription("Estados","Estados"); 
+        $MyData->setAbscissa("Estados"); 
+        $MyData->setAbscissaName("Estados"); 
+        //$MyData->addPoints(array("Firefox","Chrome","Internet Explorer","Opera","Safari","Mozilla","SeaMonkey","Camino","Lunascape"),"Browsers"); 
+        
+        //$MyData->setSerieDescription("Browsers","Browsers");
+        
+        //$MyData->setAbscissa("Browsers"); 
+        //$MyData->setAbscissaName("Browsers"); 
+        $MyData->setAxisDisplay(0,AXIS_FORMAT_METRIC,1); 
+        
+        /* Create the pChart object */ 
+        $myPicture = new pImage(500,500,$MyData); 
+        $myPicture->drawGradientArea(0,0,500,500,DIRECTION_VERTICAL,array("StartR"=>240,"StartG"=>240,"StartB"=>240,"EndR"=>180,"EndG"=>180,"EndB"=>180,"Alpha"=>100)); 
+        $myPicture->drawGradientArea(0,0,500,500,DIRECTION_HORIZONTAL,array("StartR"=>240,"StartG"=>240,"StartB"=>240,"EndR"=>180,"EndG"=>180,"EndB"=>180,"Alpha"=>20)); 
+        $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/pf_arma_five.ttf","FontSize"=>6)); 
+
+        /* Draw the chart scale */  
+        $myPicture->setGraphArea(100,30,480,480);
+        $myPicture->drawScale(array("CycleBackground"=>TRUE,"DrawSubTicks"=>TRUE,"GridR"=>0,"GridG"=>0,"GridB"=>0,"GridAlpha"=>10,"Pos"=>SCALE_POS_TOPBOTTOM)); //  
+
+        /* Turn on shadow computing */  
+        $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10)); 
+
+        /* Draw the chart */  
+        $myPicture->drawBarChart(array("DisplayPos"=>LABEL_POS_INSIDE,"DisplayValues"=>TRUE,"Rounded"=>TRUE,"Surrounding"=>30)); 
+
+        /* Write the legend */  
+        $myPicture->drawLegend(570,215,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL)); 
+        
+        $myPicture->render($graficos_img."ubicacionGeograficaBarras.png");
+        
+        
+        //die("Llegue");
+        
+        
+        
+        
+        
+        
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //$titulo = ' Desarrollo Habitacional N° '.$model->id_oficina.' - '.$model->nombre.' '.date('h:i:A') .'';
+        $titulo = 'Título del reporte';
+        $contenido ="<table align='right' width='100%' border='0'>
+                        <tr>
+                            <td colspan='2' align='center'>
+                                <!--<b><img src='images/estadisticas_temp/ubicacionGeografica.png' ></b>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan='2' align='center'>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan='2' align='center'>
+                                <b><img src='images/estadisticas_temp/ubicacionGeograficaBarras.png' ></b>
+                            </td>
+                        </tr>
+                    </table>
+                    ";
+        //die('Llegue');
+        $pdfEstadisticas = new PdfEstadisticas();
+//        $pdfEstadisticas->orientacion = 'horizontal';
+//        $pdfEstadisticas->nombreArchivo = 'Estadistica';
+//        echo $pdfEstadisticas->orientacion;die;
+        //$pdfEstadisticas->setOrientacion('horizontal');
+        //$pdfEstadisticas->setNombreArchivo('Estadistica');
+        //$pdf->imprimirPdf($titulo, $contenido,'horizontal');
+        $pdfEstadisticas->imprimirPdf($titulo, $contenido);
+         
+ 
+ /*$pdf = Yii::createComponent('application.vendors.mpdf.mpdf');
+$cabecera = '<img src="' . Yii::app()->request->baseUrl . '/images/cintillo.jpg"/>';
+
+
+$html.="<table align='right' width='100%' border='0'>       
+    <tr>
+        <td colspan='2' align='center'>
+            <b><img src='ubicacionGeografica.png' ></b>
+        </td>
+    </tr>
+</table>
+";
+
+$mpdf = new mPDF('c', 'LETTER');
+$mpdf->SetTitle(' Desarrollo Habitacional N° '.$model->id_oficina.' - '.$model->nombre.' '.date('h:i:A') .'');
+$mpdf->SetMargins(5, 50, 30);
+$mpdf->SetAuthor('BANAVIH - Banco Nacional de Vivienda y Habitat');
+$mpdf->SetCreator('BANAVIH - Banco Nacional de Vivienda y Habitat');
+$mpdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$cabecera.'</div>','O', true);
+$mpdf->SetFooter('Generado desde el Sistema de Protocolización el ' . date('d-m-Y') . ' a las ' . date('h:i:A') . '' . Yii::app()->user->name . ' |                        Página {PAGENO}/{nbpg}');
+$mpdf->WriteHTML($html);
+unlink('ubicacionGeografica.png');
+$mpdf->Output('Oficina-'.$model->id_oficina. ' .pdf','D');
+exit;*/
     }
 
 }
