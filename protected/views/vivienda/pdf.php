@@ -25,14 +25,12 @@ $html.="<table align='right' width='100%' border='0'>
                 </td>
             </tr>
             <tr>
-                <td colspan='1'>
+                <td colspan='2'>
                     <br>
-                            <blockquote style='padding: 10px 20px;   margin: 0 0 20px;   font-size: 17.5px;   border-left: 5px solid #eee;'>
-                                <p><b> Nombre del Desarrollo: </b>" . $model->unidadHabitacional->desarrollo->nombre .
-        "<br/>
-                                <b> Nombre de la Unidad Multifamiliar:</b> " . $model->unidadHabitacional->nombre .
-        "<br/></p>
-                            </blockquote>
+                    <blockquote style='padding: 10px 20px;   margin: 0 0 20px;   font-size: 17.5px;   border-left: 5px solid #eee;'>
+                    <p><b> Nombre del Desarrollo: </b>" . $model->unidadHabitacional->desarrollo->nombre ."<br/><br>
+                       <b> Nombre de la Unidad Multifamiliar:</b> " . $model->unidadHabitacional->nombre ."<br/></p>
+                    </blockquote>
                 
             </tr>
             <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
@@ -46,16 +44,16 @@ $html.="<table align='right' width='100%' border='0'>
             </tr>
             <tr>
                 <td colspan='2'>
-                    <br><br>
+                    <br>
                         <div class='col-md-6' style ='margin-left: 0.1%; margin-right: 20%; width: 40%;'>                    
                             <blockquote style='padding: 10px 20px;   margin: 0 0 20px;   font-size: 17.5px;   border-left: 5px solid #eee;'>
                                 <p>
                                 <b> Estado:</b> " . $model->unidadHabitacional->desarrollo->fkParroquia->clvmunicipio0->clvestado0->strdescripcion .
-        "<br/>
+                        "<br/>
                                 <b> Municipio:</b> " . $model->unidadHabitacional->desarrollo->fkParroquia->clvmunicipio0->strdescripcion .
-        "<br/>
+                        "<br/>
                                 <b> Parroquia:</b> " . $model->unidadHabitacional->desarrollo->fkParroquia->strdescripcion .
-        "<br/></p>
+                        "<br/></p>
                             </blockquote>
                         </div>
                 </td>
@@ -71,7 +69,7 @@ $html.="<table align='right' width='100%' border='0'>
             </tr>
             <tr>
                 <td colspan='1'>
-                    <br><br>
+                    <br>
                         <div class='col-md-6' style ='margin-left: 0.1%; margin-right: 20%; width: 40%;'> 
                             <blockquote style='padding: 10px 20px;   margin: 0 0 20px;   font-size: 17.5px;   border-left: 5px solid #eee;'>
                                 <p><b> Lindero Norte: </b>" . $model->lindero_norte .
@@ -117,26 +115,29 @@ $html.="<table align='right' width='100%' border='0'>
                                 <b> N° de Vivienda:</b> " . $model->nro_vivienda .
         "<br/>
                                 <b> Sala:</b> ";
-if ($model->sala = TRUE):;
-    $html.= "SI";
-else:
-    $html.= "NO";
-endif;
-$html.= "<br/>
-                                <b> Comedor:</b> ";
-if ($model->comedor = TRUE):;
-    $html.= "SI";
-else:
-    $html.= "NO";
-endif;
-$html.= "<br/>
-                                <b> Cocina:</b> ";
-if ($model->cocina = TRUE):;
-    $html.= "SI";
-else:
-    $html.= "NO";
-endif;
-$html.= "<br/></p>
+                                if ($model->sala = TRUE):;
+                                    $html.= "SI";
+                                else:
+                                    $html.= "NO";
+                                endif;
+                                $html.= "<br/>
+                                                                <b> Comedor:</b> ";
+                                if ($model->comedor = TRUE):;
+                                    $html.= "SI";
+                                else:
+                                    $html.= "NO";
+                                endif;
+                                $html.= "<br/>
+                                                                <b> Cocina:</b> ";
+                                if ($model->cocina = TRUE):;
+                                    $html.= "SI";
+                                else:
+                                    $html.= "NO";
+                                endif;
+                                $html.= "<br/></p>
+                                
+                            <b> Porcentaje de la Vivienda:</b> " . $model->porcentaje_vivienda . ' %'.
+        "<br/>                            
                             </blockquote>
                         </div>
                 </td>
@@ -155,12 +156,14 @@ $html.= "<br/>
         "<br/>
                                 <b> N° de Baños:</b> " . $model->nro_banos .
         "<br/>
+                                <b> Baño Auxiliar:</b> " . $model->nro_banos_auxiliar .
+        "<br/>
                                 <b> Puesto de Estacionamiento: </b>" . $model->descripcion_estac .
         "<br/>
                                 <b> N° de Estacionamiento: </b>" . $model->nro_estacionamientos .
         "<br/>
-                                <b>Precio de Vivienda: </b>" . number_format((float) $model->precio_vivienda, 2, ",", ".") .
-        "Bs.<br/></p>
+                                <b> Precio de Vivienda: </b>" . number_format((float) $model->precio_vivienda, 2, ",", ".") .
+        " Bs.<br/></p>
                             </blockquote>
                         </div>
                 </td>

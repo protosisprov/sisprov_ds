@@ -11,16 +11,17 @@ $cabecera = '<img src="' . Yii::app()->request->baseUrl . '/images/cintillo.jpg"
 
 
 $html.="<table align='right' width='100%' border='0'>       
-                        <tr>
-                                    <td colspan='4' align='center'><b><font size='6' color='#B40404'>Reporte De La Unidad Multifamiliar: </br></br></font><font size='6'> ".$model->nombre ."/". date('d-m-Y') ." </font>
-                        <br/>
-                       <br/>
-                        </td>
+            <tr>
+                <td colspan='4' align='center'><b><font size='6' color='#B40404'>Reporte De La Unidad Multifamiliar
+                </br></br></font><font size='6'> ".$model->nombre ."/". date('d-m-Y') ." </font>
+                <br/>
+                <br/>
+                </td>
             </tr>
-                                    <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
-                                    <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
-                                    <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
-                                    <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
+                <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
+                <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
+                <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
+                <tr><td colspan='2'></td></tr><tr><td colspan='2'></td></tr>
             <tr>
             </tr>
 
