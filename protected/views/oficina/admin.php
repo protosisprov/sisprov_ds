@@ -40,6 +40,21 @@ function nombre($selec, $iD) {
     $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
     return $saime['PRIMER_NOMBRE'];
 }
+function nombreE($selec, $iD) {
+    
+    $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
+    
+    return Chtml::encode($saime['PRIMER_NOMBRE']);
+    
+}
+
+function prueba() {
+    
+    //$saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
+    
+    return Chtml::encode('Holaaa');
+    
+}
 
 function apellido($selec, $iD) {
     $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
@@ -61,7 +76,8 @@ $this->widget('booster.widgets.TbGridView', array(
             'header' => 'Estado',
             'name' => 'parroquia_id',
             'value' => '$data->parroquia->clvmunicipio0->clvestado0->strdescripcion',
-            'filter' => false,
+            
+            'filter' => CHtml::listData(Tblestado::model()->findAll(array('order' => 'strdescripcion ASC')), 'strdescripcion', 'strdescripcion')
         ),
         'nombre' => array(
             'header' => 'Nombre de Oficina',
@@ -72,8 +88,9 @@ $this->widget('booster.widgets.TbGridView', array(
         'persona_id_jefe' => array(
             'header' => 'Jefe de Oficina',
             'name' => 'persona_id_jefe',
+            //'value'=> '$data->persona_id_jefe',
             'value' => 'nombre("PRIMER_NOMBRE",$data->persona_id_jefe)." ".apellido("PRIMER_APELLIDO",$data->persona_id_jefe)',
-            'filter' => false,
+            'filter' => CHtml::listData(Oficina::model()->findall(), 'persona_id_jefe',CHtml::encode(nombre('PRIMER_NOMBRE','persona_id_jefe'))),
         ),
 //        'primer_apellido' => array(
 //            'header' => 'Apellido',
