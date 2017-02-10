@@ -133,7 +133,7 @@ class CrugeWebUser extends CWebUser implements IWebUser
         if ($this->isSuperAdmin) {
             return true;
         } else {
-            return true;
+            //return true;//temporal, solo para programar sin que se cierre la sesión
             $ok = $this->getrbac()->checkAccess($itemName, $this->getId(), $params);
             if ($ok == false) {
                 // no tiene el permiso asignado.

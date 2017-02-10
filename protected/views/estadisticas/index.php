@@ -179,6 +179,45 @@
 
 
 <section class="row">
+    <h1 class="page-header">Reportes Sisprov (Consolidados)</h1>
+</section>
+
+<section class="row">
+    <div class="col-lg-6 col-md-40">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="glyphicon glyphicon-stats" style=" font-size: 25px;"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div><?php echo CHtml::link('Reporte Por Documentación', array('#'));
+?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-40">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="glyphicon glyphicon-stats" style=" font-size: 25px;"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div><?php echo CHtml::link('Reporte Por Urbanismo', array('#'));
+?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row">
     <h1 class="page-header">Estadisticas de Analisis Crediticio</h1>
 </section>
 
