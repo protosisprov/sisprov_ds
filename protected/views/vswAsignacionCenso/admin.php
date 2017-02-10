@@ -71,8 +71,9 @@ $this->widget('booster.widgets.TbGridView', array(
             'header' => 'Responsable del Censo',
             'name' => 'persona_id',
             'value' => 'nombre("PRIMER_NOMBRE",$data->persona_id)." ".apellido("PRIMER_APELLIDO",$data->persona_id)',
-            'filter' => CHtml::listData(VswAsignacionCenso::model()->findAll(), 'persona_id',nombre('PRIMER_NOMBRE',' $data->persona_id')),
+            //'filter' => CHtml::listData(VswAsignacionCenso::model()->findAll(), 'persona_id',nombre('PRIMER_NOMBRE',' $data->persona_id')),
            // 'filter' => CHtml::listData(nombreApellido, 'persona_id', 'nombre'),
+            'filter' => TRUE,
             ),
         'fecha_asignacion' => array(
             'header' => 'Fecha Asignación',

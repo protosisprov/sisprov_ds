@@ -55,7 +55,7 @@ $this->widget('booster.widgets.TbGridView', array(
         'nombre_adjudicado' => array(
             'header' => 'Nombre del Adjudicado',
             'name' => 'nombre_adjudicado',
-            'filter' => false,
+            'filter' => CHtml::listData(VswCensosCulminados::model()->findall(), 'nombre_adjudicado', 'nombre_adjudicado'),
         ),
         'estado' => array(
             'header' => 'Estado',
