@@ -17,8 +17,25 @@ function nacionalidadCedula($selec, $select2, $iD) {
     $saime = ConsultaOracle::getNacionalidadCedulaPersonaByPk($selec, $select2, (int) $iD);
     return $saime['NACIONALIDAD'] . " - " . $saime['CEDULA'];
 }
+
+
+    function nombreApellido($selec, $iD) {
+        $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
+        $nombre = $saime['PRIMER_NOMBRE'] . ' ' . $saime['PRIMER_APELLIDO'];
+        return $nombre;
+    }
+    
+    
 ?>
 
+<?php
+$v = "SELECT ofi.id_oficina, ofi.nombre FROM abogados ab
+        JOIN oficina ofi on ofi.id_oficina=ab.oficina_id
+        GROUP BY  ofi.id_oficina, ofi.nombre";
+
+$conexion = Yii::app()->db->createCommand($v)->queryAll();
+
+?>
 <?php
 $this->widget('booster.widgets.TbGridView', array(
     'id' => 'vsw-asignacion-censo-grid',
@@ -54,13 +71,15 @@ $this->widget('booster.widgets.TbGridView', array(
             'header' => 'Responsable del Censo',
             'name' => 'persona_id',
             'value' => 'nombre("PRIMER_NOMBRE",$data->persona_id)." ".apellido("PRIMER_APELLIDO",$data->persona_id)',
-            'filter' => false,
-        ),
+            //'filter' => CHtml::listData(VswAsignacionCenso::model()->findAll(), 'persona_id',nombre('PRIMER_NOMBRE',' $data->persona_id')),
+           // 'filter' => CHtml::listData(nombreApellido, 'persona_id', 'nombre'),
+            'filter' => TRUE,
+            ),
         'fecha_asignacion' => array(
             'header' => 'Fecha Asignación',
             'name' => 'fecha_asignacion',
             'value' => '$data->fecha_asignacion',
-            'filter' => false,
+            'filter' => CHtml::listData(VswAsignacionCenso::model()->findAll(), 'fecha_asignacion', 'fecha_asignacion'),
         ),
         array(
             'class' => 'booster.widgets.TbButtonColumn',

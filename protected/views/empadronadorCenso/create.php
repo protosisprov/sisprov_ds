@@ -28,7 +28,7 @@ $this->widget(
     <div class="col-md-12">
         <?php
         $this->widget(
-                'booster.widgets.TbPanel', array(
+            'booster.widgets.TbPanel', array(
             'title' => 'Asingación de empadronador',
             'headerHtmlOptions' => array('style' => 'background-color: #1fb5ad !important;color: #FFFFFF !important;'),
             'headerIcon' => 'home',
@@ -50,12 +50,12 @@ $this->widget(
             <?php
             $this->widget('booster.widgets.TbButton', array(
                 'context' => 'danger',
-                'label' => 'Cancelar',
+                'label' => 'Volver',
                 'size' => 'large',
                 'id' => 'CancelarForm',
                 'icon' => 'ban-circle',
                 'htmlOptions' => array(
-                    'onclick' => 'document.location.href ="' . $this->createUrl('/vswAsignacionCenso/admin') . '";'
+                'onclick' => 'document.location.href ="' . $this->createUrl('/vswAsignacionCenso/admin') . '";'
                 )
             ));
             ?>

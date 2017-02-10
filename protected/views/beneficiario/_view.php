@@ -111,8 +111,10 @@ function fechanacimiento($selec, $iD) {
 
                     $criteria = new CDbCriteria;
                     $criteria->addCondition('t.unidad_familiar_id = :unidad_familiar_id');
-                    $criteria->params = array(':unidad_familiar_id' => $idUnidad);
+                    $criteria->addCondition('t.estatus = 41');
+                    $criteria->params = array(':unidad_familiar_id' => $idUnidad, );
                     $grupoFami = GrupoFamiliar::model()->findAll($criteria);
+                    //$grupoFami = GrupoFamiliar::model()->findByAttributes(array('beneficiario_id' => $id)
                     foreach ($grupoFami as $fila) {
                         
                         

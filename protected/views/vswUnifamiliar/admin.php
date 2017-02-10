@@ -73,7 +73,7 @@ $this->widget('booster.widgets.TbGridView', array(
             'name' => 'nro_vivienda',
             'header' => 'Numéro de Vivienda',
             'value' => '$data->nro_vivienda',
-            'filter' => FALSE,
+            'filter' => CHtml::listData(VswUnifamiliar::model()->findAll(), 'nro_vivienda', 'nro_vivienda'),
         ),
         array(
             'class' => 'booster.widgets.TbButtonColumn',
