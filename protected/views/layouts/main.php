@@ -556,7 +556,7 @@
     </script>
 </html>
 <?php
-//$url_redirect = CHtml::normalizeUrl(array('/site/index'));
+$url_redirect = CHtml::normalizeUrl(array('/site/index'));
 $url_redirect = CHtml::normalizeUrl(array('/cruge/ui/accessDenied'));
 $url_valida_sesion = CHtml::normalizeUrl(array('/cruge/ui/login'));
 $url_destroy_session = CHtml::normalizeUrl(array('/site/logout'));
