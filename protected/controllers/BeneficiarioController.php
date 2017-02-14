@@ -54,6 +54,7 @@ class BeneficiarioController extends Controller {
      */
     //PRIMER INSERT EN BENEFICIARIO
     public function actionCreate() {
+        
         $model = new Beneficiario;
         $desarrollo = new Desarrollo;
         $vivienda = new Vivienda;
@@ -66,13 +67,19 @@ class BeneficiarioController extends Controller {
 // $this->performAjaxValidation($model);
 
         if (isset($_POST['Beneficiario'])) {
+            
             $model->attributes = $_POST['Beneficiario'];
+            
             $Existe = BeneficiarioTemporal::model()->findByPk($model->beneficiario_temporal_id);
+            
             if (empty($Existe)) {
+                
                 $this->render('create', array(
                     'model' => $model, 'desarrollo' => $desarrollo, 'municipio' => $municipio, 'estado' => $estado, 'parroquia' => $parroquia, 'unidad_familiar' => $unidad_familiar, 'vivienda' => $vivienda, 'error' => 1
                 ));
+                
                 Yii::app()->end();
+                
             } else {
 
                 $censado = Beneficiario::model()->findByAttributes(array('beneficiario_temporal_id' => $Existe->id_beneficiario_temporal));
@@ -133,7 +140,9 @@ class BeneficiarioController extends Controller {
     }
 
     //PRECARGADO DE DATOS PARA INICIO DE CENSO EN VIEW EMPADRONADOR
+    
     public function actionCreateCenso($id) {
+        
         $model = new Beneficiario;
         $desarrollo = new Desarrollo;
         $vivienda = new Vivienda;
@@ -150,8 +159,10 @@ class BeneficiarioController extends Controller {
 // $this->performAjaxValidation($model);
 
         if (isset($_POST['Beneficiario'])) {
+            
             $model->attributes = $_POST['Beneficiario'];
             $Existe = BeneficiarioTemporal::model()->findByPk($model->beneficiario_temporal_id);
+            
             if (empty($Existe)) {
                 $this->render('create', array(
                     'model' => $model, 'desarrollo' => $desarrollo, 'municipio' => $municipio, 'estado' => $estado, 'parroquia' => $parroquia, 'unidad_familiar' => $unidad_familiar, 'vivienda' => $vivienda, 'error' => 1
@@ -259,6 +270,7 @@ class BeneficiarioController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     //UPDATE DE BENEFICIARIO ULTIMA PANTALLA DE CENSO
+    
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         $estado = new Tblestado;
@@ -270,7 +282,8 @@ class BeneficiarioController extends Controller {
 
         $consulta = UnidadFamiliar::model()->findByAttributes(array('beneficiario_id' => $id)); // consulta a Unidad Familiar por el id_beneficiario
 
-        $sqlIngreso = "select sum(ingreso_mensual) as ingreso from grupo_familiar where unidad_familiar_id=" . $consulta->id_unidad_familiar . ""; //consulta que suma cuanto es el ingreso de grupo familiar por id_beneficiario
+        $sqlIngreso = "select sum(ingreso_mensual) as ingreso from grupo_familiar where estatus = 41 and unidad_familiar_id=" . $consulta->id_unidad_familiar . ""; //consulta que suma cuanto es el ingreso de grupo familiar por id_beneficiario
+        
         $rowingreso = Yii::app()->db->createCommand($sqlIngreso)->queryRow();
         $model->ingreso_mensual = ($rowingreso['ingreso']) ? $rowingreso['ingreso'] : '0.00';
         //var_dump($model->ingreso_mensual);
