@@ -57,7 +57,7 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
         });
          
         
-        
+        $('#Desarrollo_lote_terreno_mt2').numeric();
         ") ?>
 
 <?php

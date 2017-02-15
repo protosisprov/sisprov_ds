@@ -118,12 +118,14 @@ class OficinaController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
+        
         $model = $this->loadModel($id);
         $estado = new Tblestado;
         $municipio = new Tblmunicipio;
         $parroquia = new Tblparroquia;
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
+        
         $consulta = ConsultaOracle::setPersona('nacionalidad,cedula,primer_nombre, segundo_nombre,primer_apellido, segundo_apellido', $model->persona_id_jefe);
         $model->nacionalidad = ($consulta['NACIONALIDAD'] == 1) ? 97 : 98;
         $model->cedula = $consulta['CEDULA'];
@@ -148,7 +150,10 @@ class OficinaController extends Controller {
                 $idJefe = $_POST['Oficina']['persona_id_jefe'];
             }
             $ExisteJefeOficina = OficinaController::FindByIdPersona($idJefe);
+            
             if (empty($ExisteJefeOficina)) {
+                
+                $model->nombre = $_POST['Oficina']['nombre'];
                 $model->persona_id_jefe = $idJefe;
                 $model->usuario_id_actualizacion = Yii::app()->user->id;
                 $model->observaciones = trim(strtoupper($_POST['Oficina']['observaciones']));
@@ -157,6 +162,7 @@ class OficinaController extends Controller {
                     $this->redirect(array('view', 'id' => $model->id_oficina));
                 }
             } else {
+                
                 $this->render('update', array('model' => $model,
                     'estado' => $estado,
                     'municipio' => $municipio,
@@ -181,6 +187,7 @@ class OficinaController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
+        
         if (Yii::app()->request->isPostRequest) {
 // we only allow deletion via POST request
             $this->loadModel($id)->delete();

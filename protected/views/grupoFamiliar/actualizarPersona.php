@@ -92,10 +92,10 @@ Yii::app()->clientScript->registerScript('anulacion', "
                     <label>Tipo de Persona</label>
                     <select id="tipo_persona_faov" class="form-control" name="GrupoFamiliar[tipo_persona_faov]" placeholder="Tipo de persona" disabled="disabled">
                         <?php
-                        $estatus = Maestro::FindMaestrosByPadreSelect(234);
+                        $estatush = Maestro::FindMaestrosByPadreSelect(234);
                         echo '<option value="">SELECCIÓN</option>';
-                        foreach ($estatus as $data => $value):
-                            echo '<option value="' . $data . '">' . $value . '</option>';
+                        foreach ($estatush as $datah => $valueh):
+                            echo '<option value="' . $datah . '">' . $valueh . '</option>';
                         endforeach;
                         ?>
                     </select>

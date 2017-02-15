@@ -39,7 +39,8 @@ class GrupoFamiliarController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate($id, $caso = NULL) {
-//        var_dump($id);
+
+
         $model = new GrupoFamiliar;
         $idBeneficiario = UnidadFamiliar::model()->findByPk($id);
         $traza = Traza::VerificarTraza($idBeneficiario->beneficiario_id); // verifica el guardado de la traza
@@ -56,7 +57,7 @@ class GrupoFamiliarController extends Controller {
             $list = number_format($list[0]['promedio'], 2, '.', '');
 
             //SUMA DEL INGRESO MESUAL DECLARADO POR EL GRUPO FAMILIAR
-            $sqlIngreso = "select sum(ingreso_mensual) as ingreso from grupo_familiar where unidad_familiar_id=" . $id . ""; //consulta que suma cuanto es el ingreso de grupo familiar por id_beneficiario
+            $sqlIngreso = "select sum(ingreso_mensual) as ingreso from grupo_familiar where estatus = 41 and unidad_familiar_id=" . $id . ""; //consulta que suma cuanto es el ingreso de grupo familiar por id_beneficiario
             $rowingreso = Yii::app()->db->createCommand($sqlIngreso)->queryRow();
             $rowingreso = number_format($rowingreso['ingreso'], 2, '.', '');
             UnidadFamiliar::model()->updateByPk($id, array('ingreso_total_familiar_suma_faov' => $list, 'ingreso_total_familiar' => $rowingreso));
@@ -138,6 +139,8 @@ class GrupoFamiliarController extends Controller {
      */
 
     public function actionInsertFamiliar() {
+
+
         $Familiar = new GrupoFamiliar;
         if ($_POST['idPersona'] == '' && $_POST['cedula'] != '0') {
             $idPersona = ConsultaOracle::insertPersona(array(
@@ -207,7 +210,30 @@ class GrupoFamiliarController extends Controller {
                 $Familiar->ingreso_mensual_faov = ($_POST['ingresoMFaov']) ? ($_POST['ingresoMFaov']) : '0.00';
                 $Familiar->tipo_persona_faov = $_POST['tipoPersonaFaov'];
                 if ($Familiar->save()) {
+
+                    //Actualizo el ingreso integral familiar en beneficiario
+                        //busco la unidad.
+                       
+                        //$consulta = UnidadFamiliar::model()->findByAttributes(array('beneficiario_id' => $id)); // consulta a Unidad Familiar por el id_beneficiario
+                        $consulta = UnidadFamiliar::model()->findByPk($_POST['IdUnidadF']);
+                        
+                        //echo $consulta->beneficiario_id.'  -- ID ';
+
+                        //busco el beneficiario que voy a actualizar
+                        $model = Beneficiario::model()->findByPk($consulta->beneficiario_id);
+                        
+                        $sqlIngreso = "select sum(ingreso_mensual) as ingreso from grupo_familiar where estatus = 41 and unidad_familiar_id=" . $consulta->id_unidad_familiar . ""; //consulta que suma cuanto es el ingreso de grupo familiar por id_beneficiario
+                        $rowingreso = Yii::app()->db->createCommand($sqlIngreso)->queryRow();
+                        
+                        //echo $rowingreso['ingreso'].'  -- Ingreso ';
+                        
+                        $model->ingreso_mensual = ($rowingreso['ingreso']) ? $rowingreso['ingreso'] : '0.00';
+                        //guardo
+                        $model->update();
+      
                     echo CJSON::encode(3);
+        
+        
                 } else {
                     echo CJSON::encode(2);
                 }
@@ -231,6 +257,8 @@ class GrupoFamiliarController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
+        
+        
 //        $idUNidad = UnidadFamiliar::model()->findByAttributes();
         $model = new GrupoFamiliar;
 
@@ -264,6 +292,19 @@ class GrupoFamiliarController extends Controller {
         $model->fecha_actualizacion = 'now';
         $model->usuario_id_actualizacion = Yii::app()->user->id;
         $model->save();
+        
+        $unidad_familiar = UnidadFamiliar::model()->findByPk($model->unidad_familiar_id);
+        $beneficiario = Beneficiario::model()->findByPk($unidad_familiar->beneficiario_id);
+        
+        $salario_actual = $beneficiario->ingreso_mensual;
+        $salario_familiar = $model->ingreso_mensual;
+        
+        
+        $salario = $salario_actual - $salario_familiar; 
+        if ($salario < 0 ){ $salario = 0;}
+        $beneficiario->ingreso_mensual = $salario ;
+        $beneficiario->update();
+        
         $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('update', 'id' => $model->unidad_familiar_id));
     }
 

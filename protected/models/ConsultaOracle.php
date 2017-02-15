@@ -24,6 +24,18 @@ class ConsultaOracle extends CActiveRecord {
         }
     }
 
+        public static function setPersonas() {
+        //$nacional = ($nacionalidad == 97) ? '1' : '0';
+        //$SLQ = "SELECT " . $select . " FROM PERSONA WHERE ID =" . $id;
+        $SLQ = "SELECT * FROM PERSONA";
+        $result = Yii::app()->dbOarcle->createCommand($SLQ)->queryRow();
+
+        if (empty($result)) {
+            return 1;
+        } else {
+            return $result;
+        }
+    }
     /*
      * Consulta Tabla Persona de tablas_comunes
      * Consulta que busca por nacionalidad y cedula
