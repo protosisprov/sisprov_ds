@@ -938,6 +938,7 @@ exit;*/
             $validado_saren_uni    = 0;
             $devuelto_saren_uni    = 0;
             //$devuelto_saren_multi  = 0;
+            $total_por_estado = 0;
             
             foreach($consulta as $row)
             {
@@ -946,13 +947,18 @@ exit;*/
                     if($row['id_estatus_documento'] == 53)  $activo                 = $row['cantidad'];
                     if($row['id_estatus_documento'] == 54)  $inactivo               = $row['cantidad'];
                     if($row['id_estatus_documento'] == 204) $borrado                = $row['cantidad'];
-                    //if($row['id_estatus_documento'] == 285) $validado_banavih_multi = $row['cantidad'];
-                    //if($row['id_estatus_documento'] == 286) $validado_saren_multi   = $row['cantidad'];
+//                    if($row['id_estatus_documento'] == 285) $validado_banavih_multi = $row['cantidad'];
+//                    if($row['id_estatus_documento'] == 286) $validado_saren_multi   = $row['cantidad'];
                     if($row['id_estatus_documento'] == 292)  $validado_banavih_uni  = $row['cantidad'];
                     if($row['id_estatus_documento'] == 293)  $validado_saren_uni    = $row['cantidad'];
                     if($row['id_estatus_documento'] == 294)  $devuelto_saren_uni    = $row['cantidad'];
-                    //if($row['id_estatus_documento'] == 295)  $devuelto_saren_multi  = $row['cantidad'];
+//                    if($row['id_estatus_documento'] == 295)  $devuelto_saren_multi  = $row['cantidad'];
+                    
+                    if($row['id_estatus_documento'] == 53 || $row['id_estatus_documento'] == 54 || $row['id_estatus_documento'] == 204 || $row['id_estatus_documento'] == 292 || $row['id_estatus_documento'] == 293 || $row['id_estatus_documento'] == 294){
+                        $total_por_estado = $total_por_estado+$row['cantidad'];
+                    }
                 }
+                
             }
             
             $reporte[$contador]['estado']                 = $estado->strdescripcion;
@@ -965,6 +971,7 @@ exit;*/
             $reporte[$contador]['validado_saren_uni']     = $validado_saren_uni;
             //$reporte[$contador]['devuelto_saren_multi']   = $devuelto_saren_multi;
             $reporte[$contador]['devuelto_saren_uni']     = $devuelto_saren_uni;
+            $reporte[$contador]['total_por_estado']       = $total_por_estado;
             
             $activo_total                 = $activo_total+$activo;
             $inactivo_total               = $inactivo_total+$inactivo;
@@ -975,6 +982,7 @@ exit;*/
             $validado_saren_uni_total     = $validado_saren_uni_total+$validado_saren_uni;
             $devuelto_saren_uni_total     = $devuelto_saren_uni_total+$devuelto_saren_uni;
             //$devuelto_saren_multi_total   = $devuelto_saren_multi_total+$devuelto_saren_multi;
+            $estados_total                = $estados_total+$activo+$inactivo+$borrado+$validado_banavih_uni+$validado_saren_uni+$devuelto_saren_uni;
             
             $contador++;
         }
@@ -990,6 +998,7 @@ exit;*/
                                                    'validado_saren_uni_total'     => $validado_saren_uni_total,
                                                    'devuelto_saren_uni_total'     => $devuelto_saren_uni_total,
                                                    //'devuelto_saren_multi_total'   => $devuelto_saren_multi_total,
+                                                   'estados_total'                => $estados_total,
                                                   )
                     );
     }

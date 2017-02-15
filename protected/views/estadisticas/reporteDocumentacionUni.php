@@ -32,27 +32,29 @@
             <th class="text-center">Validado Saren <br> (Unifamiliar)</th>
             <!--<th class="text-center">Devuelto Saren <br> (Multifamiliar)</th>-->
             <th class="text-center">Devuelto Saren <br> (Unifamiliar)</th>
+            <th class="text-center">Total Por Estado</th>
         </tr>
     </thead>
 <?php foreach($reporte as $item): ?>
     <tr>
     <?php foreach($item as $value): ?>
-        <td><?php echo $value ?></td>
+        <td <?php if(is_int($value)) echo 'class="text-right"' ?>><?php echo $value ?></td>
     <?php endforeach ?>
     </tr>
 <?php endforeach ?>
     <tfoot class='tfoot-tabla_reporte'>
         <tr>
             <th>Total Por Estatus</th>
-            <th><?=$activo_total?></th>
-            <th><?=$inactivo_total?></th>
-            <th><?=$borrado_total?></th>
+            <th class="text-right"><?=$activo_total?></th>
+            <th class="text-right"><?=$inactivo_total?></th>
+            <th class="text-right"><?=$borrado_total?></th>
             <!--<th><?//=$validado_banavih_multi_total?></th>-->
             <!--<th><?//=$validado_saren_multi_total?></th>-->
-            <th><?=$validado_banavih_uni_total?></th>
-            <th><?=$validado_saren_uni_total?></th>
+            <th class="text-right"><?=$validado_banavih_uni_total?></th>
+            <th class="text-right"><?=$validado_saren_uni_total?></th>
             <!--<th><?//=$devuelto_saren_multi_total?></th>-->
-            <th><?=$devuelto_saren_uni_total?></th>
+            <th class="text-right"><?=$devuelto_saren_uni_total?></th>
+            <th class="text-right"><?=$estados_total?></th>
         </tr>
     </tfoot>
 </table>
