@@ -191,7 +191,7 @@
                         <i class="glyphicon glyphicon-stats" style=" font-size: 25px;"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div><?php echo CHtml::link('Reporte Por Documentación', array('#'));
+                        <div><?php echo CHtml::link('Reporte Por Documentación (Multifamiliares)', array('reporteDocumentacion'));
 ?>
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                         <i class="glyphicon glyphicon-stats" style=" font-size: 25px;"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div><?php echo CHtml::link('Reporte Por Urbanismo', array('#'));
+                        <div><?php echo CHtml::link('Reporte Por Documentación (Unifamiliares)', array('reporteDocumentacionUni'));
 ?>
                         </div>
                     </div>

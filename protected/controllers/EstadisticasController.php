@@ -75,6 +75,7 @@ class EstadisticasController extends Controller {
             GROUP BY sec.cod_estado, sec.estado
             ORDER BY sec.estado')->queryAll();
         $total = "0";
+        foreach ($consulta as $id => $estado) { echo $id."<br>";}die;
         foreach ($consulta as $id => $estado) {
             $categorias[$id] = $estado["estado"];
             $url = Yii::app()->createAbsoluteUrl("estadisticas/desarrollosUbicacionMunicipios/", array("id" => $estado["cod_estado"]));
@@ -610,6 +611,217 @@ $mpdf->WriteHTML($html);
 unlink('ubicacionGeografica.png');
 $mpdf->Output('Oficina-'.$model->id_oficina. ' .pdf','D');
 exit;*/
+    }
+    
+    public function actionReporteDocumentacion()
+    {
+        $estados = Tblestado::model()->findAll();
+        
+        $sql = "select 
+                    s.estado as estado,
+                    (select descripcion from maestro where id_maestro = d.estatus) as estatus_documento,
+                    (select id_maestro from maestro where id_maestro = d.estatus) as id_estatus_documento,
+                    count(*) as cantidad
+                    from documentacion d join beneficiario b on d.fk_beneficiario = b.id_beneficiario
+                                         join beneficiario_temporal bt on b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+                                         join asignaciones a on a.fk_caso_asignado=bt.unidad_habitacional_id
+                                         join unidad_habitacional uh on uh.id_unidad_habitacional = a.fk_caso_asignado
+                                         join desarrollo des on des.id_desarrollo = uh.desarrollo_id
+                                         join vsw_sector s on s.cod_parroquia = des.parroquia_id
+                                         join maestro m on m.id_maestro = a.fk_estatus
+                    where
+                    a.es_activo = 't'
+                    group by estado, estatus_documento, id_estatus_documento
+                    order by estado";
+        
+        $consulta = Yii::app()->db->createCommand($sql)->queryAll();
+        
+        $reporte = array();
+        $contador = 0;
+        
+        //Se declaran las variables donde se almacenaran los totales de cada estado
+        $activo_total = 0;
+        $inactivo_total = 0;
+        $borrado_total = 0;
+        $validado_banavih_multi_total = 0;
+        $validado_saren_multi_total = 0;
+        //$validado_banavih_uni_total  = 0;
+        //$validado_saren_uni_total    = 0;
+        //$devuelto_saren_uni_total    = 0;
+        $devuelto_saren_multi_total = 0;
+        
+        
+        foreach($estados as $estado)
+        {
+            $activo = 0;
+            $inactivo = 0;
+            $borrado = 0;
+            $validado_banavih_multi = 0;
+            $validado_saren_multi   = 0;
+            //$validado_banavih_uni  = 0;
+            //$validado_saren_uni    = 0;
+            //$devuelto_saren_uni    = 0;
+            $devuelto_saren_multi  = 0;
+            
+            foreach($consulta as $row)
+            {
+                if($estado->strdescripcion == $row['estado'])
+                {
+                    if($row['id_estatus_documento'] == 53)  $activo                 = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 54)  $inactivo               = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 204) $borrado                = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 285) $validado_banavih_multi = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 286) $validado_saren_multi   = $row['cantidad'];
+                    //if($row['id_estatus_documento'] == 292)  $validado_banavih_uni  = $row['cantidad'];
+                    //if($row['id_estatus_documento'] == 293)  $validado_saren_uni    = $row['cantidad'];
+                    //if($row['id_estatus_documento'] == 294)  $devuelto_saren_uni    = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 295)  $devuelto_saren_multi  = $row['cantidad'];
+                }
+            }
+            
+            $reporte[$contador]['estado']                 = $estado->strdescripcion;
+            $reporte[$contador]['activo']                 = $activo;
+            $reporte[$contador]['inactivo']               = $inactivo;
+            $reporte[$contador]['borrado']                = $borrado;
+            $reporte[$contador]['validado_banavih_multi'] = $validado_banavih_multi;
+            $reporte[$contador]['validado_saren_multi']   = $validado_saren_multi;
+            //$reporte[$contador]['validado_banavih_uni']   = $validado_banavih_uni;
+            //$reporte[$contador]['validado_saren_uni']     = $validado_saren_uni;
+            $reporte[$contador]['devuelto_saren_multi']   = $devuelto_saren_multi;
+            //$reporte[$contador]['devuelto_saren_uni']     = $devuelto_saren_uni;
+            
+            $activo_total                 = $activo_total+$activo;
+            $inactivo_total               = $inactivo_total+$inactivo;
+            $borrado_total                = $borrado_total+$borrado;
+            $validado_banavih_multi_total = $validado_banavih_multi_total+$validado_banavih_multi;
+            $validado_saren_multi_total   = $validado_saren_multi_total+$validado_saren_multi;
+            //$validado_banavih_uni_total   = $validado_banavih_uni_total+$validado_banavih_uni;
+            //$validado_saren_uni_total     = $validado_saren_uni_total+$validado_saren_uni;
+            //$devuelto_saren_uni_total     = $devuelto_saren_uni_total+$devuelto_saren_uni;
+            $devuelto_saren_multi_total   = $devuelto_saren_multi_total+$devuelto_saren_multi;
+            
+            $contador++;
+        }
+
+        
+        $this->render('reporteDocumentacion',array('reporte'                      => $reporte,
+                                                   'activo_total'                 => $activo_total,
+                                                   'inactivo_total'               => $inactivo_total,
+                                                   'borrado_total'                => $borrado_total,
+                                                   'validado_banavih_multi_total' => $validado_banavih_multi_total,
+                                                   'validado_saren_multi_total'   => $validado_saren_multi_total,
+                                                   //'validado_banavih_uni_total'   => $validado_banavih_uni_total,
+                                                   //'validado_saren_uni_total'     => $validado_saren_uni_total,
+                                                   //'devuelto_saren_uni_total'     => $devuelto_saren_uni_total,
+                                                   'devuelto_saren_multi_total'   => $devuelto_saren_multi_total,
+                                                  )
+                    );
+    }
+    
+    
+    public function actionReporteDocumentacionUni()
+    {
+        $estados = Tblestado::model()->findAll();
+        
+        $sql = "select 
+                    s.estado as estado,
+                    (select descripcion from maestro where id_maestro = d.estatus) as estatus_documento,
+                    (select id_maestro from maestro where id_maestro = d.estatus) as id_estatus_documento,
+                    count(*) as cantidad
+                    from documentacion d join beneficiario b on d.fk_beneficiario = b.id_beneficiario
+                                         join beneficiario_temporal bt on b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+                                         join asignaciones a on a.fk_caso_asignado=bt.unidad_habitacional_id
+                                         join unidad_habitacional uh on uh.id_unidad_habitacional = a.fk_caso_asignado
+                                         join desarrollo des on des.id_desarrollo = uh.desarrollo_id
+                                         join vsw_sector s on s.cod_parroquia = des.parroquia_id
+                                         join maestro m on m.id_maestro = a.fk_estatus
+                    where
+                    a.es_activo = 't'
+                    group by estado, estatus_documento, id_estatus_documento
+                    order by estado";
+        
+        $consulta = Yii::app()->db->createCommand($sql)->queryAll();
+        
+        $reporte = array();
+        $contador = 0;
+        
+        //Se declaran las variables donde se almacenaran los totales de cada estado
+        $activo_total = 0;
+        $inactivo_total = 0;
+        $borrado_total = 0;
+        //$validado_banavih_multi_total = 0;
+        //$validado_saren_multi_total = 0;
+        $validado_banavih_uni_total  = 0;
+        $validado_saren_uni_total    = 0;
+        $devuelto_saren_uni_total    = 0;
+        //$devuelto_saren_multi_total = 0;
+        
+        
+        foreach($estados as $estado)
+        {
+            $activo = 0;
+            $inactivo = 0;
+            $borrado = 0;
+            //$validado_banavih_multi = 0;
+            //$validado_saren_multi   = 0;
+            $validado_banavih_uni  = 0;
+            $validado_saren_uni    = 0;
+            $devuelto_saren_uni    = 0;
+            //$devuelto_saren_multi  = 0;
+            
+            foreach($consulta as $row)
+            {
+                if($estado->strdescripcion == $row['estado'])
+                {
+                    if($row['id_estatus_documento'] == 53)  $activo                 = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 54)  $inactivo               = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 204) $borrado                = $row['cantidad'];
+                    //if($row['id_estatus_documento'] == 285) $validado_banavih_multi = $row['cantidad'];
+                    //if($row['id_estatus_documento'] == 286) $validado_saren_multi   = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 292)  $validado_banavih_uni  = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 293)  $validado_saren_uni    = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 294)  $devuelto_saren_uni    = $row['cantidad'];
+                    //if($row['id_estatus_documento'] == 295)  $devuelto_saren_multi  = $row['cantidad'];
+                }
+            }
+            
+            $reporte[$contador]['estado']                 = $estado->strdescripcion;
+            $reporte[$contador]['activo']                 = $activo;
+            $reporte[$contador]['inactivo']               = $inactivo;
+            $reporte[$contador]['borrado']                = $borrado;
+            //$reporte[$contador]['validado_banavih_multi'] = $validado_banavih_multi;
+            //$reporte[$contador]['validado_saren_multi']   = $validado_saren_multi;
+            $reporte[$contador]['validado_banavih_uni']   = $validado_banavih_uni;
+            $reporte[$contador]['validado_saren_uni']     = $validado_saren_uni;
+            //$reporte[$contador]['devuelto_saren_multi']   = $devuelto_saren_multi;
+            $reporte[$contador]['devuelto_saren_uni']     = $devuelto_saren_uni;
+            
+            $activo_total                 = $activo_total+$activo;
+            $inactivo_total               = $inactivo_total+$inactivo;
+            $borrado_total                = $borrado_total+$borrado;
+            //$validado_banavih_multi_total = $validado_banavih_multi_total+$validado_banavih_multi;
+            //$validado_saren_multi_total   = $validado_saren_multi_total+$validado_saren_multi;
+            $validado_banavih_uni_total   = $validado_banavih_uni_total+$validado_banavih_uni;
+            $validado_saren_uni_total     = $validado_saren_uni_total+$validado_saren_uni;
+            $devuelto_saren_uni_total     = $devuelto_saren_uni_total+$devuelto_saren_uni;
+            //$devuelto_saren_multi_total   = $devuelto_saren_multi_total+$devuelto_saren_multi;
+            
+            $contador++;
+        }
+
+        
+        $this->render('reporteDocumentacionUni',array('reporte'                      => $reporte,
+                                                   'activo_total'                 => $activo_total,
+                                                   'inactivo_total'               => $inactivo_total,
+                                                   'borrado_total'                => $borrado_total,
+                                                   //'validado_banavih_multi_total' => $validado_banavih_multi_total,
+                                                   //'validado_saren_multi_total'   => $validado_saren_multi_total,
+                                                   'validado_banavih_uni_total'   => $validado_banavih_uni_total,
+                                                   'validado_saren_uni_total'     => $validado_saren_uni_total,
+                                                   'devuelto_saren_uni_total'     => $devuelto_saren_uni_total,
+                                                   //'devuelto_saren_multi_total'   => $devuelto_saren_multi_total,
+                                                  )
+                    );
     }
 
 }
