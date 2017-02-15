@@ -281,7 +281,7 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?>
     </div>
-    <?php //var_dump($model->matricula);die; ?>
+
 </div> 
     <div class="row">
     <div class="col-md-4 " style="display: ">
@@ -293,15 +293,14 @@ Yii::app()->clientScript->registerScript('desarollo', "
                 'size' => 'large',
                 'onText' => 'SI',
                 'offText' => 'NO',
-//                'state' => true,
             ),
             'htmlOptions' => array(
-                'class' => 'matri',
+                'class' => 'matricula',
                 'onChange' => 'Matricula()',
             )
                 )
         );
-        ?> 
+        ?>
     </div>
         
     

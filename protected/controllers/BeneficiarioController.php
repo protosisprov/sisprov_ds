@@ -322,7 +322,7 @@ class BeneficiarioController extends Controller {
 
     //ACTUALIZACION DE DATOS DE BENEFICIARIO //tercera pantalla de censo
     public function actionCreateDatos($id) {
-        echo 'llega aqui';
+       
         $traza = Traza::VerificarTraza($id); // verifica el guardado de la traza
         if ($traza != 2) {
             Generico::renderTraza($id); //renderiza a la traza
