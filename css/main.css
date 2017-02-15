@@ -291,3 +291,16 @@ h1{
 .highcharts-title{
     width:100%;
 }
+
+.thead-tabla_reporte{
+    background: #c3d9ff;
+}
+
+.thead-tabla_reporte tr th{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.tfoot-tabla_reporte{
+    background: #c1c1c1;
+}
