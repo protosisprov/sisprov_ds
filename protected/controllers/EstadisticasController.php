@@ -714,6 +714,7 @@ exit;*/
 ///////////////////////////////////////////////////////////////////////////////////
 //GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////
+        /*
         Yii::import('application.vendors.pChart.*');
         require_once 'class/pData.class.php';
         require_once 'class/pDraw.class.php';
@@ -793,7 +794,7 @@ exit;*/
             }
         }
 
-         /* Create and populate the pData object */
+         //Create and populate the pData object 
          $MyData = new pData();  
          foreach($series as $serie){ $MyData->addPoints($serie['activo'],"Activo"); }
          foreach($series as $serie){ $MyData->addPoints($serie['inactivo'],"Inactivo"); }
@@ -808,32 +809,32 @@ exit;*/
          $MyData->setSerieDescription("Estados","Estados");
          $MyData->setAbscissa("Estados");
 
-         /* Create the pChart object */
+         // Create the pChart object
          $myPicture = new pImage(1500,1500,$MyData);
 
-         /* Draw the background */
+         // Draw the background 
          //$Settings = array("R"=>170, "G"=>183, "B"=>87, "Dash"=>1, "DashR"=>190, "DashG"=>203, "DashB"=>107);
          $Settings = array("R"=>255, "G"=>255, "B"=>255, "Dash"=>1, "DashR"=>31, "DashG"=>181, "DashB"=>173);
          $myPicture->drawFilledRectangle(0,0,1500,1500,$Settings);
 
-         /* Overlay with a gradient */
+         // Overlay with a gradient
          $Settings = array("StartR"=>255, "StartG"=>255, "StartB"=>255, "EndR"=>255, "EndG"=>255, "EndB"=>255, "Alpha"=>50);
          //$Settings = array("StartR"=>219, "StartG"=>231, "StartB"=>139, "EndR"=>1, "EndG"=>138, "EndB"=>68, "Alpha"=>50);
          $myPicture->drawGradientArea(0,0,1500,1500,DIRECTION_VERTICAL,$Settings);
          $myPicture->drawGradientArea(0,0,1500,20,DIRECTION_VERTICAL,array("StartR"=>0,"StartG"=>0,"StartB"=>0,"EndR"=>50,"EndG"=>50,"EndB"=>50,"Alpha"=>80));
 
-         /* Add a border to the picture */
+         // Add a border to the picture
          $myPicture->drawRectangle(0,0,1499,1499,array("R"=>0,"G"=>0,"B"=>0));
 
-         /* Write the picture title */ 
+         // Write the picture title 
          $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Silkscreen.ttf","FontSize"=>6));
          $myPicture->drawText(10,13,"Reporte Por Documentacion (Multifamiliares)",array("R"=>255,"G"=>255,"B"=>255));
 
-         /* Write the chart title */ 
+         // Write the chart title 
          $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Forgotte.ttf","FontSize"=>11));
          $myPicture->drawText(750,55,"Gráfico Estadístico (Documentación de Unidades Multifamiliares)",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
 
-         /* Draw the scale and the 1st chart */
+         // Draw the scale and the 1st chart
 //         $myPicture->setGraphArea(60,60,450,190);
 //         $myPicture->drawFilledRectangle(60,60,450,190,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
 //         $myPicture->drawScale(array("DrawSubTicks"=>TRUE));
@@ -842,7 +843,7 @@ exit;*/
 //         $myPicture->drawBarChart(array("DisplayValues"=>TRUE,"DisplayColor"=>DISPLAY_AUTO,"Rounded"=>TRUE,"Surrounding"=>30));
 //         $myPicture->setShadow(FALSE);
 
-         /* Draw the scale and the 2nd chart */
+         // Draw the scale and the 2nd chart
 //         $myPicture->setGraphArea(500,60,670,190);
 //         $myPicture->drawFilledRectangle(500,60,670,190,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
 //         $myPicture->drawScale(array("Pos"=>SCALE_POS_TOPBOTTOM,"DrawSubTicks"=>TRUE));
@@ -850,23 +851,24 @@ exit;*/
 //         $myPicture->drawBarChart();
 //         $myPicture->setShadow(FALSE);
          
-         /* Mi gráfico */
+         // Mi gráfico 
          $myPicture->setGraphArea(90,145,1400,1400);
          $myPicture->drawFilledRectangle(90,145,1400,1400,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
          $myPicture->drawScale(array("Pos"=>SCALE_POS_TOPBOTTOM,"DrawSubTicks"=>TRUE));
          $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
-         $myPicture->drawBarChart();
+         $myPicture->drawBarChart(array("DisplayPos"=>LABEL_POS_INSIDE,"DisplayValues"=>TRUE,"Rounded"=>TRUE,"Surrounding"=>30));
          $myPicture->setShadow(FALSE);
 
-         /* Write the chart legend */
+         // Write the chart legend 
          $myPicture->drawLegend(950,100,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
          $myPicture->drawLegend(950,1450,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
 
-         /* Render the picture (choose the best way) */
+         // Render the picture (choose the best way)
          //die(Yii::app()->request->baseUrl."/".$graficos_img."reporteDocumentacionMultiFamiliarBarras.png");
          //$myPicture->autoOutput("reporteDocumentacionMultiFamiliarBarras.png");
          //$myPicture->Stroke("reporteDocumentacionMultiFamiliarBarras.png");
          $myPicture->render($graficos_img."reporteDocumentacionMultiFamiliarBarras.png");
+         */
  ///////////////////////////////////////////////////////////////////////////////////
 //FIN GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////
@@ -990,6 +992,7 @@ exit;*/
 ///////////////////////////////////////////////////////////////////////////////////
 //GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////
+    /*    
         Yii::import('application.vendors.pChart.*');
         require_once 'class/pData.class.php';
         require_once 'class/pDraw.class.php';
@@ -1017,63 +1020,66 @@ exit;*/
             }
         }
 
-         /* Create and populate the pData object */
+         // Create and populate the pData object 
          $MyData = new pData();  
-         foreach($series as $serie){ $MyData->addPoints($serie['activo'],"Activo"); }
-         foreach($series as $serie){ $MyData->addPoints($serie['inactivo'],"Inactivo"); }
-         foreach($series as $serie){ $MyData->addPoints($serie['borrado'],"Borrado"); }
-         foreach($series as $serie){ $MyData->addPoints($serie['validado_banavih_uni'],"Validado Por BANAVIH"); }
-         foreach($series as $serie){ $MyData->addPoints($serie['validado_saren_uni'],"Validado Por SAREN"); }
-         foreach($series as $serie){ $MyData->addPoints($serie['devuelto_saren_uni'],"Devuelto Por SAREN"); }
+         foreach($series as $serie){ $MyData->addPoints(($serie['activo'] == 0)?VOID: $serie['activo'],"Activo"); }
+         foreach($series as $serie){ $MyData->addPoints(($serie['inactivo'] == 0)?VOID:$serie['inactivo'],"Inactivo"); }
+         foreach($series as $serie){ $MyData->addPoints(($serie['borrado'] == 0)?VOID:$serie['borrado'],"Borrado"); }
+         foreach($series as $serie){ $MyData->addPoints(($serie['validado_banavih_uni'] == 0)?VOID:$serie['validado_banavih_uni'],"Validado Por BANAVIH"); }
+         foreach($series as $serie){ $MyData->addPoints(($serie['validado_saren_uni'] == 0)?VOID:$serie['validado_saren_uni'],"Validado Por SAREN"); }
+         foreach($series as $serie){ $MyData->addPoints(($serie['devuelto_saren_uni'] == 0)?VOID:$serie['devuelto_saren_uni'],"Devuelto Por SAREN"); }
          $MyData->setAxisName(0,"Totales Por Estatus");
         
          $MyData->addPoints($estados_grafico,"Estados");
          $MyData->setSerieDescription("Estados","Estados");
          $MyData->setAbscissa("Estados");
 
-         /* Create the pChart object */
-         $myPicture = new pImage(1500,1500,$MyData);
+         // Create the pChart object 
+         $myPicture = new pImage(1500,700,$MyData);
 
-         /* Draw the background */
+         // Draw the background 
          $Settings = array("R"=>255, "G"=>255, "B"=>255, "Dash"=>1, "DashR"=>31, "DashG"=>181, "DashB"=>173);
-         $myPicture->drawFilledRectangle(0,0,1500,1500,$Settings);
+         //$myPicture->drawFilledRectangle(0,0,1500,1500,$Settings);
+         //$myPicture->drawFilledRectangle(0,0,1500,700,$Settings);
 
-         /* Overlay with a gradient */
+         // Overlay with a gradient 
          $Settings = array("StartR"=>255, "StartG"=>255, "StartB"=>255, "EndR"=>255, "EndG"=>255, "EndB"=>255, "Alpha"=>50);
-         $myPicture->drawGradientArea(0,0,1500,1500,DIRECTION_VERTICAL,$Settings);
-         $myPicture->drawGradientArea(0,0,1500,20,DIRECTION_VERTICAL,array("StartR"=>0,"StartG"=>0,"StartB"=>0,"EndR"=>50,"EndG"=>50,"EndB"=>50,"Alpha"=>80));
+         //$myPicture->drawGradientArea(0,0,1500,1500,DIRECTION_VERTICAL,$Settings);
+         $myPicture->drawGradientArea(0,0,1500,700,DIRECTION_VERTICAL,$Settings);
+         //$myPicture->drawGradientArea(0,0,1500,20,DIRECTION_VERTICAL,array("StartR"=>0,"StartG"=>0,"StartB"=>0,"EndR"=>50,"EndG"=>50,"EndB"=>50,"Alpha"=>80));
 
-         /* Add a border to the picture */
-         $myPicture->drawRectangle(0,0,1499,1499,array("R"=>0,"G"=>0,"B"=>0));
+         // Add a border to the picture 
+         $myPicture->drawRectangle(0,0,1499,699,array("R"=>0,"G"=>0,"B"=>0));
 
-         /* Write the picture title */ 
-         $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Silkscreen.ttf","FontSize"=>6));
-         $myPicture->drawText(10,13,"Reporte Por Documentacion (Multifamiliares)",array("R"=>255,"G"=>255,"B"=>255));
+         // Write the picture title  
+         //$myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Silkscreen.ttf","FontSize"=>6));
+         //$myPicture->drawText(10,13,"Reporte Por Documentacion (Multifamiliares)",array("R"=>255,"G"=>255,"B"=>255));
 
-         /* Write the chart title */ 
+         // Write the chart title  
          $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Forgotte.ttf","FontSize"=>11));
          $myPicture->drawText(750,55,"Gráfico Estadístico (Documentación de Unidades Unifamiliares)",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
          
-         /* Mi gráfico */
-         $myPicture->setGraphArea(90,145,1400,1400);
-         $myPicture->drawFilledRectangle(90,145,1400,1400,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
+         // Mi gráfico 
+         $myPicture->setGraphArea(90,145,1400,600);
+         $myPicture->drawFilledRectangle(90,145,1400,600,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
          $myPicture->drawScale(array("Pos"=>SCALE_POS_TOPBOTTOM,"DrawSubTicks"=>TRUE));
          $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
-         $myPicture->drawBarChart();
+         $myPicture->drawBarChart(array("DisplayPos"=>LABEL_POS_INSIDE,"DisplayValues"=>TRUE,"Rounded"=>TRUE,"Surrounding"=>30));
          $myPicture->setShadow(FALSE);
 
-         /* Write the chart legend */
+         // Write the chart legend 
          $myPicture->drawLegend(950,100,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
-         $myPicture->drawLegend(950,1450,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
+         $myPicture->drawLegend(950,630,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
 
-         /* Render the picture (choose the best way) */
+         // Render the picture (choose the best way) 
          $myPicture->render($graficos_img."reporteDocumentacionUniFamiliarBarras.png");
+    */
  ///////////////////////////////////////////////////////////////////////////////////
 //FIN GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////
 
         
-        $this->render('reporteDocumentacionUni',array('reporte'                      => $reporte,
+        $this->render('reporteDocumentacionUni',array('reporte'                   => $reporte,
                                                    'activo_total'                 => $activo_total,
                                                    'inactivo_total'               => $inactivo_total,
                                                    'borrado_total'                => $borrado_total,
@@ -1085,7 +1091,7 @@ exit;*/
                     );
     }
     
-    public function actionreporteDocumentacionMultiPdf()
+    public function actionReporteDocumentacionMultiPdf()
     {
         $estados = Tblestado::model()->findAll();
         
@@ -1171,6 +1177,7 @@ exit;*/
 ///////////////////////////////////////////////////////////////////////////////////
 //GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////
+        /*
         Yii::import('application.vendors.pChart.*');
         require_once 'class/pData.class.php';
         require_once 'class/pDraw.class.php';
@@ -1198,7 +1205,7 @@ exit;*/
             }
         }
 
-         /* Create and populate the pData object */
+         // Create and populate the pData object
          $MyData = new pData();  
          foreach($series as $serie){ $MyData->addPoints($serie['activo'],"Activo"); }
          foreach($series as $serie){ $MyData->addPoints($serie['inactivo'],"Inactivo"); }
@@ -1212,31 +1219,31 @@ exit;*/
          $MyData->setSerieDescription("Estados","Estados");
          $MyData->setAbscissa("Estados");
 
-         /* Create the pChart object */
+         // Create the pChart object
          $myPicture = new pImage(1500,1500,$MyData);
 
-         /* Draw the background */
+         // Draw the background 
          $Settings = array("R"=>255, "G"=>255, "B"=>255, "Dash"=>1, "DashR"=>31, "DashG"=>181, "DashB"=>173);
          $myPicture->drawFilledRectangle(0,0,1500,1500,$Settings);
 
-         /* Overlay with a gradient */
+         // Overlay with a gradient
          $Settings = array("StartR"=>255, "StartG"=>255, "StartB"=>255, "EndR"=>255, "EndG"=>255, "EndB"=>255, "Alpha"=>50);
          //$Settings = array("StartR"=>219, "StartG"=>231, "StartB"=>139, "EndR"=>1, "EndG"=>138, "EndB"=>68, "Alpha"=>50);
          $myPicture->drawGradientArea(0,0,1500,1500,DIRECTION_VERTICAL,$Settings);
          $myPicture->drawGradientArea(0,0,1500,20,DIRECTION_VERTICAL,array("StartR"=>0,"StartG"=>0,"StartB"=>0,"EndR"=>50,"EndG"=>50,"EndB"=>50,"Alpha"=>80));
 
-         /* Add a border to the picture */
+         // Add a border to the picture
          $myPicture->drawRectangle(0,0,1499,1499,array("R"=>0,"G"=>0,"B"=>0));
 
-         /* Write the picture title */ 
+         // Write the picture title
          $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Silkscreen.ttf","FontSize"=>6));
          $myPicture->drawText(10,13,"Reporte Por Documentacion (Multifamiliares)",array("R"=>255,"G"=>255,"B"=>255));
 
-         /* Write the chart title */ 
+         // Write the chart title
          $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Forgotte.ttf","FontSize"=>11));
          $myPicture->drawText(750,55,"Gráfico Estadístico (Documentación de Unidades Multifamiliares)",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
          
-         /* Mi gráfico */
+         // Mi gráfico
          $myPicture->setGraphArea(90,145,1400,1400);
          $myPicture->drawFilledRectangle(90,145,1400,1400,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
          $myPicture->drawScale(array("Pos"=>SCALE_POS_TOPBOTTOM,"DrawSubTicks"=>TRUE));
@@ -1244,12 +1251,13 @@ exit;*/
          $myPicture->drawBarChart();
          $myPicture->setShadow(FALSE);
 
-         /* Write the chart legend */
+         // Write the chart legend
          $myPicture->drawLegend(950,100,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
          $myPicture->drawLegend(950,1450,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
 
-         /* Render the picture (choose the best way) */
+         // Render the picture (choose the best way)
          $myPicture->render($graficos_img."reporteDocumentacionMultiFamiliarBarras.png");
+         */
  ///////////////////////////////////////////////////////////////////////////////////
 //FIN GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////
@@ -1373,6 +1381,7 @@ exit;*/
 ///////////////////////////////////////////////////////////////////////////////////
 //GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////
+        /*
         Yii::import('application.vendors.pChart.*');
         require_once 'class/pData.class.php';
         require_once 'class/pDraw.class.php';
@@ -1400,7 +1409,7 @@ exit;*/
             }
         }
 
-         /* Create and populate the pData object */
+          //Create and populate the pData object 
          $MyData = new pData();  
          foreach($series as $serie){ $MyData->addPoints($serie['activo'],"Activo"); }
          foreach($series as $serie){ $MyData->addPoints($serie['inactivo'],"Inactivo"); }
@@ -1414,30 +1423,30 @@ exit;*/
          $MyData->setSerieDescription("Estados","Estados");
          $MyData->setAbscissa("Estados");
 
-         /* Create the pChart object */
+         // Create the pChart object
          $myPicture = new pImage(1500,1500,$MyData);
 
-         /* Draw the background */
+         // Draw the background 
          $Settings = array("R"=>255, "G"=>255, "B"=>255, "Dash"=>1, "DashR"=>31, "DashG"=>181, "DashB"=>173);
          $myPicture->drawFilledRectangle(0,0,1500,1500,$Settings);
 
-         /* Overlay with a gradient */
+         // Overlay with a gradient 
          $Settings = array("StartR"=>255, "StartG"=>255, "StartB"=>255, "EndR"=>255, "EndG"=>255, "EndB"=>255, "Alpha"=>50);
          $myPicture->drawGradientArea(0,0,1500,1500,DIRECTION_VERTICAL,$Settings);
          $myPicture->drawGradientArea(0,0,1500,20,DIRECTION_VERTICAL,array("StartR"=>0,"StartG"=>0,"StartB"=>0,"EndR"=>50,"EndG"=>50,"EndB"=>50,"Alpha"=>80));
 
-         /* Add a border to the picture */
+         // Add a border to the picture 
          $myPicture->drawRectangle(0,0,1499,1499,array("R"=>0,"G"=>0,"B"=>0));
 
-         /* Write the picture title */ 
+         // Write the picture title  
          $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Silkscreen.ttf","FontSize"=>6));
          $myPicture->drawText(10,13,"Reporte Por Documentacion (Multifamiliares)",array("R"=>255,"G"=>255,"B"=>255));
 
-         /* Write the chart title */ 
+         // Write the chart title  
          $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Forgotte.ttf","FontSize"=>11));
          $myPicture->drawText(750,55,"Gráfico Estadístico (Documentación de Unidades Unifamiliares)",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
          
-         /* Mi gráfico */
+         // Mi gráfico
          $myPicture->setGraphArea(90,145,1400,1400);
          $myPicture->drawFilledRectangle(90,145,1400,1400,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
          $myPicture->drawScale(array("Pos"=>SCALE_POS_TOPBOTTOM,"DrawSubTicks"=>TRUE));
@@ -1445,12 +1454,13 @@ exit;*/
          $myPicture->drawBarChart();
          $myPicture->setShadow(FALSE);
 
-         /* Write the chart legend */
+         // Write the chart legend 
          $myPicture->drawLegend(950,100,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
          $myPicture->drawLegend(950,1450,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
 
-         /* Render the picture (choose the best way) */
+         // Render the picture (choose the best way) 
          $myPicture->render($graficos_img."reporteDocumentacionUniFamiliarBarras.png");
+         */
  ///////////////////////////////////////////////////////////////////////////////////
 //FIN GRAFICO
 ///////////////////////////////////////////////////////////////////////////////////

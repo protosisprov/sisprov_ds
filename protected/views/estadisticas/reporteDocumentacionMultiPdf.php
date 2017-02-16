@@ -3,20 +3,22 @@ $titulo = 'Reporte Por Documentación (Multifamiliares)';
         $contenido = "<style> 
                             table thead tr {background:#c3d9ff;}
                             table td{border: 0px solid #fff;}
+                            table tfoot tr {background:#c1c1c1;}
                             .gris {background: #eee;}
+                            .tabla-reporte{ padding:5px;}
                       </style>";
         $contenido.="<div style='padding-top:5px;'>&nbsp;</div>
                      <table>
                         <thead class='thead-tabla_reporte'>
                             <tr>
-                                <th class='text-center'>Estado</th>
-                                <th class='text-center'>Activo</th>
-                                <th class='text-center'>Inactivo</th>
-                                <th class='text-center'>Borrado</th>
-                                <th class='text-center'>Validado Banavih <br> (Multifamiliar)</th>
-                                <th class='text-center'>Validado Saren <br> (Multifamiliar)</th>
-                                <th class='text-center'>Devuelto Saren <br> (Multifamiliar)</th>
-                                <th class='text-center'>Total Por Estado</th>
+                                <th class='text-center tabla-reporte'>Estado</th>
+                                <th class='text-center tabla-reporte'>Activo</th>
+                                <th class='text-center tabla-reporte'>Inactivo</th>
+                                <th class='text-center tabla-reporte'>Borrado</th>
+                                <th class='text-center tabla-reporte'>Validado Banavih <br> (Multifamiliar)</th>
+                                <th class='text-center tabla-reporte'>Validado Saren <br> (Multifamiliar)</th>
+                                <th class='text-center tabla-reporte'>Devuelto Saren <br> (Multifamiliar)</th>
+                                <th class='text-center tabla-reporte'>Total Por Estado</th>
                             </tr>
                         </thead>";
                     $count = 0;
@@ -34,9 +36,22 @@ $titulo = 'Reporte Por Documentación (Multifamiliares)';
                         $contenido.="</tr>";
                         $count++;
                     endforeach;
-                        $contenido.="</table>";
+                    $contenido.="<tfoot>
+                        <tr>
+                            <th align='left' class='tabla-reporte'>Total por Estatus</th>
+                            <th align='right' class='tabla-reporte'>$activo_total</th>
+                            <th align='right' class='tabla-reporte'>$inactivo_total</th>
+                            <th align='right' class='tabla-reporte'>$borrado_total</th>
+                            <th align='right' class='tabla-reporte'>$validado_banavih_multi_total</th>
+                            <th align='right' class='tabla-reporte'>$validado_saren_multi_total</th>
+                            <th align='right' class='tabla-reporte'>$devuelto_saren_multi_total</th>
+                            <th align='right' class='tabla-reporte'>$estados_total</th>
+                        </tr>
+                    </tfoot>
+                        </table>";
                         
-        $contenido.="<table><tr><td><img src='images/estadisticas_temp/reporteDocumentacionMultiFamiliarBarras.png'></td></tr></table>";
+        if(file_exists('..'.Yii::app()->request->baseUrl."/images/estadisticas_temp/reporteDocumentacionMultiFamiliarBarras.png"))
+            $contenido.="<table><tr><td><img src='images/estadisticas_temp/reporteDocumentacionMultiFamiliarBarras.png'></td></tr></table>";
         $pdfEstadisticas = new PdfEstadisticas();
         $pdfEstadisticas->subTitulo = 'Generado Al '.date("d/m/Y h:m A");
         $pdfEstadisticas->imprimirPdf($titulo, $contenido);

@@ -11,9 +11,10 @@
             'size' => 'btn-lg',
             'context' => 'info',
             'buttonType' => 'link',
-            'htmlOptions' => array(
+            'url' => Yii::app()->createUrl('estadisticas/index'),
+            /*'htmlOptions' => array(
                 'onClick' => 'goBack()'
-            )
+            )*/
         ));
         ?>
     </div>
