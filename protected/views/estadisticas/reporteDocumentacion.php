@@ -61,7 +61,9 @@
     </table>
 </div>
 
+<?php if(file_exists('..'.Yii::app()->request->baseUrl.'/images/estadisticas_temp/reporteDocumentacionMultiFamiliarBarras.png')): ?>
 <div style="padding-top: 20px"></div>
 <section class="text-center">
     <img src='<?php echo Yii::app()->request->baseUrl; ?>/images/estadisticas_temp/reporteDocumentacionMultiFamiliarBarras.png' >
 </section>
+<?php endif; ?>
