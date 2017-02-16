@@ -140,7 +140,7 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
         ?>
         
         <?php
-        if(isset($urlPdf))
+        /*if(isset($urlPdf))
         {
             $this->widget('booster.widgets.TbButton', array(
                 'label' => 'Generar PDF',
@@ -156,7 +156,7 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
 //                )
             ));
         }
-            
+         */   
         ?>
     </div>    
 </div>

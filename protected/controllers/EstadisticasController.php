@@ -1084,5 +1084,194 @@ exit;*/
                                                   )
                     );
     }
+    
+    public function actionreporteDocumentacionMultiPdf()
+    {
+        $estados = Tblestado::model()->findAll();
+        
+        $sql = "select 
+                    s.estado as estado,
+                    (select descripcion from maestro where id_maestro = d.estatus) as estatus_documento,
+                    (select id_maestro from maestro where id_maestro = d.estatus) as id_estatus_documento,
+                    count(*) as cantidad
+                    from documentacion d join beneficiario b on d.fk_beneficiario = b.id_beneficiario
+                                         join beneficiario_temporal bt on b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+                                         join asignaciones a on a.fk_caso_asignado=bt.unidad_habitacional_id
+                                         join unidad_habitacional uh on uh.id_unidad_habitacional = a.fk_caso_asignado
+                                         join desarrollo des on des.id_desarrollo = uh.desarrollo_id
+                                         join vsw_sector s on s.cod_parroquia = des.parroquia_id
+                                         join maestro m on m.id_maestro = a.fk_estatus
+                    where
+                    a.es_activo = 't'
+                    group by estado, estatus_documento, id_estatus_documento
+                    order by estado";
+        
+        $consulta = Yii::app()->db->createCommand($sql)->queryAll();
+        
+        $reporte = array();
+        $contador = 0;
+        
+        //Se declaran las variables donde se almacenaran los totales de cada estado
+        $activo_total = 0;
+        $inactivo_total = 0;
+        $borrado_total = 0;
+        $validado_banavih_multi_total = 0;
+        $validado_saren_multi_total = 0;
+        $devuelto_saren_multi_total = 0;
+        $estados_total = 0;
+        
+        
+        foreach($estados as $estado)
+        {
+            $activo = 0;
+            $inactivo = 0;
+            $borrado = 0;
+            $validado_banavih_multi = 0;
+            $validado_saren_multi   = 0;
+            $devuelto_saren_multi  = 0;
+            $total_por_estado = 0;
+            foreach($consulta as $row)
+            {
+                if($estado->strdescripcion == $row['estado'])
+                {
+                    $estado_grafico2[] = $row['estado'];
+                    if($row['id_estatus_documento'] == 53)  $activo                 = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 54)  $inactivo               = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 204) $borrado                = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 285) $validado_banavih_multi = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 286) $validado_saren_multi   = $row['cantidad'];
+                    if($row['id_estatus_documento'] == 295)  $devuelto_saren_multi  = $row['cantidad'];
+                    
+                    if($row['id_estatus_documento'] == 53 || $row['id_estatus_documento'] == 54 || $row['id_estatus_documento'] == 204 || $row['id_estatus_documento'] == 285 || $row['id_estatus_documento'] == 286 || $row['id_estatus_documento'] == 295)
+                        $total_por_estado = $total_por_estado+$row['cantidad'];
+                }
+            }
+            
+            $reporte[$contador]['estado']                 = $estado->strdescripcion;
+            $reporte[$contador]['activo']                 = $activo;
+            $reporte[$contador]['inactivo']               = $inactivo;
+            $reporte[$contador]['borrado']                = $borrado;
+            $reporte[$contador]['validado_banavih_multi'] = $validado_banavih_multi;
+            $reporte[$contador]['validado_saren_multi']   = $validado_saren_multi;
+            $reporte[$contador]['devuelto_saren_multi']   = $devuelto_saren_multi;
+            $reporte[$contador]['total_por_estado']       = $total_por_estado;
+            
+            $activo_total                 = $activo_total+$activo;
+            $inactivo_total               = $inactivo_total+$inactivo;
+            $borrado_total                = $borrado_total+$borrado;
+            $validado_banavih_multi_total = $validado_banavih_multi_total+$validado_banavih_multi;
+            $validado_saren_multi_total   = $validado_saren_multi_total+$validado_saren_multi;
+            $devuelto_saren_multi_total   = $devuelto_saren_multi_total+$devuelto_saren_multi;
+            $estados_total                = $estados_total+$activo+$inactivo+$borrado+$validado_banavih_multi+$validado_saren_multi+$devuelto_saren_multi;
+            
+            $contador++;
+        }
+        
+        
+///////////////////////////////////////////////////////////////////////////////////
+//GRAFICO
+///////////////////////////////////////////////////////////////////////////////////
+        Yii::import('application.vendors.pChart.*');
+        require_once 'class/pData.class.php';
+        require_once 'class/pDraw.class.php';
+        require_once 'class/pImage.class.php';
+
+        $fonts = Yii::import('application.vendors.pChart.fonts.*');
+        define("FONT_PATH", $fonts);
+        $graficos_img = "images/estadisticas_temp/";
+        
+        //Datos para el grafico        
+        $estados_grafico = array();
+        $c = 0;
+        foreach($reporte as $reporteGrafico){
+            if($reporteGrafico["activo"]>0 || $reporteGrafico["inactivo"]>0 || $reporteGrafico["borrado"]>0 || $reporteGrafico["validado_banavih_multi"]>0 || $reporteGrafico["validado_saren_multi"]>0 || $reporteGrafico["devuelto_saren_multi"]>0){
+                $estados_grafico[] = $reporteGrafico['estado'];
+                $series[$c] = array(
+                                'activo' => $reporteGrafico["activo"], 
+                                'inactivo' => $reporteGrafico["inactivo"],
+                                'borrado' => $reporteGrafico["borrado"],
+                                'validado_banavih_multi' => $reporteGrafico["validado_banavih_multi"],
+                                'validado_saren_multi' => $reporteGrafico["validado_saren_multi"],
+                                'devuelto_saren_multi' => $reporteGrafico["devuelto_saren_multi"],
+                        );
+                $c++;
+            }
+        }
+
+         /* Create and populate the pData object */
+         $MyData = new pData();  
+         foreach($series as $serie){ $MyData->addPoints($serie['activo'],"Activo"); }
+         foreach($series as $serie){ $MyData->addPoints($serie['inactivo'],"Inactivo"); }
+         foreach($series as $serie){ $MyData->addPoints($serie['borrado'],"Borrado"); }
+         foreach($series as $serie){ $MyData->addPoints($serie['validado_banavih_multi'],"Validado Por BANAVIH"); }
+         foreach($series as $serie){ $MyData->addPoints($serie['validado_saren_multi'],"Validado Por SAREN"); }
+         foreach($series as $serie){ $MyData->addPoints($serie['devuelto_saren_multi'],"Devuelto Por SAREN"); }
+         $MyData->setAxisName(0,"Totales Por Estatus");
+        
+         $MyData->addPoints($estados_grafico,"Estados");
+         $MyData->setSerieDescription("Estados","Estados");
+         $MyData->setAbscissa("Estados");
+
+         /* Create the pChart object */
+         $myPicture = new pImage(1500,1500,$MyData);
+
+         /* Draw the background */
+         $Settings = array("R"=>255, "G"=>255, "B"=>255, "Dash"=>1, "DashR"=>31, "DashG"=>181, "DashB"=>173);
+         $myPicture->drawFilledRectangle(0,0,1500,1500,$Settings);
+
+         /* Overlay with a gradient */
+         $Settings = array("StartR"=>255, "StartG"=>255, "StartB"=>255, "EndR"=>255, "EndG"=>255, "EndB"=>255, "Alpha"=>50);
+         //$Settings = array("StartR"=>219, "StartG"=>231, "StartB"=>139, "EndR"=>1, "EndG"=>138, "EndB"=>68, "Alpha"=>50);
+         $myPicture->drawGradientArea(0,0,1500,1500,DIRECTION_VERTICAL,$Settings);
+         $myPicture->drawGradientArea(0,0,1500,20,DIRECTION_VERTICAL,array("StartR"=>0,"StartG"=>0,"StartB"=>0,"EndR"=>50,"EndG"=>50,"EndB"=>50,"Alpha"=>80));
+
+         /* Add a border to the picture */
+         $myPicture->drawRectangle(0,0,1499,1499,array("R"=>0,"G"=>0,"B"=>0));
+
+         /* Write the picture title */ 
+         $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Silkscreen.ttf","FontSize"=>6));
+         $myPicture->drawText(10,13,"Reporte Por Documentacion (Multifamiliares)",array("R"=>255,"G"=>255,"B"=>255));
+
+         /* Write the chart title */ 
+         $myPicture->setFontProperties(array("FontName"=>FONT_PATH."/Forgotte.ttf","FontSize"=>11));
+         $myPicture->drawText(750,55,"Gráfico Estadístico (Documentación de Unidades Multifamiliares)",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
+         
+         /* Mi gráfico */
+         $myPicture->setGraphArea(90,145,1400,1400);
+         $myPicture->drawFilledRectangle(90,145,1400,1400,array("R"=>255,"G"=>255,"B"=>255,"Surrounding"=>-200,"Alpha"=>10));
+         $myPicture->drawScale(array("Pos"=>SCALE_POS_TOPBOTTOM,"DrawSubTicks"=>TRUE));
+         $myPicture->setShadow(TRUE,array("X"=>1,"Y"=>1,"R"=>0,"G"=>0,"B"=>0,"Alpha"=>10));
+         $myPicture->drawBarChart();
+         $myPicture->setShadow(FALSE);
+
+         /* Write the chart legend */
+         $myPicture->drawLegend(950,100,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
+         $myPicture->drawLegend(950,1450,array("Style"=>LEGEND_NOBORDER,"Mode"=>LEGEND_HORIZONTAL));
+
+         /* Render the picture (choose the best way) */
+         $myPicture->render($graficos_img."reporteDocumentacionMultiFamiliarBarras.png");
+ ///////////////////////////////////////////////////////////////////////////////////
+//FIN GRAFICO
+///////////////////////////////////////////////////////////////////////////////////
+
+        
+        $this->render('reporteDocumentacionMultiPdf',array('reporte'                      => $reporte,
+                                                   'activo_total'                 => $activo_total,
+                                                   'inactivo_total'               => $inactivo_total,
+                                                   'borrado_total'                => $borrado_total,
+                                                   'validado_banavih_multi_total' => $validado_banavih_multi_total,
+                                                   'validado_saren_multi_total'   => $validado_saren_multi_total,
+                                                   //'validado_banavih_uni_total'   => $validado_banavih_uni_total,
+                                                   //'validado_saren_uni_total'     => $validado_saren_uni_total,
+                                                   //'devuelto_saren_uni_total'     => $devuelto_saren_uni_total,
+                                                   'devuelto_saren_multi_total'   => $devuelto_saren_multi_total,
+                                                   'estados_total'                => $estados_total,
+                                                  )
+                    );
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //$titulo = ' Desarrollo Habitacional N° '.$model->id_oficina.' - '.$model->nombre.' '.date('h:i:A') .'';
+        
+    }
 
 }

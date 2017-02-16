@@ -67,3 +67,22 @@
     <img src='<?php echo Yii::app()->request->baseUrl; ?>/images/estadisticas_temp/reporteDocumentacionMultiFamiliarBarras.png' >
 </section>
 <?php endif; ?>
+
+<div style="padding-top: 15px">
+    <?php
+    $this->widget('booster.widgets.TbButton', array(
+                    'label' => 'Generar PDF',
+                    'icon' => 'glyphicon glyphicon-file',
+                    'size' => 'large',
+                    'context' => 'info',
+                    'buttonType' => 'link',
+                    //'url' => Yii::app()->createUrl('estadisticas/beneficiariosUbicacionGeograficaPdf'),
+                    //'url' => Yii::app()->createUrl('estadisticas/beneficiariosUbicacionGeograficaPdf',array('id'=>3)),
+                    'url' => Yii::app()->createUrl('estadisticas/reporteDocumentacionMultiPdf'),
+    //                'htmlOptions' => array(
+    //                    'onClick' => 'goBack()'
+    //                )
+                ));
+    ?>
+</div>
+
