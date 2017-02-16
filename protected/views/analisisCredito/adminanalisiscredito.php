@@ -34,7 +34,7 @@ Yii::app()->clientScript->registerScript('tablaamortiza', "
 
 
 <?php
-$model->estatus_beneficiario_id = 269;
+$model->estatus_beneficiario_id = 271;
 $this->widget('booster.widgets.TbGridView', array(
     'id' => 'tablaamortizacionGrid',
     'dataProvider' => $model->search(),
