@@ -75,7 +75,7 @@ class EstadisticasController extends Controller {
             GROUP BY sec.cod_estado, sec.estado
             ORDER BY sec.estado')->queryAll();
         $total = "0";
-        foreach ($consulta as $id => $estado) { echo $id."<br>";}die;
+
         foreach ($consulta as $id => $estado) {
             $categorias[$id] = $estado["estado"];
             $url = Yii::app()->createAbsoluteUrl("estadisticas/desarrollosUbicacionMunicipios/", array("id" => $estado["cod_estado"]));
