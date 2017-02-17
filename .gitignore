@@ -1,2 +1,3 @@
-protected/modules/cruge/components/CrugeWebUser.php
-assets/
+/protected/config/
+/assets/
+/protected/runtime/
