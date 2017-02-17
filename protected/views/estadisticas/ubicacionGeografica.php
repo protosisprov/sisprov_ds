@@ -62,9 +62,9 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
             'plotBackgroundColor'=>array(
                 'linearGradient'=> array(0,0,500,500),
                 'stops'=>array(
-                    array(0,'rgb(70, 154, 112)'),
+                    //array(0,'rgb(70, 154, 112)'),
                     //array(1,'rgb(213, 245, 229)'),
-                    array(1,'rgb(220, 232, 226)'),
+                   // array(1,'rgb(220, 232, 226)'),
                 )
             )
             ),
