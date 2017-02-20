@@ -8,6 +8,7 @@ class PdfEstadisticas
     private $footer;
     public  $orientacion;
     public  $nombreArchivo;
+    public  $subTitulo;
     
     
     public function __construct() {
@@ -32,7 +33,10 @@ class PdfEstadisticas
         $mpdf->SetCreator('BANAVIH - Banco Nacional de Vivienda y Habitat');
         $mpdf->SetHTMLHeader('<div style="text-align: center; font-weight: bold;">'.$this->cintillo.'</div>','O', true);
         $mpdf->SetFooter($this->footer);
-        $html= '<table align="center"><tr><td><h1>'.$titulo.'</h1></td></tr></table>';
+        if(empty($this->subTitulo))
+            $html= '<table align="center"><tr><td><h1>'.$titulo.'</h1></td></tr></table>';
+        else
+            $html= '<table align="center"><tr><td><h1>'.$titulo.'</h1></td></tr><tr><td align="center"><h4>'.$this->subTitulo.'</h4></td></tr></table>';
         $html.=$contenido;
         $mpdf->WriteHTML($html);
         
