@@ -31,6 +31,14 @@ function Terreno() {
         $('.col2').hide('fade');
     }
 }
+function Tipo_discapacidad() {
+    if ($('.tipo_discapacidad').is(":checked")) {
+        $('#tipo_discapacidad_div').show('fade');
+        
+    } else {
+        $('#tipo_discapacidad_div').hide('fade');
+    }
+}
 function Matricula() {
     
     if ($('.matri').is(":checked")) {
