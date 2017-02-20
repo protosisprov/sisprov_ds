@@ -160,6 +160,7 @@ class DesarrolloController extends Controller {
             $model->fecha_actualizacion = 'now()';
             $model->titularidad_del_terreno = isset($_POST['titularidad_del_terreno']) ? true : false;
             $model->matricula = isset($_POST['matricula']) ? true : false;
+            
 //            $model->matricula = isset($_POST['matricula']) ? true : false;
             $model->fecha_transferencia = ($model->titularidad_del_terreno) ? Generico::formatoFecha($_POST['Desarrollo']['fecha_transferencia']) : '0001-01-01 00:00:00';
             // nuevos campos;

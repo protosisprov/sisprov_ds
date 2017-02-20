@@ -95,6 +95,14 @@ if (!empty($model->parroquia_id)) {
                 }   else {
                     $('#titularidad_del_terreno').bootstrapSwitch('state', false, false);
                 }
+                
+            var matricula ='".$model->matricula."';
+                if(matricula== true){
+                    $('#matricula').bootstrapSwitch('state', true, true);
+                }   else {
+                    $('#matricula').bootstrapSwitch('state', false, false);
+                }    
+                
 
 
             $('#Tblestado_clvcodigo').val(" . $id_estado . ");
