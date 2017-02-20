@@ -144,7 +144,7 @@ class Desarrollo extends CActiveRecord {
             'lindero_oeste' => 'Lindero Oeste',
             'coordenadas' => 'Coordenadas',
             'lote_terreno_mt2' => 'Lote Terreno Mt2',
-            'fuente_financiamiento_id' => 'Fuente Financiamiento',
+            'fuente_financiamiento_id' => 'Fuente Financiamiento del Crédito',
             'ente_ejecutor_id' => 'Ente Ejecutor',
             'titularidad_del_terreno' => 'Titularidad Del Terreno',
             'matricula' => 'Posee Matricula',
