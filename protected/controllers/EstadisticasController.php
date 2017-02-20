@@ -617,22 +617,38 @@ exit;*/
     {
         $estados = Tblestado::model()->findAll();
         
+//        $sql = "select 
+//                    s.estado as estado,
+//                    (select descripcion from maestro where id_maestro = d.estatus) as estatus_documento,
+//                    (select id_maestro from maestro where id_maestro = d.estatus) as id_estatus_documento,
+//                    count(*) as cantidad
+//                    from documentacion d join beneficiario b on d.fk_beneficiario = b.id_beneficiario
+//                                         join beneficiario_temporal bt on b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+//                                         join asignaciones a on a.fk_caso_asignado=bt.unidad_habitacional_id
+//                                         join unidad_habitacional uh on uh.id_unidad_habitacional = a.fk_caso_asignado
+//                                         join desarrollo des on des.id_desarrollo = uh.desarrollo_id
+//                                         join vsw_sector s on s.cod_parroquia = des.parroquia_id
+//                                         join maestro m on m.id_maestro = a.fk_estatus
+//                    where
+//                    a.es_activo = 't'
+//                    group by estado, estatus_documento, id_estatus_documento
+//                    order by estado";
+        
         $sql = "select 
                     s.estado as estado,
                     (select descripcion from maestro where id_maestro = d.estatus) as estatus_documento,
                     (select id_maestro from maestro where id_maestro = d.estatus) as id_estatus_documento,
                     count(*) as cantidad
-                    from documentacion d join beneficiario b on d.fk_beneficiario = b.id_beneficiario
-                                         join beneficiario_temporal bt on b.beneficiario_temporal_id = bt.id_beneficiario_temporal
-                                         join asignaciones a on a.fk_caso_asignado=bt.unidad_habitacional_id
-                                         join unidad_habitacional uh on uh.id_unidad_habitacional = a.fk_caso_asignado
-                                         join desarrollo des on des.id_desarrollo = uh.desarrollo_id
-                                         join vsw_sector s on s.cod_parroquia = des.parroquia_id
-                                         join maestro m on m.id_maestro = a.fk_estatus
-                    where
-                    a.es_activo = 't'
-                    group by estado, estatus_documento, id_estatus_documento
-                    order by estado";
+                    from documentacion d join unidad_habitacional uh on d.fk_beneficiario=uh.id_unidad_habitacional
+                                                  join asignaciones a on uh.id_unidad_habitacional=a.fk_caso_asignado
+                                                  join desarrollo des on des.id_desarrollo = uh.desarrollo_id
+                                                  join vsw_sector s on s.cod_parroquia = des.parroquia_id
+                                                  join maestro m on m.id_maestro = a.fk_estatus
+                where d.es_multi = true
+                    /*and d.es_activo = true */
+                    and a.es_activo = true 
+                    and d.ente_documento = 311
+                group by estado, estatus_documento, id_estatus_documento";
         
         $consulta = Yii::app()->db->createCommand($sql)->queryAll();
         
@@ -907,7 +923,8 @@ exit;*/
                                          join vsw_sector s on s.cod_parroquia = des.parroquia_id
                                          join maestro m on m.id_maestro = a.fk_estatus
                     where
-                    a.es_activo = 't'
+                    d.es_multi = false
+                    and a.es_activo = 't'
                     group by estado, estatus_documento, id_estatus_documento
                     order by estado";
         
@@ -1095,22 +1112,38 @@ exit;*/
     {
         $estados = Tblestado::model()->findAll();
         
+//        $sql = "select 
+//                    s.estado as estado,
+//                    (select descripcion from maestro where id_maestro = d.estatus) as estatus_documento,
+//                    (select id_maestro from maestro where id_maestro = d.estatus) as id_estatus_documento,
+//                    count(*) as cantidad
+//                    from documentacion d join beneficiario b on d.fk_beneficiario = b.id_beneficiario
+//                                         join beneficiario_temporal bt on b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+//                                         join asignaciones a on a.fk_caso_asignado=bt.unidad_habitacional_id
+//                                         join unidad_habitacional uh on uh.id_unidad_habitacional = a.fk_caso_asignado
+//                                         join desarrollo des on des.id_desarrollo = uh.desarrollo_id
+//                                         join vsw_sector s on s.cod_parroquia = des.parroquia_id
+//                                         join maestro m on m.id_maestro = a.fk_estatus
+//                    where
+//                    a.es_activo = 't'
+//                    group by estado, estatus_documento, id_estatus_documento
+//                    order by estado";
+        
         $sql = "select 
                     s.estado as estado,
                     (select descripcion from maestro where id_maestro = d.estatus) as estatus_documento,
                     (select id_maestro from maestro where id_maestro = d.estatus) as id_estatus_documento,
                     count(*) as cantidad
-                    from documentacion d join beneficiario b on d.fk_beneficiario = b.id_beneficiario
-                                         join beneficiario_temporal bt on b.beneficiario_temporal_id = bt.id_beneficiario_temporal
-                                         join asignaciones a on a.fk_caso_asignado=bt.unidad_habitacional_id
-                                         join unidad_habitacional uh on uh.id_unidad_habitacional = a.fk_caso_asignado
-                                         join desarrollo des on des.id_desarrollo = uh.desarrollo_id
-                                         join vsw_sector s on s.cod_parroquia = des.parroquia_id
-                                         join maestro m on m.id_maestro = a.fk_estatus
-                    where
-                    a.es_activo = 't'
-                    group by estado, estatus_documento, id_estatus_documento
-                    order by estado";
+                    from documentacion d join unidad_habitacional uh on d.fk_beneficiario=uh.id_unidad_habitacional
+                                                  join asignaciones a on uh.id_unidad_habitacional=a.fk_caso_asignado
+                                                  join desarrollo des on des.id_desarrollo = uh.desarrollo_id
+                                                  join vsw_sector s on s.cod_parroquia = des.parroquia_id
+                                                  join maestro m on m.id_maestro = a.fk_estatus
+                where d.es_multi = true
+                    /*and d.es_activo = true */
+                    and a.es_activo = true 
+                    and d.ente_documento = 311
+                group by estado, estatus_documento, id_estatus_documento";
         
         $consulta = Yii::app()->db->createCommand($sql)->queryAll();
         
@@ -1296,7 +1329,8 @@ exit;*/
                                          join vsw_sector s on s.cod_parroquia = des.parroquia_id
                                          join maestro m on m.id_maestro = a.fk_estatus
                     where
-                    a.es_activo = 't'
+                    d.es_multi = false
+                    and a.es_activo = 't'
                     group by estado, estatus_documento, id_estatus_documento
                     order by estado";
         
