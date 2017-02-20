@@ -298,8 +298,8 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
         echo $form->dropDownListGroup($model, 'tipo_persona_faov', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
             'widgetOptions' => array(
                 'data' => Maestro::FindMaestrosByPadreSelect(234, 'descripcion ASC'),
-                'htmlOptions' => array('empty' => 'NO APLICA', 'disabled' => true,
-                ),
+               // 'htmlOptions' => array('empty' => 'NO APLICA',
+               // ),
             )
                 )
         );

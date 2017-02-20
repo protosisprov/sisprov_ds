@@ -1429,26 +1429,49 @@ function emailCheck(emailStr, emailid) {
  * tipo de persona faov sea COSOLICITANTE /ACEPTANTE
  */
 function aceptante(id) {
+    
+    $('#GrupoFamiliar_tipo_persona_faov').val('');
     parentesco = $('#GrupoFamiliar_gen_parentesco_id').val();
+    
     if ($('#GrupoFamiliar_ingreso_mensual').val() == '') {
         bootbox.alert('Declare un ingreso mensual.');
         return false;
     }
+    
     if (parentesco == 155 || parentesco == 161) {  //155=CONYUGUE - 161=CONCUBINO(A)
-        if (total_tems = $('#GrupoFamiliar_tipo_persona_faov').find('option').length == 2) {
-            $("#GrupoFamiliar_tipo_persona_faov").append("<option value='236'>ACEPTANTE</option>");
+                
+        $("#GrupoFamiliar_tipo_persona_faov option[value='235']").remove(); 
+        $("#GrupoFamiliar_tipo_persona_faov option[value='236']").remove(); 
+        $("#GrupoFamiliar_tipo_persona_faov option[value='316']").remove(); 
+        
+        $('#GrupoFamiliar_tipo_persona_faov').append("<option value='236'> ACEPTANTE </option>");
+        $('#GrupoFamiliar_tipo_persona_faov').append("<option value='235'> COSOLICITANTE </option>");
+        $('#GrupoFamiliar_tipo_persona_faov').attr('disabled', false); 
+        
+    }else{
+        
+        $("#GrupoFamiliar_tipo_persona_faov option[value='235']").remove(); 
+        $("#GrupoFamiliar_tipo_persona_faov option[value='236']").remove(); 
+        $("#GrupoFamiliar_tipo_persona_faov option[value='316']").remove(); 
+        
 
-        }
-        $('#GrupoFamiliar_tipo_persona_faov').attr('disabled', true);
-        if ($('#GrupoFamiliar_ingreso_mensual').val() == 0) {
-            $('#GrupoFamiliar_tipo_persona_faov').val('236');   // ACEPTANTE
-        } else {
-            $('#GrupoFamiliar_tipo_persona_faov').val('235');   // COSOLICITANTE
-        }
-    } else {
-        $("#GrupoFamiliar_tipo_persona_faov option[value='236']").remove();
-        $('#GrupoFamiliar_tipo_persona_faov').attr('disabled', false);
+        $('#GrupoFamiliar_tipo_persona_faov').append("<option value='236'> ACEPTANTE </option>");
+        $('#GrupoFamiliar_tipo_persona_faov').append("<option value='316'> NO APLICA </option>");
+            
+      
     }
+    
+    if ($('#GrupoFamiliar_ingreso_mensual').val() == 0) {
+        $("#GrupoFamiliar_tipo_persona_faov option[value='235']").remove(); 
+        $("#GrupoFamiliar_tipo_persona_faov option[value='236']").remove(); 
+        $("#GrupoFamiliar_tipo_persona_faov option[value='316']").remove(); 
+        
+        $('#GrupoFamiliar_tipo_persona_faov').append("<option value='236'> ACEPTANTE </option>");
+        $('#GrupoFamiliar_tipo_persona_faov').attr('disabled', true); 
+    }
+    
+    
+//    
 }
 
 
