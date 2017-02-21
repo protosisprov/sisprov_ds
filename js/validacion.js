@@ -37,6 +37,7 @@ function Tipo_discapacidad() {
         
     } else {
         $('#tipo_discapacidad_div').hide('fade');
+        $('#GrupoFamiliar_tipo_discapacidad').val('');
     }
 }
 function Matricula() {
