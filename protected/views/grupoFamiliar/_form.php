@@ -13,7 +13,7 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
     }),
     
      $('#GuardarFamiliar').click(function(){
-     
+
         var idPersona = $('#GrupoFamiliar_persona_id').val();
         var cedula = $('#GrupoFamiliar_cedula').val();
         var nacionalidad = $('#GrupoFamiliar_nacionalidad').val();
@@ -145,6 +145,14 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
                 bootbox.alert('Seleccione Tipo de Discapacidad');
                 return false;
             }
+            else
+            {
+                tipoSujeto = '231';
+            }
+        }
+        else
+        {
+            tipoSujeto = '';
         }
 
         if ($('#GrupoFamiliar_cotiza_faov').is(':checked')) {var faov = '1';}else{var faov = '0';}
