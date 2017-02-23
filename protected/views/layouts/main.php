@@ -417,7 +417,7 @@
                                             <?php if (Yii::app()->user->checkAccess('action_analisicredito_adminanalisiscredito')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/analisisCredito/adminanalisiscredito'); ?>">
-                                                        <i class="glyphicon glyphicon-euro"></i>
+                                                        <i class="glyphicon glyphicon-list-alt"></i>
                                                         <span>Tabla de Amortización</span>
                                                     </a>
                                                 </li>    

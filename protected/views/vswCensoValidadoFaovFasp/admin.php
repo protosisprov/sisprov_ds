@@ -83,7 +83,7 @@ $this->widget('booster.widgets.TbGridView', array(
                 ),
                 'acreditacion' => array(
                     'label' => 'Análisis de Credito',
-                    'icon' => 'glyphicon glyphicon-euro',
+                    'icon' => 'glyphicon glyphicon-list-alt',
                     'size' => 'medium',
                     'visible' => '((Yii::app()->user->checkAccess("action_analisiscredito_create")))',
                     'url' => 'Yii::app()->createUrl("/analisisCredito/create", array("id"=>$data->id_beneficiario))',
