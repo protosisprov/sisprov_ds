@@ -44,6 +44,19 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?>
     </div>
+
+    <div class="col-md-4" >
+        <?php
+        echo $form->dropDownListGroup($model, 'id_fuente_financiamiento_obra', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
+            'widgetOptions' => array(
+                'data' => CHtml::listData(FuenteFinanciamientoObra::model()->findAll(), 'id_fuente_financiamiento_obra', 'nombre_fuente_financiamiento_obra'),
+                'htmlOptions' => array('empty' => 'SELECCIONE',
+                ),
+            )
+                )
+        );
+        ?>
+    </div>
     <div class="col-md-4">
         <?php
         echo $form->dropDownListGroup($model, 'programa_id', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
@@ -56,6 +69,9 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?>
     </div>
+    
+</div>
+<div class="row">
     <div class="col-md-4" >
         <?php
         echo $form->dropDownListGroup($model, 'ente_ejecutor_id', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
@@ -68,8 +84,7 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?>
     </div>
-</div>
-<div class="row">
+
     <div class="col-md-4">
 
         <?php
@@ -112,6 +127,8 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?>
     </div>
+</div>
+<div class="row">
     <div class="col-md-4">
 
         <?php
@@ -128,17 +145,17 @@ Yii::app()->clientScript->registerScript('desarollo', "
         ?>
     </div>
 
-</div>
 
-<div class="row">
     <div class="col-md-4">
         <?php echo $form->textFieldGroup($model, 'urban_barrio', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200)))); ?>
     </div>
     <div class="col-md-4">
         <?php echo $form->textFieldGroup($model, 'av_call_esq_carr', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200)))); ?>
     </div>
+</div>
+<div class="row">
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <?php
         echo $form->textAreaGroup(
                 $model, 'zona', array(
@@ -156,9 +173,7 @@ Yii::app()->clientScript->registerScript('desarollo', "
     </div>
 
 
-</div>
 
-<div class="row">
     <div class="col-md-6">
         <?php
         echo $form->textAreaGroup(
@@ -174,6 +189,8 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?>
     </div>
+</div>
+<div class="row">
     <div class="col-md-6">
 
         <?php
@@ -191,8 +208,8 @@ Yii::app()->clientScript->registerScript('desarollo', "
         ?>
         <?php //echo $form->textFieldGroup($model, 'lindero_sur', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200))));    ?>
     </div>
-</div>
-<div class="row">
+
+
     <div class="col-md-6">
         <?php //echo $form->textFieldGroup($model, 'lindero_este', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200))));  ?>
         <?php
@@ -209,7 +226,8 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?>
     </div>
-
+</div>
+<div class="row">
     <div class="col-md-6">
 
         <?php //echo $form->textFieldGroup($model, 'lindero_oeste', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200))));  ?>
@@ -228,13 +246,12 @@ Yii::app()->clientScript->registerScript('desarollo', "
         ?>
     </div>
 
-</div>
 
-
-<div class="row">
-    <div class="col-md-3">
+    <div class="col-md-6">
         <?php echo $form->textFieldGroup($model, 'coordenadas', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 7)))); ?>
     </div>
+</div>
+<div class="row">
     <div class="col-md-3">
         <?php echo $form->textFieldGroup($model, 'lote_terreno_mt2', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 8)))); ?>
     </div>
@@ -267,10 +284,8 @@ Yii::app()->clientScript->registerScript('desarollo', "
         );
         ?> 
     </div>
-</div>
 
-<div class="row">
-    <div class='col-md-4'>
+    <div class='col-md-3'>
         <?php
         echo $form->dropDownListGroup($model, 'propiedad_terreno_id', array('wrapperHtmlOptions' => array('class' => 'col-sm-12'),
             'widgetOptions' => array(

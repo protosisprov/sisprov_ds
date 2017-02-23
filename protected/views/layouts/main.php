@@ -198,6 +198,11 @@
                                                         <a href="<?php echo $this->createUrl('/fuenteFinanciamiento/create'); ?>">Cargar Fuentes de Financiamiento</a>
                                                     </li>
                                                 <?php } ?>
+                                                <?php if (Yii::app()->user->checkAccess('action_fuentefinanciamiento_obra_create')) { ?>
+                                                    <li>
+                                                        <a href="<?php echo $this->createUrl('/fuenteFinanciamientoObra/create'); ?>">Cargar Fuentes de Financiamiento de la Obra</a>
+                                                    </li>
+                                                <?php } ?>
                                                 <?php if (Yii::app()->user->checkAccess('action_programa_create')) { ?>
                                                     <li>
                                                         <a href="<?php echo $this->createUrl('/programa/create'); ?>">Cargar Nuevo Programa</a>

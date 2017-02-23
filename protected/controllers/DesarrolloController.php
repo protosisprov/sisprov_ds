@@ -56,6 +56,7 @@ class DesarrolloController extends Controller {
         $parroquia = new Tblparroquia;
         $enteEjecutor = new EnteEjecutor;
         $fuenteFinacimiento = new FuenteFinanciamiento;
+        $fuenteFinacimientoObra = new FuenteFinanciamientoObra;
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
@@ -83,6 +84,7 @@ class DesarrolloController extends Controller {
                 $model->coordenadas = $_POST['Desarrollo']['coordenadas'];
                 $model->ente_ejecutor_id = $_POST['Desarrollo']['ente_ejecutor_id'];
                 $model->fuente_financiamiento_id = $_POST['Desarrollo']['fuente_financiamiento_id'];
+                $model->id_fuente_financiamiento_obra = $_POST['Desarrollo']['id_fuente_financiamiento_obra'];
                 $model->fuente_datos_entrada_id = 5;
                 $model->titularidad_del_terreno = isset($_POST['titularidad_del_terreno']) ? true : false;
                 $model->fecha_transferencia = ($_POST['Desarrollo']['fecha_transferencia'] !='') ? Generico::formatoFecha($_POST['Desarrollo']['fecha_transferencia']) : '0001-01-01 00:00:00';
@@ -105,7 +107,7 @@ class DesarrolloController extends Controller {
                 if ($model->save()) {
                     if (isset($_POST['CARGAR_OTRO'])) {
                         $this->render('create', array(
-                            'model' => new Desarrollo, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento
+                            'model' => new Desarrollo, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento, 'fuenteFinacimientoObra' => $fuenteFinacimientoObra
                         ));
                         Yii::app()->end();
                     } else {
@@ -117,14 +119,14 @@ class DesarrolloController extends Controller {
                 $this->render('create', array(
                     'model' => $model, 'estado' => $estado,
                     'municipio' => $municipio, 'parroquia' => $parroquia,
-                    'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento,
+                    'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento, 'fuenteFinacimientoObra' => $fuenteFinacimientoObra,
                     'sms' => 1
                 ));
                 Yii::app()->end();
             }
         }
         $this->render('create', array(
-            'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento
+            'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento,  'fuenteFinacimientoObra' => $fuenteFinacimientoObra
         ));
     }
 
@@ -142,9 +144,10 @@ class DesarrolloController extends Controller {
         $parroquia = new Tblparroquia;
         $enteEjecutor = new EnteEjecutor;
         $fuenteFinacimiento = new FuenteFinanciamiento;
+        $fuenteFinacimientoObra = new FuenteFinanciamientoObra;
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
-
+        
         if (isset($_POST['Desarrollo'])) {
             $model->attributes = $_POST['Desarrollo'];
             $model->nombre = trim(strtoupper($_POST['Desarrollo']['nombre']));
@@ -174,12 +177,14 @@ class DesarrolloController extends Controller {
             //$model->tomo = $_POST['Desarrollo']['tomo'];
             //$model->folio_real = $_POST['Desarrollo']['folio_real'];
             //$model->num_matricula = $_POST['Desarrollo']['num_matricula'];
+            
+            
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_desarrollo));
         }
 
         $this->render('update', array(
-            'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento
+            'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento, 'fuenteFinacimientoObra' => $fuenteFinacimientoObra
         ));
     }
 

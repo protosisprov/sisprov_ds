@@ -77,6 +77,7 @@
                 <p>
                     <b> Programa:</b> <?php echo $model->programa->nombre_programa ?><br/>
                     <b> Fuente de Finaciamiento:</b> <?php echo $model->fuenteFinanciamiento->nombre_fuente_financiamiento ?><br/>
+                    <b> Fuente de Finaciamiento de la Obra:</b> <?php echo $model->fuenteFinanciamientoObra->nombre_fuente_financiamiento_obra ?><br/>
                     <b> Ente Ejecutor:</b> <?php echo $model->enteEjecutor->nombre_ente_ejecutor ?><br/>
 
                 </p>

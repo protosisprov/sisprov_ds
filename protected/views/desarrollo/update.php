@@ -147,13 +147,13 @@ if (isset($sms) && !empty($sms)) {
 
 <div class="row">
     <div class="col-md-12">
-        <?php
+        <?php 
         $this->widget(
                 'booster.widgets.TbPanel', array(
             'title' => 'Caracteristica del Desarrollo Habitacional',
             'headerHtmlOptions' => array('style' => 'background-color: #1fb5ad !important;color: #FFFFFF !important;'),
             'headerIcon' => 'globe',
-            'content' => $this->renderPartial('_formUpdate', array('form' => $form, 'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento), TRUE),
+            'content' => $this->renderPartial('_formUpdate', array('form' => $form, 'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento, 'fuenteFinacimientoObra' => $fuenteFinacimientoObra), TRUE),
                 )
         );
         ?>
