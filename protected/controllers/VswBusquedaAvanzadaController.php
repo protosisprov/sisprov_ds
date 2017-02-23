@@ -111,7 +111,7 @@ class VswBusquedaAvanzadaController extends Controller {
         $fila = 5;
 
         //$objPHPExcel->getActiveSheet()->setSharedStyle($estilo_etiquetas, "A$fila:CJ$fila");
-        $objPHPExcel->getActiveSheet()->setSharedStyle($estilo_etiquetas, "A$fila:BJ$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($estilo_etiquetas, "A$fila:BK$fila");
 
         foreach ($datos as $key => $registro) {
 
