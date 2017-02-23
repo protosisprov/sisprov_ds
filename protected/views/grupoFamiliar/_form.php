@@ -13,6 +13,7 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
     }),
     
      $('#GuardarFamiliar').click(function(){
+
         var idPersona = $('#GrupoFamiliar_persona_id').val();
         var cedula = $('#GrupoFamiliar_cedula').val();
         var nacionalidad = $('#GrupoFamiliar_nacionalidad').val();
@@ -22,13 +23,15 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
         var segundoApellido = $('#GrupoFamiliar_segundo_apellido').val();
         var parentesco = $('#GrupoFamiliar_gen_parentesco_id').val();
         var tipoSujeto = $('#GrupoFamiliar_tipo_sujeto_atencion').val();
+        var tipoDiscapacidad = $('#GrupoFamiliar_tipo_discapacidad').val();
         var ingresoM = $('#GrupoFamiliar_ingreso_mensual').val();
         var ingresoMFaov = $('#GrupoFamiliar_ingreso_mensual_faov').val();
         var fechaNac = $('#GrupoFamiliar_fecha_nacimiento').val();
         var IdUnidadF = '" . $_GET['id'] . "';
         var tipoPersonaFaov = $('#GrupoFamiliar_tipo_persona_faov').val();
         var fechaNacMenor = $('#GrupoFamiliar_fecha_nacimiento_menor').val();
- 
+        
+
         if(cedula == ''){
             bootbox.alert('Ingrese un número de cédula!');
             $('#GrupoFamiliar_gen_parentesco_id').val('');
@@ -65,6 +68,8 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
 //            bootbox.alert('Ingrese el Segundo Apellido.');
 //            return false;
 //        }
+
+       
 
         contadorPadre = parseInt(0);
         contadorConyuge = parseInt(0);
@@ -132,15 +137,33 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
                 return false;
             }
         }
+        
+        if ($('#GrupoFamiliar_tipo_sujeto_atencion').is(':checked')) 
+        {
+            if(tipoDiscapacidad == '')
+            {
+                bootbox.alert('Seleccione Tipo de Discapacidad');
+                return false;
+            }
+            else
+            {
+                tipoSujeto = '231';
+            }
+        }
+        else
+        {
+            tipoSujeto = '';
+        }
 
         if ($('#GrupoFamiliar_cotiza_faov').is(':checked')) {var faov = '1';}else{var faov = '0';}
         $('.loader').fadeIn('slow');
+        
 
         $.ajax({
             url: '" . Yii::app()->createAbsoluteUrl('GrupoFamiliar/InsertFamiliar') . "',
             async: true,
             type: 'POST',
-            data: 'cedula=' +cedula + '&nacionalida=' +nacionalidad + '&primerNombre=' + primerNombre +'&segundoNombre=' +segundoNombre + '&primerApellido=' +primerApellido +'&segundoApellido=' +segundoApellido +'&idPersona=' +idPersona +'&parentesco=' +parentesco +'&tipoSujeto=' +tipoSujeto +'&ingresoM='+ ingresoM+ '&faov='+faov+'&fechaNac='+fechaNac+'&IdUnidadF='+IdUnidadF+'&ingresoMFaov='+ingresoMFaov+ '&tipoPersonaFaov='+tipoPersonaFaov+ '&fechaNacMenor='+fechaNacMenor,
+            data: 'cedula=' +cedula + '&nacionalida=' +nacionalidad + '&primerNombre=' + primerNombre +'&segundoNombre=' +segundoNombre + '&primerApellido=' +primerApellido +'&segundoApellido=' +segundoApellido +'&idPersona=' +idPersona +'&parentesco=' +parentesco +'&tipoSujeto=' +tipoSujeto +'&tipoDiscapacidad='+tipoDiscapacidad +'&ingresoM='+ ingresoM+ '&faov='+faov+'&fechaNac='+fechaNac+'&IdUnidadF='+IdUnidadF+'&ingresoMFaov='+ingresoMFaov+ '&tipoPersonaFaov='+tipoPersonaFaov+ '&fechaNacMenor='+fechaNacMenor,
             dataType: 'json',
             success: function(data,faov) {
                 if(data == 3){
@@ -154,6 +177,7 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
                     $('#GrupoFamiliar_ingreso_mensual_faov').val('');
                     $('#GrupoFamiliar_gen_parentesco_id').val('');
                     $('#GrupoFamiliar_tipo_sujeto_atencion').val('');
+                    $('#GrupoFamiliar_tipo_discapacidad').val('');
                     $('#GrupoFamiliar_ingreso_mensual').val('');
                     $('#GrupoFamiliar_tipo_persona_faov').val('');
                     $('.loader').fadeOut('slow');
@@ -169,6 +193,7 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
                     $('#GrupoFamiliar_ingreso_mensual_faov').val('');
                     $('#GrupoFamiliar_gen_parentesco_id').val('');
                     $('#GrupoFamiliar_tipo_sujeto_atencion').val('');
+                    $('#GrupoFamiliar_tipo_discapacidad').val('');
                     $('#GrupoFamiliar_ingreso_mensual').val('');
                     $('#GrupoFamiliar_tipo_persona_faov').val('');
                     $('.loader').fadeOut('slow');
@@ -185,6 +210,7 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
                     $('#GrupoFamiliar_ingreso_mensual_faov').val('');
                     $('#GrupoFamiliar_gen_parentesco_id').val('');
                     $('#GrupoFamiliar_tipo_sujeto_atencion').val('');
+                    $('#GrupoFamiliar_tipo_discapacidad').val('');
                     $('#GrupoFamiliar_ingreso_mensual').val('');
                     $('#GrupoFamiliar_tipo_persona_faov').val('');
                     $('.loader').fadeOut('slow');
@@ -298,8 +324,8 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
         echo $form->dropDownListGroup($model, 'tipo_persona_faov', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
             'widgetOptions' => array(
                 'data' => Maestro::FindMaestrosByPadreSelect(234, 'descripcion ASC'),
-                'htmlOptions' => array('empty' => 'NO APLICA', 'disabled' => true,
-                ),
+               // 'htmlOptions' => array('empty' => 'NO APLICA',
+               // ),
             )
                 )
         );
@@ -318,9 +344,10 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
         ?>
 
     </div>
-    <div class="col-md-3">
+    <div class='col-md-3'></div>
+    <!--<div class="col-md-3">
 
-        <?php
+        <?php /*
         echo $form->dropDownListGroup($model, 'tipo_sujeto_atencion', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
             'widgetOptions' => array(
                 'data' => array('231' => 'SI', '' => 'NO'),
@@ -328,9 +355,46 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
                 ),
             )
                 )
+        ); */
+        ?>
+    </div>-->
+    
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <?php echo CHtml::activeLabel($model, 'tipo_sujeto_atencion'); ?><br>
+        <?php
+        $this->widget('booster.widgets.TbSwitch', array(
+            'name' => 'GrupoFamiliar_tipo_sujeto_atencion',
+            'options' => array(
+                'size' => 'large',
+                'onText' => 'SI',
+                'offText' => 'NO',
+            ),
+            'htmlOptions' => array(
+                'class' => 'tipo_discapacidad',
+                'onChange' => 'Tipo_discapacidad()',
+            )
+                )
+        );
+        ?> 
+    </div>
+    <div class="col-md-3" style="display: none" id="tipo_discapacidad_div">
+
+        <?php
+        echo $form->dropDownListGroup($model, 'tipo_discapacidad', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
+            'widgetOptions' => array(
+                'data' => Maestro::FindMaestrosByPadreSelect(231, 'descripcion ASC'),
+                'htmlOptions' => array('empty' => 'SELECCIONE',
+                ),
+            )
+                )
         );
         ?>
     </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
 </div>
 <div style="margin-bottom: 1%"></div>
 <div class="row">

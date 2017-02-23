@@ -10,6 +10,7 @@
  * @property integer $persona_id
  * @property integer $gen_parentesco_id
  * @property integer $tipo_sujeto_atencion
+ * @property integer $tipo_discapacidad
  * @property string $ingreso_mensual
  * @property integer $fuente_datos_entrada_id
  * @property boolean $cotiza_faov
@@ -41,6 +42,7 @@ class GrupoFamiliar extends CActiveRecord {
     public $segundo_apellido;
     public $fecha_nacimiento;
     public $fecha_nacimiento_menor;
+    public $tipo_discapacidad;
 
     /**
      * @return string the associated database table name
@@ -58,12 +60,12 @@ class GrupoFamiliar extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('unidad_familiar_id, persona_id, gen_parentesco_id, ingreso_mensual, fuente_datos_entrada_id, fecha_creacion, fecha_actualizacion, usuario_id_creacion, estatus', 'required'),
-            array('unidad_familiar_id, persona_id, gen_parentesco_id, tipo_sujeto_atencion, fuente_datos_entrada_id, usuario_id_creacion, usuario_id_actualizacion, estatus, estado_civil_id,ingreso_mensual_nuevo', 'numerical', 'integerOnly' => true),
+            array('unidad_familiar_id, persona_id, gen_parentesco_id, tipo_sujeto_atencion, tipo_discapacidad, fuente_datos_entrada_id, usuario_id_creacion, usuario_id_actualizacion, estatus, estado_civil_id,ingreso_mensual_nuevo', 'numerical', 'integerOnly' => true),
             array('ingreso_mensual', 'length', 'max' => 16),
             array('cotiza_faov, ingreso_mensual_faov,ingreso_mensual_nuevo', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('ingreso_mensual_faov, id_grupo_familiar, unidad_familiar_id, persona_id, gen_parentesco_id, tipo_sujeto_atencion, ingreso_mensual, fuente_datos_entrada_id, cotiza_faov, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus,  nacionalidad, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_persona_faov, estado_civil_id,ingreso_mensual_nuevo', 'safe', 'on' => 'search'),
+            array('ingreso_mensual_faov, id_grupo_familiar, unidad_familiar_id, persona_id, gen_parentesco_id, tipo_sujeto_atencion, tipo_discapacidad, ingreso_mensual, fuente_datos_entrada_id, cotiza_faov, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus,  nacionalidad, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_persona_faov, estado_civil_id,ingreso_mensual_nuevo', 'safe', 'on' => 'search'),
         );
     }
 
@@ -95,6 +97,7 @@ class GrupoFamiliar extends CActiveRecord {
             'persona_id' => 'Persona',
             'gen_parentesco_id' => 'Parentesco',
             'tipo_sujeto_atencion' => '¿Posee Discapacidad?',
+            'tipo_discapacidad' => 'Tipo de Discapacidad',
             'ingreso_mensual' => 'Ingreso Mensual',
             'fuente_datos_entrada_id' => 'Fuente Datos Entrada',
             'cotiza_faov' => 'Cotiza Faov',
@@ -133,6 +136,7 @@ class GrupoFamiliar extends CActiveRecord {
         $criteria->compare('persona_id', $this->persona_id);
         $criteria->compare('gen_parentesco_id', $this->gen_parentesco_id);
         $criteria->compare('tipo_sujeto_atencion', $this->tipo_sujeto_atencion);
+        $criteria->compare('tipo_discapacidad', $this->tipo_discapacidad);
         $criteria->compare('ingreso_mensual', $this->ingreso_mensual, true);
         $criteria->compare('fuente_datos_entrada_id', $this->fuente_datos_entrada_id);
         $criteria->compare('cotiza_faov', $this->cotiza_faov);

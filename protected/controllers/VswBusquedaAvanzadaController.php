@@ -82,7 +82,7 @@ class VswBusquedaAvanzadaController extends Controller {
     }
 
     public function actionArmaHojaCalculo($datos, $model) {
-
+        
         Yii::import('ext.phpexcel.XPHPExcel');
         $objPHPExcel = XPHPExcel::createPHPExcel();
 
@@ -110,14 +110,45 @@ class VswBusquedaAvanzadaController extends Controller {
 
         $fila = 5;
 
-        $objPHPExcel->getActiveSheet()->setSharedStyle($estilo_etiquetas, "A$fila:CJ$fila");
+        //$objPHPExcel->getActiveSheet()->setSharedStyle($estilo_etiquetas, "A$fila:CJ$fila");
+        $objPHPExcel->getActiveSheet()->setSharedStyle($estilo_etiquetas, "A$fila:BK$fila");
 
         foreach ($datos as $key => $registro) {
 
             $fila++;
             $letra = "A";
+            
+            //Extraer los campos que no se requieren en el reporte
+            $arreglo_nuevo = $registro->attributes;
+            unset($arreglo_nuevo['id_beneficiario_temporal']);
+            unset($arreglo_nuevo['id_nacionalidad']);
+            unset($arreglo_nuevo['id_estatus_adjudicado']);
+            unset($arreglo_nuevo['id_desarrollo']);
+            unset($arreglo_nuevo['cod_estado']);
+            unset($arreglo_nuevo['cod_municipio']);
+            unset($arreglo_nuevo['cod_parroquia']);
+            unset($arreglo_nuevo['id_parcela']);
+            unset($arreglo_nuevo['id_unidad_habitacional']);
+            unset($arreglo_nuevo['id_vivienda']);
+            unset($arreglo_nuevo['tipo_vivienda_id']);
+            unset($arreglo_nuevo['id_fuente_financiamiento']);
+            unset($arreglo_nuevo['id_programa']);
+            unset($arreglo_nuevo['id_ente_ejecutor']);
+            unset($arreglo_nuevo['id_beneficiario']);
+            unset($arreglo_nuevo['condicion_trabajo_id']);
+            unset($arreglo_nuevo['condicion_laboral_id']);
+            unset($arreglo_nuevo['fuente_ingreso_id']);
+            unset($arreglo_nuevo['relacion_trabajo_id']);
+            unset($arreglo_nuevo['sector_trabajo_id']);
+            unset($arreglo_nuevo['gen_cargo_id']);
+            unset($arreglo_nuevo['cod_estado_anterior']);
+            unset($arreglo_nuevo['cod_municipio_anterior']);
+            unset($arreglo_nuevo['cod_parroquia_anterior']);
+            unset($arreglo_nuevo['condicion_unidad_familiar_id']);
+            unset($arreglo_nuevo['id_tipo_inmueble']);
 
-            foreach (array_keys($registro->attributes) as $etiqueta) {
+            //foreach (array_keys($registro->attributes) as $etiqueta) {
+            foreach (array_keys($arreglo_nuevo) as $etiqueta) {
                 //Coloco las etiquetas
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue($letra . "5", $model->attributeLabels()[$etiqueta]);
                 //Coloco los valores

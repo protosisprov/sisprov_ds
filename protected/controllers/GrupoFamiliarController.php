@@ -140,7 +140,6 @@ class GrupoFamiliarController extends Controller {
 
     public function actionInsertFamiliar() {
 
-
         $Familiar = new GrupoFamiliar;
         if ($_POST['idPersona'] == '' && $_POST['cedula'] != '0') {
             $idPersona = ConsultaOracle::insertPersona(array(
@@ -209,6 +208,7 @@ class GrupoFamiliarController extends Controller {
                 $Familiar->usuario_id_creacion = Yii::app()->user->id;
                 $Familiar->ingreso_mensual_faov = ($_POST['ingresoMFaov']) ? ($_POST['ingresoMFaov']) : '0.00';
                 $Familiar->tipo_persona_faov = $_POST['tipoPersonaFaov'];
+                $Familiar->tipo_discapacidad = $_POST['tipoDiscapacidad'];
                 if ($Familiar->save()) {
 
                     //Actualizo el ingreso integral familiar en beneficiario
