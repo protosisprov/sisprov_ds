@@ -31,7 +31,7 @@ function Terreno() {
         $('.col2').hide('fade');
     }
 }
-function Matricula() {
+function Matricula() { 
     
     if ($('.matri').is(":checked")) {
         $('.col1').show('fade');
@@ -42,7 +42,7 @@ function Matricula() {
         $('.col2').show('fade');
         
     }
-}
+} 
 /*
  *
  * FUNCION QUE BUSCA EN SAIME Y EN PERSONA POR NUMERO DE CEDULA Y NACIONALIDAD
