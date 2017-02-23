@@ -168,6 +168,22 @@ class DocumentacionController extends Controller {
 //            'model' => $model,
         ));
     }
+    
+        /**
+     * Manages all models.
+     */
+    public function actionAdminactivacion() {
+        $model = VswDocumentoEntregado::model()->findAll();
+        //echo '<pre>';$model;die;
+        $model = new VswDocumentoEntregado('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['VswDocumentoEntregado']))
+            $model->attributes = $_GET['VswDocumentoEntregado'];
+        //echo '<pre>';var_dump($model);die;
+        $this->render('adminactivacion', array(
+            'model' => $model,
+        ));
+    }
 
     /**
      * Returns the data model based on the primary key given in the GET variable.

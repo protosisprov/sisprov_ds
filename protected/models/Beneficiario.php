@@ -35,6 +35,7 @@
  * @property integer $condicion_laboral
  * @property integer $beneficiario_temporal_id
  * @property string $observacion
+ * @property integer $documento_beneficiario
  *
  * The followings are the available model relations:
  * @property BeneficiarioTemporal $beneficiarioTemporal
@@ -95,7 +96,7 @@ class Beneficiario extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('persona_id, fecha_ultimo_censo, fecha_creacion, fecha_actualizacion, usuario_id_creacion,cedula', 'required'),
-            array('persona_id, condicion_trabajo_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, gen_cargo_id, parroquia_id, usuario_id_creacion, usuario_id_actualizacion, estatus_beneficiario_id, condicion_laboral, beneficiario_temporal_id,ingreso_mensual_nuevo', 'numerical', 'integerOnly' => true),
+            array('persona_id, condicion_trabajo_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, gen_cargo_id, parroquia_id, usuario_id_creacion, usuario_id_actualizacion, estatus_beneficiario_id, condicion_laboral, beneficiario_temporal_id,ingreso_mensual_nuevo, documento_beneficiario', 'numerical', 'integerOnly' => true),
             array('rif', 'length', 'max' => 12),
             array('nombre_empresa, direccion_empresa, direccion_anterior, urban_barrio, av_call_esq_carr, zona', 'length', 'max' => 200),
             array('observacion', 'length', 'max' => 800),
@@ -106,7 +107,7 @@ class Beneficiario extends CActiveRecord {
             array('ingreso_mensual,estatus, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, protocolizado, ingreso_mensual_nuevo', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id_beneficiario,estatus, persona_id, rif, condicion_trabajo_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, nombre_empresa, direccion_empresa, telefono_trabajo, gen_cargo_id, ingreso_mensual, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, direccion_anterior, parroquia_id, urban_barrio, av_call_esq_carr, zona, fecha_ultimo_censo, protocolizado, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus_beneficiario_id, codigo_trab, condicion_laboral, beneficiario_temporal_id, observacion, ingreso_mensual_nuevo', 'safe', 'on' => 'search'),
+            array('id_beneficiario,estatus, persona_id, rif, condicion_trabajo_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, nombre_empresa, direccion_empresa, telefono_trabajo, gen_cargo_id, ingreso_mensual, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, direccion_anterior, parroquia_id, urban_barrio, av_call_esq_carr, zona, fecha_ultimo_censo, protocolizado, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus_beneficiario_id, codigo_trab, condicion_laboral, beneficiario_temporal_id, observacion, ingreso_mensual_nuevo, documento_beneficiario', 'safe', 'on' => 'search'),
         );
     }
 
@@ -185,6 +186,7 @@ class Beneficiario extends CActiveRecord {
             'sexo' => 'Sexo  <span  class="required">*<span>',
             'ingreso_mensual_nuevo' => 'Ingreso Mensual Nuevo',
             'estatus' => 'Estatus de <br/>Asignación:',
+            'documento_beneficiario' => 'Documento Beneficiario',
         );
     }
 
@@ -237,6 +239,7 @@ class Beneficiario extends CActiveRecord {
         $criteria->compare('beneficiario_temporal_id', $this->beneficiario_temporal_id);
         $criteria->compare('observacion', $this->observacion, true);
         $criteria->compare('estatus', $this->estatus, true);
+        $criteria->compare('documento_beneficiario',$this->documento_beneficiario);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

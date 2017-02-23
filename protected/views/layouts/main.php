@@ -453,6 +453,16 @@
                                                     </a>
                                                 </li><?php } ?>
                                         </ul>
+                                        <ul class="sub">
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <?php if (Yii::app()->user->checkAccess('action_documentacion_adminbeneficiario')) { ?>
+                                                <li>
+                                                    <a href="<?php echo $this->createUrl('/documentacion/adminactivacion'); ?>">
+                                                        <i class="glyphicon glyphicon-asterisk"></i>
+                                                        <span>Activación del Crédito</span>
+                                                    </a>
+                                                </li><?php } ?>
+                                        </ul>
                                     </li>
                                 <?php } ?>
                                 <!-- Fin de Documentacion-->

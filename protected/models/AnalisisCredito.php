@@ -138,7 +138,7 @@ class AnalisisCredito extends CActiveRecord {
             'monto_cuota_f_total' => 'Monto Cuota F Total',
             'monto_prima_inicial_fg' => 'Monto Prima Inicial Fg',
             'alicuota_fondo_garantia' => 'Alicuota Fondo Garantia',
-            'fecha_protocolizacion' => 'Fecha Protocolizacion',
+            'fecha_protocolizacion' => 'Fecha de Análisis',
             'tasa_interes_id' => 'Tasa Interes',
             'tasa_mora_id' => 'Tasa Mora',
             'tasa_fongar_id' => 'Tasa Fongar',
