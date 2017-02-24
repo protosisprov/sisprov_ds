@@ -826,7 +826,7 @@ if ($desarrollo->fuente_financiamiento_id == 2) {
             'fecha_actualizacion' => 'now()'
         ));
 
-        $this->render('tablaAmortizacionpdf', array(
+        $this->render('tablaAmortizacionCompletapdf', array(
             'model' => $credito, 'totalInteres' => $totalInteres, 'totalCuotaFongar' => $totalCuotaFongar, 'analicredito' => $analicredito,
             'totalMontoCuotaFinan' => $totalMontoCuotaFinan, 'totalCancelar' => $totalCancelar, 'tablaAmortiz' => $tablaAmortiz, 'htmlprincipal' => $htmlprincipal
         ));

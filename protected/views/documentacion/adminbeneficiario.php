@@ -152,7 +152,7 @@ if(Yii::app()->user->checkAccess("analista_documentacion")){
         'criteria' => array(
             'order' => 't.id_beneficiario ASC',
             'join' => 'join beneficiario_temporal tmp ON t.beneficiario_temporal_id = tmp.id_beneficiario_temporal
-                       join vsw_asignaciones_documentos doc ON doc.fk_caso_asignado = tmp.unidad_habitacional_id
+                       join vsw_asignaciones_documentos doc ON doc.fk_caso_asignado = tmp.unidad_habitacional_id and doc.es_activo=true
                        ',
             'condition' => 'doc.fk_usuario_asignado ='.Yii::app()->user->id,
         ),
@@ -338,5 +338,4 @@ $this->widget('booster.widgets.TbGridView', array(
 ));
 ?>
 <?php
-
 //$this->endWidget(); ?>
