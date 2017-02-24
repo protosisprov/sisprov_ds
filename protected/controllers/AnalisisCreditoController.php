@@ -138,7 +138,8 @@ class AnalisisCreditoController extends Controller {
         //TABLA DE SUELDO MENSUAL DEL BENEFICIARIO Y GRUPO_FAMILIAR
 
         //$TableSueldo = '<table class="table table-bordered">';
-        $TableSueldo='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th><th>Ingreso Mensual Nuevo</th>';
+        $TableSueldo='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th>';
+//        $TableSueldo='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th><th>Ingreso Mensual Nuevo</th>'; colocarlo OJOO
 
        // $TableSueldo = '<table class="table table-bordered">';
         //$TableSueldo.='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th>';

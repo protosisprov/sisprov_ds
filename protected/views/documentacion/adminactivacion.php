@@ -36,7 +36,7 @@ $this->widget('booster.widgets.TbGridView', array(
            // 'visible' => (Yii::app()->user->checkAccess("action_beneficiarioTemporal_certificadoVarios") == FALSE) ? FALSE: TRUE
         ),
         'id_beneficiario' => array(
-            'header' => 'Númerodfdsf',
+            'header' => 'Número',
             'name' => 'id_beneficiario',
             'value' => '$data->id_beneficiario',
         ),
