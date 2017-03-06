@@ -159,6 +159,7 @@ class DocumentacionController extends Controller {
      * Manages all models.
      */
     public function actionAdminmultifamiliar() {
+
 //        $model = new VswMultifamiliar('search');
 //        $model->unsetAttributes();  // clear any default values
 //        if (isset($_GET['VswMultifamiliar']))
@@ -166,6 +167,22 @@ class DocumentacionController extends Controller {
         $asignaciones = new Asignaciones;
         $this->render('adminmultifamiliar', array('asignaciones' => $asignaciones,
 //            'model' => $model,
+        ));
+    }
+    
+    public function actionAdminmultifamiliarFiltro()
+    {
+
+        $modelVswMultifamiliar = new VswMultifamiliar('search');
+            $modelVswMultifamiliar->unsetAttributes();
+        if (isset($_GET['VswMultifamiliar'])){
+            $modelVswMultifamiliar->attributes = $_GET['VswMultifamiliar'];
+        }    
+        
+        
+        $asignaciones = new Asignaciones;
+        $this->render('adminmultifamiliarFiltro', array('asignaciones' => $asignaciones,
+            'modelVswMultifamiliar' => $modelVswMultifamiliar,
         ));
     }
 

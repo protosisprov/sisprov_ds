@@ -13,6 +13,9 @@
  * @property integer $cantidad_vivienda
  * @property integer $id_estatus
  * @property string $estatus
+ * @property integer $cantidad
+ * @property integer $porcentaje
+ * @property integer $total_para_documentar
  */
 class VswMultifamiliar extends CActiveRecord {
 
@@ -26,6 +29,12 @@ class VswMultifamiliar extends CActiveRecord {
     public function tableName() {
         return 'vsw_multifamiliar';
     }
+    
+    public $cantidad;
+    public $porcentaje;
+    public $total_para_documentar;
+    public $analista;
+    public $estatus_asignacion;
 
     /**
      * @return array validation rules for model attributes.
@@ -41,7 +50,7 @@ class VswMultifamiliar extends CActiveRecord {
             array('estatus', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id_desarrollo, nombre_desarrollo, id_unidad_habitacional, nombre_unidad_habitacional, cod_estado, estado, cantidad_vivienda, id_estatus, estatus', 'safe', 'on' => 'search'),
+            array('id_desarrollo, nombre_desarrollo, id_unidad_habitacional, nombre_unidad_habitacional, cod_estado, estado, cantidad_vivienda, id_estatus, estatus, cantidad, total_para_documentar, estatus_msj, estatus_asignacion', 'safe', 'on' => 'search'),
         );
     }
 
@@ -52,6 +61,10 @@ class VswMultifamiliar extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'vsw_asignaciones_documentos' => array(self::BELONGS_TO, 'VswAsignacionesDocumentos','','on'=>'t.id_unidad_habitacional=vsw_asignaciones_documentos.fk_caso_asignado'),
+//            'vsw_asignaciones_documentos' => array(self::HAS_MANY, 'VswAsignacionesDocumentos','','on'=>'t.id_unidad_habitacional=vsw_asignaciones_documentos.fk_caso_asignado'),
+//            'vsw_multifamiliar_relation' => array(self::MANY_MANY, 'VswAsignacionesDocumentos','','on'=>'t.id_unidad_habitacional=vsw_asignaciones_documentos.fk_caso_asignado'),
+            //'asignaciones' => array(self::BELONGS_TO, 'Asignaciones','','on'=>'t.id_unidad_habitacional=asignaciones.fk_caso_asignado'),
         );
     }
 
@@ -84,24 +97,108 @@ class VswMultifamiliar extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models
      * based on the search/filter conditions.
      */
+//    public function search() {
+//        // @todo Please modify the following code to remove attributes that should not be searched.
+//
+//        $criteria = new CDbCriteria;
+//        $criteria->order = 'id_unidad_habitacional DESC';
+//        $criteria->compare('id_desarrollo', $this->id_desarrollo);
+//        $criteria->compare('nombre_desarrollo', $this->nombre_desarrollo, true);
+//        $criteria->compare('id_unidad_habitacional', $this->id_unidad_habitacional);
+//        $criteria->compare('nombre_unidad_habitacional', $this->nombre_unidad_habitacional, true);
+//        $criteria->compare('cod_estado', $this->cod_estado);
+//        $criteria->compare('estado', $this->estado, true);
+//        $criteria->compare('cantidad_vivienda', $this->cantidad_vivienda);
+//        $criteria->compare('id_estatus', $this->id_estatus);
+//        $criteria->compare('estatus', $this->estatus, true);
+//
+//        return new CActiveDataProvider($this, array(
+//            'criteria' => $criteria,
+//        ));
+//    }
+    
+    
     public function search() {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
+
         $criteria = new CDbCriteria;
-        $criteria->order = 'id_unidad_habitacional DESC';
-        $criteria->compare('id_desarrollo', $this->id_desarrollo);
-        $criteria->compare('nombre_desarrollo', $this->nombre_desarrollo, true);
-        $criteria->compare('id_unidad_habitacional', $this->id_unidad_habitacional);
-        $criteria->compare('nombre_unidad_habitacional', $this->nombre_unidad_habitacional, true);
-        $criteria->compare('cod_estado', $this->cod_estado);
-        $criteria->compare('estado', $this->estado, true);
-        $criteria->compare('cantidad_vivienda', $this->cantidad_vivienda);
-        $criteria->compare('id_estatus', $this->id_estatus);
-        $criteria->compare('estatus', $this->estatus, true);
+//        $criteria->order = 'id_unidad_habitacional DESC';
+        $criteria->select = ''
+                . 't.id_unidad_habitacional, '
+                . 't.nombre_unidad_habitacional , '
+                . 't.estado , '
+                . 'sum(t.cantidad_vivienda) as cantidad , '
+                . 'sum(t.cantidad_vivienda) as porcentaje, '
+                . 'sum(t.cantidad_vivienda) as total_para_documentar, '
+                . 't.estatus_msj, '
+                . 't.observaciones';
+            
+        
+        $criteria->compare('t.id_desarrollo', $this->id_desarrollo);
+        $criteria->compare('t.nombre_desarrollo', $this->nombre_desarrollo, true);
+        $criteria->compare('t.id_unidad_habitacional', $this->id_unidad_habitacional);
+        $criteria->compare('t.nombre_unidad_habitacional', $this->nombre_unidad_habitacional, true);
+        $criteria->compare('t.cod_estado', $this->cod_estado);
+        $criteria->compare('t.estado', $this->estado, true);
+        $criteria->compare('t.cantidad_vivienda', $this->cantidad_vivienda);
+        $criteria->compare('t.id_estatus', $this->id_estatus);
+        $criteria->compare('t.estatus', $this->estatus, true);
+        $criteria->compare('t.estatus_msj', $this->estatus_msj, true);
+         
+        
+        if (Yii::app()->user->checkAccess("administrador_documentacion")){
+            $criteria->group = 't.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones';
+        }elseif (Yii::app()->user->checkAccess("analista_documentacion")){
+            $criteria->with = array('vsw_asignaciones_documentos'=>array('select'=>''));
+            $criteria->compare('vsw_asignaciones_documentos.fk_usuario_asignado', Yii::app()->user->id);
+            $criteria->group = 't.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones, t.id_desarrollo';
+        }
+            
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+
+    }
+    
+    public function search_analista() {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+        //die('Llegue!');
+        if(!empty($this->estatus_msj))
+            die($this->estatus_msj);
+        
+        $criteria = new CDbCriteria;
+        
+        $criteria->select = array(
+                't.id_unidad_habitacional', 
+                't.nombre_unidad_habitacional', 
+                't.estado', 
+                'sum(t.cantidad_vivienda) as cantidad' , 
+                'sum(t.cantidad_vivienda) as porcentaje', 
+                'sum(t.cantidad_vivienda) as total_para_documentar', 
+                't.estatus_msj', 
+                't.observaciones',
+                't.id_desarrollo');
+        
+        $criteria->with = array('vsw_asignaciones_documentos'=>array('select'=>''));
+        $criteria->compare('t.id_desarrollo', $this->id_desarrollo);
+        $criteria->compare('t.nombre_desarrollo', $this->nombre_desarrollo, true);
+        $criteria->compare('t.id_unidad_habitacional', $this->id_unidad_habitacional);
+        $criteria->compare('t.nombre_unidad_habitacional', $this->nombre_unidad_habitacional, true);
+        $criteria->compare('t.cod_estado', $this->cod_estado);
+        $criteria->compare('t.estado', $this->estado, true);
+        $criteria->compare('t.cantidad_vivienda', $this->cantidad_vivienda);
+        $criteria->compare('t.id_estatus', $this->id_estatus);
+        $criteria->compare('t.estatus', $this->estatus, true);
+        $criteria->compare('t.estatus_msj', $this->estatus_msj, true);
+        $criteria->compare('vsw_asignaciones_documentos.fk_usuario_asignado', Yii::app()->user->id);
+        $criteria->group = 't.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones, t.id_desarrollo';
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+
     }
 
     public function searchGroupBy()

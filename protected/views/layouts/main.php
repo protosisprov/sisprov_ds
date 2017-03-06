@@ -437,7 +437,8 @@
                                             <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminmultifamiliar')) { ?>
                                                 <li>
-                                                    <a href="<?php echo $this->createUrl('/documentacion/adminmultifamiliar'); ?>">
+                                                    <!--<a href="<?php //echo $this->createUrl('/documentacion/adminmultifamiliar'); ?>">-->
+                                                    <a href="<?php echo $this->createUrl('/documentacion/adminmultifamiliarFiltro'); ?>">
                                                         <i class="glyphicon glyphicon-map-marker"></i>
                                                         <span>Unidad Multifamilar</span>
                                                     </a>
@@ -561,7 +562,7 @@
     </script>
 </html>
 <?php
-$url_redirect = CHtml::normalizeUrl(array('/site/index'));
+/*$url_redirect = CHtml::normalizeUrl(array('/site/index'));
 $url_redirect = CHtml::normalizeUrl(array('/cruge/ui/accessDenied'));
 $url_valida_sesion = CHtml::normalizeUrl(array('/cruge/ui/login'));
 $url_destroy_session = CHtml::normalizeUrl(array('/site/logout'));
@@ -591,7 +592,7 @@ Yii::app()->getClientScript()->registerScript("core_cruge", "
         document.getElementById('expirado').innerHTML = xmlhttp.responseText;
         document.location.href = '$url_valida_sesion';
     }
-  ", CClientScript::POS_LOAD);
+  ", CClientScript::POS_LOAD);*/
 ?>
 
 <script type="text/javascript">
