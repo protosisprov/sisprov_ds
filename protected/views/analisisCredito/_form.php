@@ -78,26 +78,26 @@ echo $form->hiddenField($model, 'unidad_familiar_id');
 
 
 
-                <td>
+                <!--<td>-->
 
                     <?php
                     
-                    //var_dump($beneficiario);die;
-                    $this->widget('booster.widgets.TbEditableField', array(
-                            
-                        'type' => 'text',
-                        'model' => $beneficiario,
-                        'attribute' => 'ingreso_mensual_nuevo',
-                        'url' => $this->createUrl('Beneficiario/Actualizar'),
-                        'placement' => 'right',
-                        'emptytext' => '0.00',
-                       
-
-                        
-                        'onSave' => 'js: function(event, params) {
-                            setTimeout("location.reload()", 0);
-                         }'
-                    ));
+//                    //var_dump($beneficiario);die;
+//                    $this->widget('booster.widgets.TbEditableField', array(
+//                            
+//                        'type' => 'text',
+//                        'model' => $beneficiario,
+//                        'attribute' => 'ingreso_mensual_nuevo',
+//                        'url' => $this->createUrl('Beneficiario/Actualizar'),
+//                        'placement' => 'right',
+//                        'emptytext' => '0.00',
+//                       
+//
+//                        
+//                        'onSave' => 'js: function(event, params) {
+//                            setTimeout("location.reload()", 0);
+//                         }'
+//                    ));
                     
            
                     
@@ -105,9 +105,10 @@ echo $form->hiddenField($model, 'unidad_familiar_id');
                     
                     
                     ?>         
-                    <input type="radio" name="opciones_0" id="opciones"   value="<?php echo $beneficiario->ingreso_mensual_nuevo; ?>">
+                    <!--<input type="radio" name="opciones_0" id="opciones"   value="<?php echo $beneficiario->ingreso_mensual_nuevo; ?>">-->
 
-                </td></tr>
+                <!--</td>-->
+                </tr>
 
 
 
@@ -129,10 +130,10 @@ echo $form->hiddenField($model, 'unidad_familiar_id');
                 echo '<tr><td>' . $nombregrfamiliar . '</td><td> Bs.' . $fila['ingreso_mensual'] .
                 '<input class="a"  type="radio" name="opciones_' . $conut_id . '" id="opciones_' . $conut_id . '"   value="' . $fila['ingreso_mensual'] . '"></td>'
                 . '<td>';
-                $this->widget("booster.widgets.TbEditableField", array("type" => "text",  "emptytext" => "0.00","model" => $fila, "attribute" => "ingreso_mensual_nuevo", 'url' => $this->createUrl('GrupoFamiliar/Actualizar'),
-                    'placement' => 'right', "pk" => (int) $fila["id_grupo_familiar"], 'onSave' => 'js: function(event, params) {setTimeout("location.reload()", 0);}'));
-
-                echo ' <input type="radio" name="opciones_' . $conut_id . '" id="opciones_0" value="' . $fila['ingreso_mensual_nuevo'] . '"></td></tr>';
+//                $this->widget("booster.widgets.TbEditableField", array("type" => "text",  "emptytext" => "0.00","model" => $fila, "attribute" => "ingreso_mensual_nuevo", 'url' => $this->createUrl('GrupoFamiliar/Actualizar'),
+//                    'placement' => 'right', "pk" => (int) $fila["id_grupo_familiar"], 'onSave' => 'js: function(event, params) {setTimeout("location.reload()", 0);}'));
+//
+//                echo ' <input type="radio" name="opciones_' . $conut_id . '" id="opciones_0" value="' . $fila['ingreso_mensual_nuevo'] . '"></td></tr>';
 
 
 

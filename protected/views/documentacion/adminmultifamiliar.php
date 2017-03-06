@@ -10,7 +10,6 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
  */
 $baseUrl = Yii::app()->baseUrl;
 $validaciones = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/validacion.js');
-
 //si ya existe el multi en la tabla documentacion no muestra generar documento
 function DocumentoExistMulti($iD) {
     $unidadHabitacional = UnidadHabitacional::model()->findByPk($iD);
@@ -20,14 +19,12 @@ function DocumentoExistMulti($iD) {
     } else {
         $tipo_documento = 297;
     }
-
     if (Documentacion::model()->exists('fk_beneficiario=:fk_beneficiario AND tipo_documento_id=:tipo_documento_id', array(':fk_beneficiario' => $iD, ':tipo_documento_id' => $tipo_documento))) {
         return TRUE;
     } else {
         return FALSE;
     }
 }
-
 function DocumentoExistMulti2($iD) {
     $sql = 'SELECT * FROM documentacion WHERE fk_beneficiario=' . $iD . ' AND (tipo_documento_id=' . $tipo_documento . ' or  tipo_documento_id=277)  AND registro_documento_id IS NULL';
     $query = Yii::app()->db->createCommand($sql)->queryAll();
@@ -36,7 +33,6 @@ function DocumentoExistMulti2($iD) {
     else
         return FALSE;
 }
-
 function PorcentajeVivienda($iD) {
     $criteria = new CDbCriteria;
     $criteria->select = 't.*';
@@ -46,23 +42,17 @@ function PorcentajeVivienda($iD) {
 //    var_dump($criteria); die();
     $CantVivienda = Vivienda::model()->count($criteria);
     $porcentaje = round((int) $CantVivienda * 0.17);
-
     if ((int) $porcentaje == '0') {
-
         $porcentaje = 1;
     }
-
-
     return $porcentaje;
 }
-
 function Censadas($idUnidadHabitacional) {
     $Asignada = Yii::app()->db->createCommand('SELECT count(vi.*) as result FROM vivienda vi
                     JOIN beneficiario_temporal be ON vi.id_vivienda = be.vivienda_id and be.unidad_habitacional_id = ' . $idUnidadHabitacional . ' and be.estatus = 272 and NOT be.estatus = 193
                     WHERE NOT vi.estatus_vivienda_id = 211')->queryScalar();
     return $Asignada;
 }
-
 function GenerarDocumento($idUnidadHabitacional) {
     $criteria = new CDbCriteria;
     $criteria->select = 't.*';
@@ -71,49 +61,37 @@ function GenerarDocumento($idUnidadHabitacional) {
     $criteria->params = array(":unidad_habitacional" => $idUnidadHabitacional);
     $CantVivienda = Vivienda::model()->count($criteria);
     $porcentaje = round((int) $CantVivienda * 0.17);
-
-
     /* CANTIDAD DE VIVIENDAS ASIGNADAS Y CON EL CENSO CONFIRMADO PARA ANALISIS DE CREDITO */
     $Asignada = Yii::app()->db->createCommand('SELECT count(vi.*) as result FROM vivienda vi
                     JOIN beneficiario_temporal be ON vi.id_vivienda = be.vivienda_id and be.unidad_habitacional_id = ' . $idUnidadHabitacional . ' and be.estatus = 272 and NOT be.estatus = 193
                     WHERE NOT vi.estatus_vivienda_id = 211')->queryScalar();
-
     if ((int) $porcentaje == '0') {
-
         $porcentaje = 1;
     }
-
-
     if (((int) $Asignada < $porcentaje)) {
         return FALSE;
     } else {
         return TRUE;
     }
 }
-
 function EstatusDocumentoAprobado($idUnidadHabitacional) {
     $sql_documento = 'select uh.id_unidad_habitacional, uh.nombre, uh.estatus as estatus_unidadH, a.estatus as estatus_documentacion from unidad_habitacional uh
                         join documentacion a ON a.fk_beneficiario = ' . $idUnidadHabitacional . ' where a.estatus = 286 ';
 //            'select * from desarrollo t join documentacion a ON a.fk_beneficiario =' . $id_desarrollo . 'where a.estatus = 286';
     $queryy = Yii::app()->db->createCommand($sql_documento)->queryScalar();
-
 //    var_dump($queryy);die;
-
     if ($queryy != null) {
         return TRUE;
     } else {
         return FALSE;
     }
 }
-
 function EstatusDocumentoDevuelto($idUnidadHabitacional) {
     $sql_documento = 'select uh.id_unidad_habitacional, uh.nombre, uh.estatus as estatus_unidadH, a.estatus as estatus_documentacion from unidad_habitacional uh
                         join documentacion a ON a.fk_beneficiario = ' . $idUnidadHabitacional . ' where a.estatus = 295 ';
 //    $sql_documento = 'select * from desarrollo t join documentacion a ON a.fk_beneficiario =' . $id_desarrollo . 'where a.estatus = 295';
     $queryy = Yii::app()->db->createCommand($sql_documento)->queryScalar();
-
 //    var_dump($queryy);die;
-
     if ($queryy != null) {
         return TRUE;
     } else {
@@ -121,10 +99,7 @@ function EstatusDocumentoDevuelto($idUnidadHabitacional) {
     }
 //    var_dump(EstatusDocumentoDevuelto($id_desarrollo));die;
 }
-
 function ColorEstatus($color) {
-
-
     switch ($color) {
         case "VALIDADO POR SAREN":
             $color = 'aprobado';
@@ -144,13 +119,10 @@ function ColorEstatus($color) {
 ?>
 
 <style>
-
-
     .aprobado
     {
         background: #CEF6F5 !important;
     }
-
     .devuelto {
         background:#F5A9BC !important;
         /*color:#514721 !important;*/
@@ -159,7 +131,6 @@ function ColorEstatus($color) {
         background:#F5F6CE !important;
         /*color:#514721 !important;*/
     }
-
 </style>
 
 
@@ -247,9 +218,7 @@ $sql = 'SELECT id_unidad_habitacional, nombre_unidad_habitacional , estado , sum
                                             GROUP BY id_unidad_habitacional, nombre_unidad_habitacional , estado, estatus_msj, observaciones 
 					ORDER BY id_unidad_habitacional DESC';
 $rawData = Yii::app()->db->createCommand($sql);
-
 $count = Yii::app()->db->createCommand('SELECT COUNT(*) FROM (' . $sql . ') as consulta ')->queryScalar();
-
 $this->widget('booster.widgets.TbGridView', array(
     'id' => 'unidad-habitacional-grid',
     'type' => 'striped bordered condensed',
@@ -458,7 +427,6 @@ $this->widget('booster.widgets.TbGridView', array(
         ),
     ),
 ));
-
 //var_dump($data);die;
 ?>
 <?php $this->endWidget(); ?>

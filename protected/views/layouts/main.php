@@ -417,7 +417,7 @@
                                             <?php if (Yii::app()->user->checkAccess('action_analisicredito_adminanalisiscredito')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/analisisCredito/adminanalisiscredito'); ?>">
-                                                        <i class="glyphicon glyphicon-euro"></i>
+                                                        <i class="glyphicon glyphicon-list-alt"></i>
                                                         <span>Tabla de Amortización</span>
                                                     </a>
                                                 </li>    
@@ -451,6 +451,16 @@
                                                     <a href="<?php echo $this->createUrl('/documentacion/adminbeneficiario'); ?>">
                                                         <i class="glyphicon glyphicon-user"></i>
                                                         <span>Beneficiario</span>
+                                                    </a>
+                                                </li><?php } ?>
+                                        </ul>
+                                        <ul class="sub">
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <?php if (Yii::app()->user->checkAccess('action_documentacion_adminbeneficiario')) { ?>
+                                                <li>
+                                                    <a href="<?php echo $this->createUrl('/documentacion/adminactivacion'); ?>">
+                                                        <i class="glyphicon glyphicon-asterisk"></i>
+                                                        <span>Activación del Crédito</span>
                                                     </a>
                                                 </li><?php } ?>
                                         </ul>

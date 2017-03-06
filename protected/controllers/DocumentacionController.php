@@ -1,11 +1,8 @@
 <?php
-
 class DocumentacionController extends Controller {
-
     public function filters() {
         return array(array('CrugeAccessControlFilter'));
     }
-
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
@@ -19,7 +16,6 @@ class DocumentacionController extends Controller {
             ),
         );
     }
-
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -29,28 +25,23 @@ class DocumentacionController extends Controller {
             'model' => $this->loadModel($id),
         ));
     }
-
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
         $model = new Documentacion;
-
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
-
         if (isset($_POST['Documentacion'])) {
             $model->attributes = $_POST['Documentacion'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_documentacion));
         }
-
         $this->render('create', array(
             'model' => $model,
         ));
     }
-
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -58,21 +49,17 @@ class DocumentacionController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
-
         if (isset($_POST['Documentacion'])) {
             $model->attributes = $_POST['Documentacion'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_documentacion));
         }
-
         $this->render('update', array(
             'model' => $model,
         ));
     }
-
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -82,14 +69,12 @@ class DocumentacionController extends Controller {
         if (Yii::app()->request->isPostRequest) {
 // we only allow deletion via POST request
             $this->loadModel($id)->delete();
-
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
-
     /**
      * Lists all models.
      */
@@ -99,7 +84,6 @@ class DocumentacionController extends Controller {
             'dataProvider' => $dataProvider,
         ));
     }
-
     /**
      * Manages all models.
      */
@@ -108,12 +92,10 @@ class DocumentacionController extends Controller {
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Documentacion']))
             $model->attributes = $_GET['Documentacion'];
-
         $this->render('admin', array(
             'model' => $model,
         ));
     }
-
     /**
      * Manages all models.
      */
@@ -130,18 +112,15 @@ class DocumentacionController extends Controller {
 // $llaves = implode('["id_beneficiario"]=>', $ids);
 //    var_dump($ids);
 //die;
-
         if (isset($_GET['Beneficiario']))
             $model->attributes = $_GET['Beneficiario'];
         $this->render('adminbeneficiario', array(
             'model' => $model, 'asignaciones' => $asignaciones,
         ));
     }
-
     /*
      * FUNCION QUE CONSULTA SI EL DOCUMENTO EXISTE (MULTIFAMILIAR)
      */
-
     public function actionDocumentoExiste() {
         $id = $_POST['id'];
         $id = (int) $id;
@@ -154,12 +133,10 @@ class DocumentacionController extends Controller {
             echo CJSON::encode(array('sms' => 2, 'documento' => $model->documento));
         }
     }
-
     /**
      * Manages all models.
      */
     public function actionAdminmultifamiliar() {
-
 //        $model = new VswMultifamiliar('search');
 //        $model->unsetAttributes();  // clear any default values
 //        if (isset($_GET['VswMultifamiliar']))
@@ -170,22 +147,21 @@ class DocumentacionController extends Controller {
         ));
     }
     
-    public function actionAdminmultifamiliarFiltro()
-    {
-
-        $modelVswMultifamiliar = new VswMultifamiliar('search');
-            $modelVswMultifamiliar->unsetAttributes();
-        if (isset($_GET['VswMultifamiliar'])){
-            $modelVswMultifamiliar->attributes = $_GET['VswMultifamiliar'];
-        }    
-        
-        
-        $asignaciones = new Asignaciones;
-        $this->render('adminmultifamiliarFiltro', array('asignaciones' => $asignaciones,
-            'modelVswMultifamiliar' => $modelVswMultifamiliar,
+        /**
+     * Manages all models.
+     */
+    public function actionAdminactivacion() {
+        $model = VswDocumentoEntregado::model()->findAll();
+        //echo '<pre>';$model;die;
+        $model = new VswDocumentoEntregado('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['VswDocumentoEntregado']))
+            $model->attributes = $_GET['VswDocumentoEntregado'];
+        //echo '<pre>';var_dump($model);die;
+        $this->render('adminactivacion', array(
+            'model' => $model,
         ));
     }
-
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -197,7 +173,6 @@ class DocumentacionController extends Controller {
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
-
     /**
      * Performs the AJAX validation.
      * @param CModel the model to be validated
@@ -208,21 +183,15 @@ class DocumentacionController extends Controller {
             Yii::app()->end();
         }
     }
-
     /*
      * 
      */
-
     public function actionGenerar2($id) {
         $model = new Documentacion;
-
 //            var_dump($id);die;
-
         if (isset($_POST['PlantillaDocumento']) || isset($_POST['Documentacion'])) {
-
             $documento = new Documentacion;
             $buscarDocMulti = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 53));
-
             if (!empty($buscarDocMulti)) {
                 Documentacion::model()->updateByPk($buscarDocMulti->id_documentacion, array(
                     'estatus' => 54, //ESTATUS INACTIVO
@@ -231,7 +200,6 @@ class DocumentacionController extends Controller {
                         )
                 );
             }
-
             $unidadHabitacional = UnidadHabitacional::model()->findByPk($id);
             $fuente_financiamiento = $unidadHabitacional->desarrollo->fuenteFinanciamiento->id_fuente_financiamiento;
             if ($fuente_financiamiento = 3) { //fasp
@@ -239,7 +207,6 @@ class DocumentacionController extends Controller {
             } else {
                 $tipo_documento = 297; //faov
             }
-
             $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
             $documento->tipo_documento_id = $tipo_documento;
             $documento->estatus = 53; //ESTATUS ACTIVO
@@ -250,9 +217,7 @@ class DocumentacionController extends Controller {
             $documento->es_multi = true;
             $documento->ente_documento = 311;
             $documento->doc_primera_vez = TRUE;
-
             if ($documento->save()) {
-
                 /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
                 $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                 foreach ($ids_unidad_familiar as $idBenef) {
@@ -269,7 +234,6 @@ class DocumentacionController extends Controller {
         }
         $this->render('generarDocMulti', array('model' => $model));
     }
-
     public function actionMultifamiliar($id) {
         
         $id = (int) $id;
@@ -280,18 +244,14 @@ class DocumentacionController extends Controller {
         } else {
             $ente = 311;
         }
-
 //        var_dump($ente);die;
-
         if ($ente == 312) { //SAREN
 //            CONSULTA PARA DOCUMENTO YA CREADO POR SAREN
             $consultaDoc = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 312, 'es_multi' => 1));
             $consultaDoc1 = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 312, 'es_multi' => 1, 'doc_primera_vez' => 1));
 //            CONSULTA PARA DOCUMENTO POR PRIMERA VEZ GENERADO POR SAREN
             $consultaDoc2 = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 311, 'es_multi' => 1));
-
             if (isset($consultaDoc1)) {
-
                 //MODEL MUESTRA DOCUMENTO GENERADO POR BANAVIH PARA SER CORREGIDO POR SAREN
                 $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 312, 'es_multi' => 1)); //esto
 //                MODELL MUESTRA DOCUMENTO GENERADO POR BANVIH
@@ -302,28 +262,19 @@ class DocumentacionController extends Controller {
                 $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 312, 'es_multi' => 1)); //esto
 //                MODELL MUESTRA DOCUMENTO GENERADO POR BANVIH
                 $modell = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 311, 'es_multi' => 1));
-
                 $sql_pg = ("SELECT documento FROM documentacion WHERE id_documentacion = (SELECT MIN (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . ")");
                 $doc_banavih = Yii::app()->db->createCommand($sql_pg)->queryRow(); //PRIMER DOCUMENTO GENERADO POR BANAVIH
             } else if (isset($consultaDoc2)) {
-
                 $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 311, 'es_multi' => 1));
                 $modell = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 285, 'ente_documento' => 311, 'es_multi' => 1));
                 $doc_banavih = 1;
             }
-
-
-
-
             if (isset($_POST['PlantillaDocumento']) || isset($_POST['Documentacion'])) {
                 $documento = new Documentacion;
-
                 $buscarDocMultiPrimeraVez = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 285, 'es_activo' => 1, 'ente_documento' => 312, 'es_multi' => 1, 'doc_primera_vez' => 1));
                 $buscarDocMultiPrimeraVez2 = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 285, 'es_activo' => 1, 'ente_documento' => 312, 'es_multi' => 1, 'doc_primera_vez' => 1));
                 $buscarDocMulti = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 285, 'es_activo' => 1, 'ente_documento' => 312, 'es_multi' => 1));
                 $buscarDocMulti2 = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 285, 'es_activo' => 1, 'ente_documento' => 311, 'es_multi' => 1));
-
-
                 if (!empty($buscarDocMulti)) { //DOCUMENTO CORREGIDO POR SAREN MAS DE UNA VEZ
                     if (!empty($buscarDocMultiPrimeraVez2)) { //SI EL DOCUMENTO EXISTE POR PRIMERA VEZ
                         Documentacion::model()->updateByPk($buscarDocMulti->id_documentacion, array(
@@ -334,8 +285,6 @@ class DocumentacionController extends Controller {
                             'usuario_id_actualizacion' => Yii::app()->user->id,
                                 )
                         );
-
-
                         $unidadHabitacional = UnidadHabitacional::model()->findByPk($id);
                         $fuente_financiamiento = $unidadHabitacional->desarrollo->fuenteFinanciamiento->id_fuente_financiamiento;
                         if ($fuente_financiamiento = 3) { //fasp
@@ -343,7 +292,6 @@ class DocumentacionController extends Controller {
                         } else {
                             $tipo_documento = 297; //faov
                         }
-
                         $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
                         $documento->tipo_documento_id = $tipo_documento;
                         $documento->estatus = 285; //ESTATUS ACTIVO
@@ -354,9 +302,7 @@ class DocumentacionController extends Controller {
                         $documento->es_multi = true;
                         $documento->ente_documento = 312;
                         $documento->doc_primera_vez = true;
-
                         if ($documento->save()) {
-
                             /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
                             $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                             foreach ($ids_unidad_familiar as $idBenef) {
@@ -371,8 +317,6 @@ class DocumentacionController extends Controller {
                             $this->redirect(array('/documentacion/adminsarenMulti'));
                         }
                     } else {
-
-
                         Documentacion::model()->updateByPk($buscarDocMulti->id_documentacion, array(
                             'estatus' => 285, //ESTATUS INACTIVO
                             /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
@@ -381,8 +325,6 @@ class DocumentacionController extends Controller {
                             'usuario_id_actualizacion' => Yii::app()->user->id,
                                 )
                         );
-
-
                         $unidadHabitacional = UnidadHabitacional::model()->findByPk($id);
                         $fuente_financiamiento = $unidadHabitacional->desarrollo->fuenteFinanciamiento->id_fuente_financiamiento;
                         if ($fuente_financiamiento = 3) { //fasp
@@ -390,7 +332,6 @@ class DocumentacionController extends Controller {
                         } else {
                             $tipo_documento = 297; //faov
                         }
-
                         $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
                         $documento->tipo_documento_id = $tipo_documento;
                         $documento->estatus = 285; //ESTATUS ACTIVO
@@ -400,9 +341,7 @@ class DocumentacionController extends Controller {
                         $documento->fk_beneficiario = $id;
                         $documento->es_multi = true;
                         $documento->ente_documento = 312;
-
                         if ($documento->save()) {
-
                             /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
                             $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                             foreach ($ids_unidad_familiar as $idBenef) {
@@ -427,7 +366,6 @@ class DocumentacionController extends Controller {
                             $tipo_documento = 297; //faov
                         }
 //                        var_dump($tipo_documento);die;
-
                         $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
                         $documento->tipo_documento_id = $tipo_documento;
                         $documento->estatus = 285; //ESTATUS ACTIVO
@@ -438,9 +376,7 @@ class DocumentacionController extends Controller {
                         $documento->es_multi = true;
                         $documento->ente_documento = 312;
                         $documento->doc_primera_vez = true;
-
                         if ($documento->save()) {
-
                             /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
                             $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                             foreach ($ids_unidad_familiar as $idBenef) {
@@ -455,9 +391,6 @@ class DocumentacionController extends Controller {
                             $this->redirect(array('/documentacion/adminsarenMulti'));
                         }
                     } else {
-
-
-
                         $unidadHabitacional = UnidadHabitacional::model()->findByPk($id);
                         $fuente_financiamiento = $unidadHabitacional->desarrollo->fuenteFinanciamiento->id_fuente_financiamiento;
                         if ($fuente_financiamiento = 3) { //fasp
@@ -465,7 +398,6 @@ class DocumentacionController extends Controller {
                         } else {
                             $tipo_documento = 297; //faov
                         }
-
                         $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
                         $documento->tipo_documento_id = $tipo_documento;
                         $documento->estatus = 285; //ESTATUS ACTIVO
@@ -475,9 +407,7 @@ class DocumentacionController extends Controller {
                         $documento->fk_beneficiario = $id;
                         $documento->es_multi = true;
                         $documento->ente_documento = 312;
-
                         if ($documento->save()) {
-
                             /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
                             $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                             foreach ($ids_unidad_familiar as $idBenef) {
@@ -498,29 +428,21 @@ class DocumentacionController extends Controller {
         } else { //BANAVIH
             $consultaDoc = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 295, 'ente_documento' => 311, 'es_multi' => 1));
             $consultaDoc2 = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 53, 'es_activo' => 1, 'es_multi' => 1, 'ente_documento' => 311));
-
             if (isset($consultaDoc)) {
-
                 $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 295, 'ente_documento' => 311, 'es_multi' => 1));
                 $modell = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 295, 'ente_documento' => 312, 'es_multi' => 1));
             } else if (isset($consultaDoc2)) {
-
 //                $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 294, 'ente_documento' => 1));
 //                $modell = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 294, 'ente_documento' => 1));
                 $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'es_multi' => 1, 'ente_documento' => 311));
                 $modell = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 295, 'es_multi' => 1, 'ente_documento' => 311));
             }
-
 //            var_dump($model);die;
-
-
             if (isset($_POST['PlantillaDocumento']) || isset($_POST['Documentacion'])) {
-
                 $documento = new Documentacion;
                 $buscarDocMulti1 = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 53, 'es_multi' => 1));
                 $buscarDocumentoDevuelto = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 295, 'es_multi' => 1, 'ente_documento' => 311));
 //                var_dump($buscarDocum$buscarDocumentoDevueltoentoDevuelto);die;
-
                 if (!empty($buscarDocMulti1)) { //INSERT CUANDO EL DOCUMENTO ES GENERADO POR PRIMERA VEZ , (doc_primera_vez es TRUE)
                     Documentacion::model()->updateByPk($buscarDocMulti1->id_documentacion, array(
                         'estatus' => 54, //ESTATUS INACTIVO
@@ -530,8 +452,6 @@ class DocumentacionController extends Controller {
                         'doc_primera_vez' => false,
                             )
                     );
-
-
                     $unidadHabitacional = UnidadHabitacional::model()->findByPk($id);
                     $fuente_financiamiento = $unidadHabitacional->desarrollo->fuenteFinanciamiento->id_fuente_financiamiento;
                     if ($fuente_financiamiento = 3) { //fasp
@@ -539,7 +459,6 @@ class DocumentacionController extends Controller {
                     } else {
                         $tipo_documento = 297; //faov
                     }
-
                     $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
                     $documento->tipo_documento_id = $tipo_documento;
                     $documento->estatus = 53; //ESTATUS ACTIVO
@@ -550,7 +469,6 @@ class DocumentacionController extends Controller {
                     $documento->es_multi = true;
                     $documento->ente_documento = 311;
                     $documento->doc_primera_vez = TRUE;
-
                     if ($documento->save()) {
                         $buscarCaso = Asignaciones::model()->findByAttributes(array('fk_caso_asignado' => $unidadHabitacional->id_unidad_habitacional, 'fk_estatus' => 304, 'es_activo' => TRUE));
                         //var_dump($buscarCaso);die;
@@ -570,9 +488,6 @@ class DocumentacionController extends Controller {
                                 $modelAsignaciones->es_activo = TRUE;
                                 $modelAsignaciones->save();
                                 /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
-
-
-
                                 $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                                 foreach ($ids_unidad_familiar as $idBenef) {
                                     UnidadFamiliar::model()->updateByPk($idBenef, array(
@@ -595,7 +510,6 @@ class DocumentacionController extends Controller {
                         'es_activo' => false,
                             )
                     );
-
                     $unidadHabitacional = UnidadHabitacional::model()->findByPk($id);
 //                    var_dump($unidadHabitacional);die;
                     $fuente_financiamiento = $unidadHabitacional->desarrollo->fuenteFinanciamiento->id_fuente_financiamiento;
@@ -604,7 +518,6 @@ class DocumentacionController extends Controller {
                     } else {
                         $tipo_documento = 297; //faov
                     }
-
                     $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
                     $documento->tipo_documento_id = $tipo_documento;
                     $documento->estatus = 295;
@@ -614,12 +527,8 @@ class DocumentacionController extends Controller {
                     $documento->fk_beneficiario = $id;
                     $documento->es_multi = true;
                     $documento->ente_documento = 311;
-
                     if ($documento->save()) {
-
-
                         /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
-
                         $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                         foreach ($ids_unidad_familiar as $idBenef) {
                             UnidadFamiliar::model()->updateByPk($idBenef, array(
@@ -630,7 +539,6 @@ class DocumentacionController extends Controller {
                                     )
                             );
                         }
-
                         $this->redirect(array('/documentacion/adminmultifamiliar'));
                     }
                 }
@@ -638,13 +546,10 @@ class DocumentacionController extends Controller {
             $this->render('multifamiliar', array('model' => $model, 'modell' => $modell));
         }
     }
-
     /*
      * FUNCION QUE LISTA LA INFORMACION DE LA UNIDAD MULTIFAMULIAR // DESARROLLO
      */
-
     public function actionListarDocumento() {
-
         $agent_documentacion = $_POST['Documentacion']['agente_documentacion'];
         $apoderado = $_POST['Documentacion']['apoderado'];
         $error = array();
@@ -661,19 +566,16 @@ class DocumentacionController extends Controller {
             } else {
                 $tipo_documento = 297; //DOCUMENTO FAOV
             }
-
 //            if (empty($unidadHabitacional)) {
 //                array_push($error, '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> EL BENEFICIARIO NO PRESENTA UN ANÁLISIS DE CREDITO');
 //                echo json_encode(array('cont' => $error, 'sms' => '3'));
 //                Yii::app()->end();
 //            }
-
             $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $idUnidadHabitacional, 'es_activo' => 1, 'es_multi' => 1));
             if (empty($model)) {
                 $model = PlantillaDocumento::model()->findByAttributes(array('fk_tipo_documento' => $tipo_documento));
             }
 //            var_dump($idUnidadHabitacional);die;
-
             /* BUSQUEDA DE LOS DATOS DEL APODERADO */
             $data_apoderado = Abogados::model()->findByPk($apoderado);
             $info_apoderado = ConsultaOracle::setPersona("*", (int) $data_apoderado->persona_id);
@@ -681,7 +583,6 @@ class DocumentacionController extends Controller {
             $data_agente = Abogados::model()->findByPk($agent_documentacion);
             $info_agente = ConsultaOracle::setPersona("*", (int) $data_agente->persona_id);
             $array = explode(" ", $model->documento);
-
             foreach ($array as &$value) {
                 /* ------------------- DATOS DEL APODERADO ------------------- */
                 if (stristr($value, '&MULTI_NOMBRE_APODERADO')) {
@@ -732,13 +633,11 @@ class DocumentacionController extends Controller {
                         array_push($error, '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> MUNICIPIO DEL REGISTRO PÚBLICO AL QUE PERTENECE EL APODERADO');
                     }
                 }
-
                 //nombre de la oficina del  registro publico
 //                if (stristr($value, '&IMPRE_ABOGADO')) {
 //                    $value = $data_apoderado->inpreabogado;
 //                }
 //                /* ------------------- FIN DATOS DEL APODERADO ------------------- */
-
                 /* ------------------- DATOS DEL AGENTE DE DOCUMENTACION------------------- */
                 if (stristr($value, '&NOMBRE_ABOGADO')) {
                     $value = $info_agente['PRIMER_NOMBRE'] . ' ' . $info_agente['PRIMER_APELLIDO'];
@@ -748,7 +647,6 @@ class DocumentacionController extends Controller {
                 }
                 /* ------------------- FIN DATOS DEL AGENTE DE DOCUMENTACION------------------- */
 //            var_dump($model);die();
-
                 if (stristr($value, '&')) {
 //                    
                     /*                     * ** CONSULTA DE LAS UNIDADES FAMILIARES (BENEFICIARIOS) ASOCIADOS A UNA UNIDAD HABITACIONAL (UNIDAD MULTIFAMILIAR)   * ** */
@@ -767,7 +665,6 @@ class DocumentacionController extends Controller {
                         }
                         $value = $cont;
                     }
-
                     if ($value == '&MULTI_CANT_UNIFA_LETRA') {
                         $count_unif = count($consulta);
                         $value = str_replace('00', '', Generico::numtoletras($count_unif));
@@ -776,7 +673,6 @@ class DocumentacionController extends Controller {
                         $count_unif = count($consulta);
                         $value = $count_unif;
                     }
-
                     /* CONSULTA QUE TRAE LAS VIVIENDAS QUE ESTAN ASOCIADAS A LA UNIDAD HABITACIONAL(UNIDAD MULTIFAMILIAR) */
                     if ($value == '&MULTI_VIVIENDA_ALL') {
                         $consul = Yii::app()->db->createCommand("SELECT vi.id_vivienda as id, uh.nombre, uh.gen_tipo_inmueble_id, m.descripcion, 
@@ -792,7 +688,6 @@ class DocumentacionController extends Controller {
                         $cont = '';
                         foreach ($consul as $valores) {
                             $porcentavivienda = $valores['porcentaje_vivienda'] / 100;
-
                             $cont.= (($valores['nro_piso'] != '') ? '<b> PISO ' . $valores['nro_piso'] . ' :</b>' : '') . '<b> ' . $valores['vivienda'] . ' ' . $valores['nro_vivienda'] . ' :</b> Tiene una superficie de'
                                     . ' ' . str_replace('00', '', Generico::numtoletras($valores['construccion_mt2'])) . 'metros cuadrados (' . $valores['construccion_mt2'] . ' mts2), sus linderos son; '
                                     . ' <b>NORTE:</b> ' . $valores['lindero_norte'] . ' , <b>SUR:</b> ' . $valores['lindero_sur'] . ' , <b>ESTE:</b> ' . $valores['lindero_este'] . ' y <b>OESTE: </b>' . $valores['lindero_oeste'] . ''
@@ -800,13 +695,10 @@ class DocumentacionController extends Controller {
                                     . ', ' . $valores['nro_banos'] . ' Baños, ' . $valores['nro_habitaciones'] . ' Habitaciones). '
                                     . 'Le Corresponde un porcentaje de cargas sobre cosas de uso y disfrute común (' . (($porcentavivienda != '') ? '' . str_replace('00', '', Generico::numtoletras($valores['porcentaje_vivienda'])) . ' Porciento, ' . $valores['porcentaje_vivienda'] . ' %' : ' 0 %' ) . ').'
                                     . '' . (($valores['descripcion_estac'] != '') ? ' Asimismo, le corresponde el uso exclusivo de ' . $valores['descripcion_estac'] . ' Puesto de estacionamiento del área común de estacionamientos.' : '') . '';
-
-
                             //$cont.='<b>' . $valores['vivienda'] .'</b>  ';
                         }
                         $value = $cont;
                     }
-
                     //CANTIDAD DE VIVIENDAS 
                     if ($value == '&MULTI_TOTAL_VIVIENDAS') {
                         $consul_vivienda = Yii::app()->db->createCommand("SELECT  tipo_vivienda_id, ms.descripcion AS tipo,  COUNT(tipo_vivienda_id) AS cantidad FROM vivienda vi
@@ -820,12 +712,10 @@ class DocumentacionController extends Controller {
                         }
                         $value = $cont;
                     }
-
 //                    if ($value == '&MULTI_TOTAL_EDIFICIOS') { //cantidad de apartamentos 
 //                        $count_total_unif = UnidadHabitacional::model()->count('id_unidad_habitacional=:id_unidad_habitacional', array('id_unidad_habitacional' => $unidadHabitacional->id_unidad_habitacional));
 //                        $value = $count_total_unif;
 //                    }
-
                     $variable = VariablesDocumentos::model()->findByAttributes(array('variable' => $value));
                     if (!empty($variable)) {
                         $string = explode(',', $variable->relation);
@@ -917,36 +807,26 @@ class DocumentacionController extends Controller {
             }
         }
     }
-
     public function actionPdf($id) {
         $Documentacion = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => true, 'ente_documento' => 311));
         //$titilo = $Documentacion->tipoDocumento->descripcion;
         $documento = $Documentacion->documento;
         $id = $Documentacion->id_documentacion;
-
         $this->render('pdf', array('documento' => $documento, 'id' => $id));
     }
-
     public function actionPdfById($id) {
         $Documentacion = Documentacion::model()->findBypK($id);
 //        $titilo = $Documentacion->tipoDocumento->descripcion;
         $documento = $Documentacion->documento;
         $id = $Documentacion->id_documentacion;
-
         $this->render('pdf', array('documento' => $documento, 'id' => $id));
     }
-
     /*
      * Funcion que genera el view de documento perteneciente al beneficiario
      */
-
     public function actionGenerar($id) { //generar documento del beneficiario
         $model = new Documentacion;
-
-
-
         if (isset($_POST['PlantillaDocumento']) || isset($_POST['Documentacion'])) {
-
             $documento = new Documentacion;
             $buscarBeneficiario = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'estatus' => 53));
             if (!empty($buscarBeneficiario)) {
@@ -957,7 +837,6 @@ class DocumentacionController extends Controller {
                         )
                 );
             }
-
             $beneficiario = Beneficiario::model()->findByPk($id);
             $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
             $documento->tipo_documento_id = $beneficiario->unidadFamiliars[0]->analisisCreditos[0]->tipo_documento_id;
@@ -968,39 +847,29 @@ class DocumentacionController extends Controller {
             $documento->fk_beneficiario = $id;
             $documento->ente_documento = 311;
             $documento->doc_primera_vez = TRUE;
-
             if ($documento->save()) {
                 $this->redirect(array('/documentacion/adminbeneficiario'));
             }
         }
         $this->render('generar', array('model' => $model));
     }
-
     /*
      * Listar Adendum
      */
-
     public function actionListarAdendum($id) {
         if (Yii::app()->request->isAjaxRequest) {
             $this->renderPartial('listadoAdendum', array('model' => $id), false, true);
         }
     }
-
     /*
      * Action to Document Adendum
      */
-
     public function actionAdendum($id) {
-
         $model = new Documentacion;
-
         if (isset($_POST['PlantillaDocumento']) || isset($_POST['Documentacion'])) {
 //            var_dump($_POST['ids_unidad_familiar']);die;
-
             /*  ACTUALIZACION DE TABLA UNIDAD_FAMILIAR PARA LA IDENTICACION DE DOCUMENTO MULTI  */
-
             $documento = new Documentacion;
-
             $documento->documento = isset($_POST['PlantillaDocumento']['documento']) ? $_POST['PlantillaDocumento']['documento'] : $_POST['Documentacion']['documento'];
             $documento->tipo_documento_id = 277;
             $documento->estatus = 53; //ESTATUS ACTIVO
@@ -1009,7 +878,6 @@ class DocumentacionController extends Controller {
             $documento->usuario_id_creacion = Yii::app()->user->id;
             $documento->fk_beneficiario = $id;
             $documento->es_multi = true;
-
             if ($documento->save()) {
                 $ids_unidad_familiar = explode(',', $_POST['ids_unidad_familiar']);
                 foreach ($ids_unidad_familiar as $id) {
@@ -1026,13 +894,10 @@ class DocumentacionController extends Controller {
         }
         $this->render('adendum', array('model' => $model));
     }
-
     /*
      * FUNCION QUE LISTA LA INFORMACION DE LA UNIDAD MULTIFAMULIAR // DESARROLLO
      */
-
     public function actionListarDocumentoAdendum() {
-
         $agent_documentacion = $_POST['Documentacion']['agente_documentacion'];
         $apoderado = $_POST['Documentacion']['apoderado'];
         $error = array();
@@ -1045,27 +910,22 @@ class DocumentacionController extends Controller {
         } else {
 //            $unidadHabitacional = UnidadHabitacional::model()->findByPk($idUnidadHabitacional);
             $unidadHabitacional = UnidadHabitacional::model()->findByAttributes(array('desarrollo_id' => $idUnidadHabitacional));
-
             if (empty($unidadHabitacional)) {
                 array_push($error, '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> EL BENEFICIARIO NO PRESENTA UN ANÁLISIS DE CREDITO');
                 echo json_encode(array('cont' => $error, 'sms' => '3'));
                 Yii::app()->end();
             }
-
 //            $model = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $idUnidadHabitacional, 'es_activo' => 1, 'es_multi' => 1));
 //            if (empty($model)) {
             $model = PlantillaDocumento::model()->findByAttributes(array('fk_tipo_documento' => 277));
 //            }
-
             /* BUSQUEDA DE LOS DATOS DEL APODERADO */
             $data_apoderado = Abogados::model()->findByPk($apoderado);
             $info_apoderado = ConsultaOracle::setPersona("*", (int) $data_apoderado->persona_id);
 //            /* BUSQUEDA DE LOS DATOS DEL AGENTE DE DOCUMENTACION */
             $data_agente = Abogados::model()->findByPk($agent_documentacion);
             $info_agente = ConsultaOracle::setPersona("*", (int) $data_agente->persona_id);
-
             $array = explode(" ", $model->documento);
-
             foreach ($array as &$value) {
                 /* ------------------- DATOS DEL APODERADO ------------------- */
                 if (stristr($value, '&MULTI_NOMBRE_APODERADO')) {
@@ -1116,13 +976,11 @@ class DocumentacionController extends Controller {
                         array_push($error, '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> MUNICIPIO DEL REGISTRO PÚBLICO AL QUE PERTENECE EL APODERADO');
                     }
                 }
-
                 //nombre de la oficina del  registro publico
 //                if (stristr($value, '&IMPRE_ABOGADO')) {
 //                    $value = $data_apoderado->inpreabogado;
 //                }
 //                /* ------------------- FIN DATOS DEL APODERADO ------------------- */
-
                 /* ------------------- DATOS DEL AGENTE DE DOCUMENTACION------------------- */
                 if (stristr($value, '&NOMBRE_ABOGADO')) {
                     $value = $info_agente['PRIMER_NOMBRE'] . ' ' . $info_agente['PRIMER_APELLIDO'];
@@ -1131,7 +989,6 @@ class DocumentacionController extends Controller {
                     $value = $data_agente->inpreabogado;
                 }
                 /* ------------------- FIN DATOS DEL AGENTE DE DOCUMENTACION------------------- */
-
                 if (stristr($value, '&')) {
 //                    echo '<pre>';var_dump($value);
                     /*                     * ** SEARCH COSOLICITANTE * ** */
@@ -1150,7 +1007,6 @@ class DocumentacionController extends Controller {
                         }
                         $value = $cont;
                     }
-
                     if ($value == '&MULTI_CANT_UNIFA_LETRA') {
                         $count_unif = count($consulta);
                         $value = str_replace('00', '', Generico::numtoletras($count_unif));
@@ -1163,7 +1019,6 @@ class DocumentacionController extends Controller {
                         $count_total_unif = UnidadHabitacional::model()->count('desarrollo_id=:desarrollo_id', array('desarrollo_id' => $unidadHabitacional->desarrollo_id));
                         $value = $count_total_unif;
                     }
-
                     $variable = VariablesDocumentos::model()->findByAttributes(array('variable' => $value));
                     if (!empty($variable)) {
                         $string = explode(',', $variable->relation);
@@ -1255,7 +1110,6 @@ class DocumentacionController extends Controller {
             }
         }
     }
-
     public function actionAdminsarenBene() {
         $model = new Beneficiario('search');
         $model->unsetAttributes();  // clear any default values
@@ -1280,7 +1134,6 @@ class DocumentacionController extends Controller {
 //        } else {
 //            $tipo_poa = MaestroPoa::model()->findByPk(71);
 //        }
-
         $this->render('adminsarenBene', array(
             'model' => $model,
             'estado' => $estado,
@@ -1289,13 +1142,11 @@ class DocumentacionController extends Controller {
         ));
 //        $this->render('adminsarenBene', array('model' => $model,));
     }
-
     public function actionAdminsarenMulti() {
         $model = new VswMultifamiliar('search');
 //        $model->unsetAttributes();  // clear any default values
 //        if (isset($_GET['VswMultifamiliar']))
 //            $model->attributes = $_GET['VswMultifamiliar'];
-
         $sql = "select iduser from cruge_user where iduser =" . Yii::app()->user->id;
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
@@ -1315,55 +1166,41 @@ class DocumentacionController extends Controller {
 //        } else {
 //            $tipo_poa = MaestroPoa::model()->findByPk(71);
 //        }
-
         $this->render('adminsarenMulti', array(
             'model' => $model,
             'estado' => $estado,
             'cruge_estado' => $cruge_estado,
         ));
     }
-
     public function actionCambioEstatusDocumento() {
-
 //        $model = new Documentacion;
         $caso = $_POST['caso'];
         $id = $_POST['codigo'];
-
         if ($caso == 1) {
-
             $sql1 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 311 and es_multi = true)");
             $sql2 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 312 and es_multi = true)");
-
             $docBanavih = Yii::app()->db->createCommand($sql1)->queryColumn();
             $docSaren = Yii::app()->db->createCommand($sql2)->queryRow();
-
 //            var_dump($docSaren);die;
             foreach ($docBanavih as $idDocBanavih) {
                 
             }
-
             if ($docSaren != false) {
                 foreach ($docSaren as $idDocSaren) {
                     
                 }
             } else {
-
                 $idDocSaren = 0;
             }
-
             if ($idDocBanavih < $idDocSaren) {
-
                 echo json_encode(2);
             } else if ($idDocBanavih > $idDocSaren) {
-
-
                 $model = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1));
                 foreach ($model as $documentos) {
 //            var_dump($documentos);die;
 //                var_dump($id);die;
                     $desarrollo = UnidadHabitacional::model()->findByPk($id);
 //                var_dump($desarrollo);die;
-
                     $documentos->estatus = 285; //ESTATUS VALIDADO POR BANAVIH (MULTIFAMILIAR)
                     $documentos->usuario_id_creacion = Yii::app()->user->id;
                     $documentos->fecha_creacion = 'now()';
@@ -1374,21 +1211,15 @@ class DocumentacionController extends Controller {
                         $desarrollo->update();
                     }
                 }
-
                 if ($documentos->save()) {
-
                     echo json_encode(1);
                 }
             }
         } else if ($caso == 2) {
-
             $sql1 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 311 and es_multi = true)");
             $sql2 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 312 and es_multi = true)");
-
             $docBanavih = Yii::app()->db->createCommand($sql1)->queryColumn();
             $docSaren = Yii::app()->db->createCommand($sql2)->queryRow();
-
-
             foreach ($docBanavih as $idDocBanavih) {
                 
             }
@@ -1399,16 +1230,12 @@ class DocumentacionController extends Controller {
             } else {
                 $idDocSaren = 0;
             }
-
             if ($idDocBanavih < $idDocSaren) {
-
                 echo json_encode(2);
             } else {
-
                 $model = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1));
                 foreach ($model as $documentos) {
                     $desarrollo = UnidadHabitacional::model()->findByPk($id);
-
                     $documentos->estatus = 286; //ESTATUS VALIDADO POR SAREN (MULTIFAMILIAR)
                     $documentos->usuario_id_creacion = Yii::app()->user->id;
                     $documentos->fecha_creacion = 'now()';
@@ -1419,47 +1246,33 @@ class DocumentacionController extends Controller {
                         $desarrollo->update();
                     }
                 }
-
                 if ($documentos->save()) {
-
                     echo json_encode(1);
                 }
             }
         } else if ($caso == 3) {
-
             $sql1 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 311 and es_multi = false)");
             $sql2 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 312 and es_multi = false)");
-
             $docBanavih = Yii::app()->db->createCommand($sql1)->queryColumn();
             $docSaren = Yii::app()->db->createCommand($sql2)->queryRow();
-
 //            var_dump($docSaren);die;
             foreach ($docBanavih as $idDocBanavih) {
                 
             }
-
             if ($docSaren != false) {
                 foreach ($docSaren as $idDocSaren) {
                     
                 }
             } else {
-
                 $idDocSaren = 0;
             }
-
             if ($idDocBanavih < $idDocSaren) {
-
                 echo json_encode(2);
             } else if ($idDocBanavih > $idDocSaren) {
-
                 $model = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1));
-
-
 //            var_dump($bene->update());die;
-
                 foreach ($model as $documentos) {
                     $bene = Beneficiario::model()->findByPk($id);
-
                     $documentos->estatus = 292; //ESTATUS VALIDADO POR BANAVIH (UNIFAMILIAR)
                     $documentos->usuario_id_creacion = Yii::app()->user->id;
                     $documentos->fecha_creacion = 'now()';
@@ -1472,21 +1285,15 @@ class DocumentacionController extends Controller {
                     }
 //                var_dump($documentos->save());die;
                 }
-
                 if ($documentos->save()) {
-
                     echo json_encode(1);
                 }
             }
         } else if ($caso == 4) {
-
             $sql1 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 311 and es_multi = false)");
             $sql2 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 312 and es_multi = false)");
-
             $docBanavih = Yii::app()->db->createCommand($sql1)->queryColumn();
             $docSaren = Yii::app()->db->createCommand($sql2)->queryRow();
-
-
             foreach ($docBanavih as $idDocBanavih) {
                 
             }
@@ -1497,18 +1304,12 @@ class DocumentacionController extends Controller {
             } else {
                 $idDocSaren = 0;
             }
-
             if ($idDocBanavih < $idDocSaren) {
-
                 echo json_encode(2);
             } else {
-
                 $model = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1));
                 foreach ($model as $documentos) {
-
                     $bene = Beneficiario::model()->findByPk($id);
-
-
                     $documentos->estatus = 293; //ESTATUS VALIDADO POR SAREN (UNIFAMILIAR)
                     $documentos->usuario_id_creacion = Yii::app()->user->id;
                     $documentos->fecha_creacion = 'now()';
@@ -1526,25 +1327,19 @@ class DocumentacionController extends Controller {
                         
                     }
                 }
-
                 if ($documentos->save()) {
-
                     echo json_encode(1);
                 }
             }
         } else if ($caso == 5) {
-
 //            VALIDACION PARA CUANDO EL DOCUMENTO A DEVOLVER A BANAVIH NO HA SIDO CORREGIDO
             $sql1 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 311 and es_multi = false)");
             $sql2 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 312 and es_multi = false)");
-
             $docBanavih = Yii::app()->db->createCommand($sql1)->queryColumn();
             $docSaren = Yii::app()->db->createCommand($sql2)->queryRow();
-
             foreach ($docBanavih as $idDocBanavih) {
                 
             }
-
             if ($docSaren != false) {
                 foreach ($docSaren as $idDocSaren) {
                     
@@ -1552,23 +1347,15 @@ class DocumentacionController extends Controller {
             } else {
                 $idDocSaren = 0;
             }
-
             if ($idDocBanavih > $idDocSaren) {
-
                 echo json_encode(2);
             } else { //FIN DE LA VALIDACION
                 $model = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1));
                 foreach ($model as $documentos) {
-
                     $bene = Beneficiario::model()->findByPk($id);
-
-
-
-
                     $documentos->estatus = 294; //ESTATUS DEVUELTO POR SAREN (UNIFAMILIAR)
                     $documentos->usuario_id_creacion = Yii::app()->user->id;
                     $documentos->fecha_creacion = 'now()';
-
                     if ($documentos->save()) {
                         $bene->estatus_msj = 'DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)';
                         $bene->fecha_actualizacion = 'now()';
@@ -1576,39 +1363,27 @@ class DocumentacionController extends Controller {
                         $bene->update();
                     }
                 }
-
-
                 if ($documentos->save()) {
-
                     echo json_encode(1);
                 }
-
                 $model2 = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'doc_primera_vez' => 1));
-
                 if ($model2 != "") {
-
 //            var_dump($model2);die;
                     foreach ($model2 as $documentoss) {
-
                         $documentoss->doc_primera_vez = false;
                         $documentoss->save();
                     }
                 }
             }
         } else if ($caso == 6) {
-
-
 //            VALIDACION PARA CUANDO EL DOCUMENTO A DEVOLVER A BANAVIH NO HA SIDO CORREGIDO
             $sql1 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 311 and es_multi = true)");
             $sql2 = ("SELECT id_documentacion FROM documentacion WHERE id_documentacion = (SELECT MAX (id_documentacion) FROM documentacion where fk_beneficiario =" . $id . "and es_activo = true and ente_documento = 312 and es_multi = true)");
-
             $docBanavih = Yii::app()->db->createCommand($sql1)->queryColumn();
             $docSaren = Yii::app()->db->createCommand($sql2)->queryRow();
-
             foreach ($docBanavih as $idDocBanavih) {
                 
             }
-
             if ($docSaren != false) {
                 foreach ($docSaren as $idDocSaren) {
                     
@@ -1616,23 +1391,16 @@ class DocumentacionController extends Controller {
             } else {
                 $idDocSaren = 0;
             }
-
             if ($idDocBanavih > $idDocSaren) {
-
                 echo json_encode(2);
             } else { //FIN DE LA VALIDACION
                 $model = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1));
-
 //            $model2 = Documentacion::model()->findAll('fk_beneficiario=' . $id);
-
                 foreach ($model as $documentos) {
-
                     $desarrollo = UnidadHabitacional::model()->findByPk($id);
-
 //                if (empty($desarrollo->observaciones)) {
 ////                    echo json_encode(2);
 //                } else {
-
                     $documentos->estatus = 295; //ESTATUS DEVUELTO POR SAREN (MULTIFAMILIAR)
                     $documentos->usuario_id_creacion = Yii::app()->user->id;
                     $documentos->fecha_creacion = 'now()';
@@ -1644,19 +1412,13 @@ class DocumentacionController extends Controller {
                         $desarrollo->update();
                     }
                 }
-
                 if ($documentos->save()) {
-
                     echo json_encode(1);
                 }
-
                 $model2 = Documentacion::model()->findAllByAttributes(array('fk_beneficiario' => $id, 'doc_primera_vez' => 1));
-
                 if ($model2 != "") {
-
 //            var_dump($model2);die;
                     foreach ($model2 as $documentoss) {
-
                         $documentoss->doc_primera_vez = false;
                         $documentoss->save();
                     }
@@ -1664,5 +1426,4 @@ class DocumentacionController extends Controller {
             }
         }
     }
-
 }

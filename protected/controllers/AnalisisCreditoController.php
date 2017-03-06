@@ -138,7 +138,8 @@ class AnalisisCreditoController extends Controller {
         //TABLA DE SUELDO MENSUAL DEL BENEFICIARIO Y GRUPO_FAMILIAR
 
         //$TableSueldo = '<table class="table table-bordered">';
-        $TableSueldo='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th><th>Ingreso Mensual Nuevo</th>';
+        $TableSueldo='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th>';
+//        $TableSueldo='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th><th>Ingreso Mensual Nuevo</th>'; colocarlo OJOO
 
        // $TableSueldo = '<table class="table table-bordered">';
         //$TableSueldo.='<th>Beneficiario/Grupo Familiar</th><th>Sueldo Declarado</th>';
@@ -278,6 +279,7 @@ if ($desarrollo->fuente_financiamiento_id == 2) {
             $model->diferencia_pago = str_replace(',', '.', str_replace('.', '', $_POST['AnalisisCredito']['diferencia_pago'])); //Diferencia de pago resta el precio de la vivienda - capacidad de pago
             $model->tasa_mora_id = ($_POST['Desarrollo']['fuente_financiamiento_id'] == 2 ) ? 3 : 2; // tasa_mora guarda 2% para fasp, 3% para faov 
             $model->fecha_protocolizacion = $_POST['AnalisisCredito']['fecha_protocolizacion']; // fecha en la que se hace el analisis 
+            $model->fecha_analisis = $_POST['AnalisisCredito']['fecha_protocolizacion']; // fecha en la que se hace el analisis 
             $model->monto_cuota_finan_requerida = str_replace(',', '.', str_replace('.', '', $_POST['AnalisisCredito']['monto_cuota_finan_requerida'])); //monto cuota financiera requerida
             
             //comision flat 
@@ -379,6 +381,7 @@ if ($desarrollo->fuente_financiamiento_id == 2) {
                             $extra->tasa_fongar_id = $model->tasa_fongar_id;
                             $extra->tasa_interes_id = $model->tasa_interes_id;
                             $extra->fecha_protocolizacion = $model->fecha_protocolizacion;
+                            $extra->fecha_analisis=$model->fecha_analisis;
                             $extra->cuota_extraordinarias = true;
                             $extra->tasa_mora_id = $model->tasa_mora_id;
                             $extra->diferencia_pago = $model->diferencia_pago;
@@ -455,6 +458,211 @@ if ($desarrollo->fuente_financiamiento_id == 2) {
             $totalMontoCuotaFinan = 0;
             $htmlprincipal = "<table align='right' width='100%' border='0'>       
                                 <tr>
+                                    <td colspan='4' align='center'><b><font size='4'>DATOS DEL CRÉDITO</br></br></font></td>
+                                </tr>		
+                              </table>
+        
+                    <table width='100%' >
+                        <tr  style='background:#E5E2E2'>
+                            <td colspan='1'><b>Monto Solicitado: </b></td><td colspan='1'>" . number_format($analisis->unidadFamiliar->beneficiario->beneficiarioTemporal->vivienda->precio_vivienda, 2, ',', '.') . "</td> 
+                        </tr>";
+                        if ($analisis->sub_directo_habitacional!='0.00'){
+                       $htmlprincipal .= "
+                         <tr>
+                            <td colspan='1'><b>Subsidio Directo Habitacional:</b></td><td colspan='1'>" . $analisis->sub_directo_habitacional . "</td>
+                        </tr>";
+                        }
+                         if ($analisis->sub_vivienda_perdida!='0.00'){
+                         $htmlprincipal .= "
+                         <tr   style='background:#E5E2E2'>
+                            <td colspan='1'><b>Reconocimiento Vivienda Perdida:</b></td><td colspan='1'>" . number_format($analisis->sub_vivienda_perdida, 2, ',', '.') . "</td>
+                        </tr>";
+                          }
+                           if (($analisis->sub_directo_habitacional!='0.00')&&($analisis->sub_vivienda_perdida!='0.00')){
+                         $htmlprincipal .= "
+                        <tr>
+                            <td colspan=''><b>Subsidio Total (Bs.):</b></td><td colspan='1'>" . number_format($analisis->sub_directo_habitacional + $analisis->sub_vivienda_perdida, 2, ',', '.') . "</td>
+                        </tr>"; 
+                           }
+                           
+                          if ($analisis->monto_inicial!='0.00'){
+                          $htmlprincipal .= "
+                        <tr   style='background:#E5E2E2'>
+                                <td colspan='1'><b>Cuota Inicial Pagada (Bs.):</b></td><td colspan='1'>" . number_format($analisis->monto_inicial, 2, ',', '.') . "</td>
+                        </tr>";
+                          }
+                        $htmlprincipal .= "  
+                        <tr>
+                            <td colspan='1'><b>Monto Credito A Otorgar: </b></td><td colspan='1'>" . number_format($analisis->monto_credito, 2, ',', '.') . "</td>             
+                        </tr>
+                        
+                        <tr   style='background:#E5E2E2'>
+                            <td colspan='1'><b> Tasa Interes:</b></td><td colspan='1'>" . $analicredito->tasaInteres->tasa_interes . " %</td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan='1'><b>Plazo del Credito:</b></td><td colspan='1'>" . number_format($analisis->nro_cuotas/12  )." - AÑOS</td>
+                        </tr>
+                        <tr    style='background:#E5E2E2'>
+                            <td colspan='1'><b>Pago Total Mensual:</b></td><td colspan='1'>" . number_format($analisis->monto_cuota_f_total, 2, ',', '.') . "</td>
+                        </tr>
+                        
+                    </table>  <br/>";
+
+            $htmlprincipal.=" <table align='right' width='100%'  border='0'> 
+                            <tr >
+                                <td colspan='4' align='center'><b><font size='4'>DATOS PARA LA CANCELACIÓN</br></br></font><font size='6'> </font></td>
+                            </tr>
+                             </table>
+                             <table width='100%'>
+                            <tr style='background:#E5E2E2'>
+                                <td colspan='2'><b>Institución Bancaria:</b></td><td  colspan='2'> BANCO DE VENEZUELA </td>
+                            </tr>
+                            <tr >
+                                <td colspan='2'><b>Cuenta Corriente:</b></td><td  colspan='2'> 0102-0552-23-0000027685 </td>
+                            </tr>
+                            <tr style='background:#E5E2E2'>
+                                <td colspan='2'><b>A nombre de:</b></td><td  colspan='2'> <b>BANAVIH COBRANZAS</b></td>
+                            </tr>
+                            <tr >
+                                <td colspan='2'><b>Serial de Cliente:</b></td><td  colspan='2'>" . date('Y') . " " . $analicredito->unidadFamiliar->beneficiario->beneficiarioTemporal->cedula . " </td>
+                            </tr> 
+                            <tr style='background:#E5E2E2'>
+                                <td colspan='2'><b>Fecha Primer Pago:</b></td><td  colspan='2'>" . date("d/m/Y", strtotime($analisis->fecha_protocolizacion)) . "</td>
+                            </tr>
+                            </table>
+                            <br/>";
+
+//            $htmlprincipal.="<table align='right' width='100%'  border='0'>       
+//                        <tr>
+//                            <td colspan='4' align='center'><b><font size='4'>PRIMA INICIAL FONDO DE GARANTIA</br></br></font><font size='6'> </font></td>
+//                        </tr>		
+//                        <tr  style='background:#E5E2E2'>
+//                            <td colspan='2'><b>Prima Inicial Fondo de Garantia (Bs.):</b></td><td  colspan='2'>" . number_format($analisis->monto_prima_inicial_fg, 2, ',', '.') . "</td>
+//                        <tr>
+//                            <td colspan='2'><b>Porcentaje de la Prima Inicial (Bs.):</b></td><td  colspan='2'> 1,43% </td>
+//                        </tr>		
+//                        </tr>
+//                        </table>";
+
+
+
+
+//            $tablaAmortiz = '<table border=1 cellspacing=1 cellpadding=0 bordercolor="E5E2E2">';
+//            $tablaAmortiz.= ' <tr><th colspan="4" style="background:#E5E2E2; tex-algn:center;"><b>CUOTA FINANCIERA</th><th colspan="1" style="background:#E5E2E2">PRIMA <br/>RENOVAC. <br/>FONGAR</th>
+//                            <th colspan="2" style="background:#E5E2E2">CUOTA <br/>TOTAL<br/>MENSUAL</th>
+//                        </tr>';
+//            $tablaAmortiz.= '<tr  style="background:#E5E2E2"> <th colspan="1">N-MESES</th><th colspan="1">SALDO<br/>DEUDOR (Bs.)</th><th colspan="1">AMORTIZACION <br>DE CAPITAL</th><th colspan="1">INTERESES<br/>(Bs.)</th>
+//                            <th colspan="1">PRIMA DEL <br/>FONDO DE<br/> GARANTIA (Bs.)</th><th colspan="1">PAGO TOTAL <br/> MENSUAL (Bs.)</th><th colspan="1">FECHA DE <br/> VENCIMIENTO</th><th colspan="1"></th>
+//                        </tr>';
+            $tasaFongar = 0.0143; //tasa fongar al 1.43%
+            $fechaprotocolizacion = $analisis->fecha_protocolizacion; //fecha en que se hizo genero el calculo
+            $mes = 1; //variable definida en 1 para la sumar por meses 
+
+            for ($i = 1; $i <= $meses; $i++) { // inicio for para incrementar los meses   
+                $primaFondoGa = number_format($montocredito * ($tasaFongar / 12), 2, '.', '');
+                $intereses = number_format($montocredito * (($tasainteres / 100) / 12), 2, '.', '');
+                $amortizacion = number_format(($montoCoutaFinanciera - $intereses), 2, '.', '');
+                $cuotamen = number_format(($intereses + $primaFondoGa + $amortizacion), 2, '.', '');
+                $nuevafecha = strtotime('+' . $mes . ' month', strtotime($fechaprotocolizacion)); //$nuevafecha  fecha de Protocolizacion 01/01/0001 00:00:00 convertida en fecha, sumando el mes siguiente
+                $mes++;
+                $nuevafecha = date('d/m/Y', $nuevafecha); //formato de la fecha nueva
+
+                $saldoAnt = $montocredito - $amortizacion; // saldo nuevo una vez restada en el $montocredito - $amortizacion
+
+                if ($i == $meses) { //inicio if
+                    $saldo = number_format(0.00, 2, '.', ''); //saldo deudor
+                } else {
+
+                    $saldo = number_format($saldoAnt, 2, '.', ''); //saldo deudor
+                } //fin if 
+
+                $totalInteres = $totalInteres + $intereses;
+                $totalCuotaFongar = $totalCuotaFongar + $primaFondoGa;
+                $totalMontoCuotaFinan = $totalMontoCuotaFinan + $montoCoutaFinanciera;
+                $totalCancelar = $totalCuotaFongar + $totalMontoCuotaFinan;
+//                $tablaAmortiz.='<tr><td>' . $i . '</td><td style="text-align:center;">' . number_format($saldo, 2, ',', '.') . '</td><td style="text-align:center;">' . number_format($amortizacion, 2, ',', '.') . '</td><td style="text-align:center;">' . number_format($intereses, 2, ',', '.') . '</td>'
+//                        . '<td style="text-align:center;">' . number_format($primaFondoGa, 2, ',', '.') . '</td><td style="text-align:center;">' . number_format($cuotamen, 2, ',', '.') . '</td><td style="text-align:center;">' . $nuevafecha . '</td></tr>';
+                $montocredito = $saldoAnt; // saldo deudor
+            }//fin del for
+//            $tablaAmortiz.='</table>';
+//            $htmlprincipal.="<table  align='right' width='100%' border='0'>       
+//                                <tr>
+//                                    <td colspan='2' align='center'><b><font size='5'>RESUMEN DEL PRESTAMO AL FINAL DE " . $analisis->nro_cuotas . " MESES</br></br></font><font size='6'> </font>
+//                                    </td>
+//                                    <br/>
+//                                </tr>		
+//                                <tr style='background:#E5E2E2'>
+//                                    <td colspan='1'><b>Total Capital (Bs.):</b></td><td colspan='1'>" . number_format($analisis->monto_credito, 2, ',', '.') . "</td>
+//                                </tr>
+//                                <tr>
+//                                    <td colspan='1'><b>Total Interes (Bs.):</b></td><td colspan='1'>" . number_format($totalInteres, 2, ',', '.') . "</td>
+//                                </tr>
+//                                <tr style='background:#E5E2E2'>
+//                                    <td colspan='1'><b>Total Cuota Financiera (Bs.):</b></td><td colspan='1'>" . number_format($totalMontoCuotaFinan, 2, ',', '.') . "</td>
+//                                </tr>
+//                                <tr>
+//                                    <td colspan='1'><b>Total Cuota FONDO DE GARANTÍA (Bs.):</b></td><td colspan='1'>" . number_format($totalCuotaFongar, 2, ',', '.') . "</td>
+//                                </tr>
+//                                <tr  style='background:#E5E2E2'>
+//                                    <td colspan='1'><b>TOTAL A CANCELAR (Bs.):</b></td><td colspan='1'>" . number_format($totalCancelar, 2, ',', '.') . "</td>
+//                                </tr>
+//                            </table> <br/><br/><br/><br/><br/><br/><br/><br/>";
+        }
+
+        $updateBene = Beneficiario::model()->updateByPk($beneficiario->id_beneficiario, array(
+            'estatus_beneficiario_id' => 271,
+            'usuario_id_actualizacion' => Yii::app()->user->id,
+            'fecha_actualizacion' => 'now()'
+        ));
+        $updateBeneTemp = BeneficiarioTemporal::model()->updateByPk($beneficiario->beneficiario_temporal_id, array(
+            'estatus' => 272,
+            'usuario_id_actualizacion' => Yii::app()->user->id,
+            'fecha_actualizacion' => 'now()'
+        ));
+
+        $this->render('tablaAmortizacionpdf', array(
+            'model' => $credito, 'totalInteres' => $totalInteres, 'totalCuotaFongar' => $totalCuotaFongar, 'analicredito' => $analicredito,
+            'totalMontoCuotaFinan' => $totalMontoCuotaFinan, 'totalCancelar' => $totalCancelar, 'htmlprincipal' => $htmlprincipal
+        ));
+    }
+    /*
+     * PDF DE TABLA DE AMORTIZACION completa
+     */
+
+            
+    public function actionTablaAmortizacionCompletaPdf($id) {
+        $id_unidad_familiar = UnidadFamiliar::model()->findByAttributes(array('beneficiario_id' => $id))->id_unidad_familiar; // ID DE LA UNIDAD_FAMILIAR PARA TRAER EL BENEFICIARIO
+        $analicredito = AnalisisCredito::model()->findByAttributes(array('unidad_familiar_id' => $id_unidad_familiar)); // BUSQUEDA DEL ID_UNIDAD_FAMILIAR EN ANALISIS DE CREDITO 
+        $beneficiario = Beneficiario::model()->findByPk($id); //ID DEL BENEFICIARIO
+//        $n = new AnalisisCredito();
+        $criteria = new CDbCriteria;
+        $criteria->condition = 'unidad_familiar_id= :unidad_familiar';
+        $criteria->params = array(":unidad_familiar" => (int) $id_unidad_familiar);
+        $credito = AnalisisCredito::model()->findAll($criteria);
+
+
+        $htmlprincipal = "<table align='right' width='100%' border='0'> ";
+        foreach ($credito AS $analisis) {
+//      var_dump($analisis->tasaInteres->tasa_interes);die();
+
+            /* monto de la cuota finaciera es la funcion que se calcula de acuerdo al interes,  los años , y el monto de credito a pagar ; funcion PMT EN EXCEL
+             * $tasainteres=> 4.66/100/12
+             * $años=> cantidad de años
+             * $monto credito=> monto a pagar solicitado
+             */
+            $meses = $analisis->nro_cuotas; //meses para pagar
+            $años = $analisis->plazo_credito_ano; // cantidad en años para los meses 
+            $cuotamensual = $analisis->monto_cuota_f_total; //cuota total mensual a pagar
+            $montocredito = $analisis->monto_credito; //monto total a pagar del credito
+            $tasainteres = $analisis->tasaInteres->tasa_interes; // tasa de interes 
+            $montoCoutaFinanciera = CalculosController::actionMontoCoutaFinanciera($tasainteres, $años, $montocredito);
+            $montoCoutaFinanciera = number_format($montoCoutaFinanciera, 2, '.', '');
+            $totalInteres = 0;
+            $totalCuotaFongar = 0;
+            $totalMontoCuotaFinan = 0;
+            $htmlprincipal = "<table align='right' width='100%' border='0'>       
+                                <tr>
                                     <td colspan='4' align='center'><b><font size='5'>DATOS DEL CRÉDITO</br></br></font></td>
                                 </tr>		
                               </table>
@@ -462,22 +670,33 @@ if ($desarrollo->fuente_financiamiento_id == 2) {
                     <table width='100%' >
                         <tr  style='background:#E5E2E2'>
                             <td colspan='1'><b>Monto Solicitado: </b></td><td colspan='1'>" . number_format($analisis->unidadFamiliar->beneficiario->beneficiarioTemporal->vivienda->precio_vivienda, 2, ',', '.') . "</td> 
-                        </tr>
-                        
-                        <tr>
+                        </tr>";
+                        if ($analisis->sub_directo_habitacional!='0.00'){
+                       $htmlprincipal .= "
+                         <tr>
                             <td colspan='1'><b>Subsidio Directo Habitacional:</b></td><td colspan='1'>" . $analisis->sub_directo_habitacional . "</td>
-                        </tr>
-                        
-                        <tr   style='background:#E5E2E2'>
-                            <td colspan='1'><b>Subsidio Vivienda Perdida:</b></td><td colspan='1'>" . number_format($analisis->sub_vivienda_perdida, 2, ',', '.') . "</td>
-                        </tr>
-                        
+                        </tr>";
+                        }
+                         if ($analisis->sub_vivienda_perdida!='0.00'){
+                         $htmlprincipal .= "
+                         <tr   style='background:#E5E2E2'>
+                            <td colspan='1'><b>Reconosimiento Vivienda Perdida:</b></td><td colspan='1'>" . number_format($analisis->sub_vivienda_perdida, 2, ',', '.') . "</td>
+                        </tr>";
+                          }
+                           if (($analisis->sub_directo_habitacional!='0.00')&&($analisis->sub_vivienda_perdida!='0.00')){
+                         $htmlprincipal .= "
                         <tr>
                             <td colspan=''><b>Subsidio Total (Bs.):</b></td><td colspan='1'>" . number_format($analisis->sub_directo_habitacional + $analisis->sub_vivienda_perdida, 2, ',', '.') . "</td>
-                        </tr>
+                        </tr>"; 
+                           }
+                           
+                          if ($analisis->monto_inicial!='0.00'){
+                          $htmlprincipal .= "
                         <tr   style='background:#E5E2E2'>
                                 <td colspan='1'><b>Cuota Inicial Pagada (Bs.):</b></td><td colspan='1'>" . number_format($analisis->monto_inicial, 2, ',', '.') . "</td>
-                        </tr>
+                        </tr>";
+                          }
+                        $htmlprincipal .= "  
                         <tr>
                             <td colspan='1'><b>Monto Credito A Otorgar: </b></td><td colspan='1'>" . number_format($analisis->monto_credito, 2, ',', '.') . "</td>             
                         </tr>
@@ -607,7 +826,7 @@ if ($desarrollo->fuente_financiamiento_id == 2) {
             'fecha_actualizacion' => 'now()'
         ));
 
-        $this->render('tablaAmortizacionpdf', array(
+        $this->render('tablaAmortizacionCompletapdf', array(
             'model' => $credito, 'totalInteres' => $totalInteres, 'totalCuotaFongar' => $totalCuotaFongar, 'analicredito' => $analicredito,
             'totalMontoCuotaFinan' => $totalMontoCuotaFinan, 'totalCancelar' => $totalCancelar, 'tablaAmortiz' => $tablaAmortiz, 'htmlprincipal' => $htmlprincipal
         ));

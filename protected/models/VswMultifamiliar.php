@@ -161,45 +161,6 @@ class VswMultifamiliar extends CActiveRecord {
         ));
 
     }
-    
-    public function search_analista() {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-        //die('Llegue!');
-        if(!empty($this->estatus_msj))
-            die($this->estatus_msj);
-        
-        $criteria = new CDbCriteria;
-        
-        $criteria->select = array(
-                't.id_unidad_habitacional', 
-                't.nombre_unidad_habitacional', 
-                't.estado', 
-                'sum(t.cantidad_vivienda) as cantidad' , 
-                'sum(t.cantidad_vivienda) as porcentaje', 
-                'sum(t.cantidad_vivienda) as total_para_documentar', 
-                't.estatus_msj', 
-                't.observaciones',
-                't.id_desarrollo');
-        
-        $criteria->with = array('vsw_asignaciones_documentos'=>array('select'=>''));
-        $criteria->compare('t.id_desarrollo', $this->id_desarrollo);
-        $criteria->compare('t.nombre_desarrollo', $this->nombre_desarrollo, true);
-        $criteria->compare('t.id_unidad_habitacional', $this->id_unidad_habitacional);
-        $criteria->compare('t.nombre_unidad_habitacional', $this->nombre_unidad_habitacional, true);
-        $criteria->compare('t.cod_estado', $this->cod_estado);
-        $criteria->compare('t.estado', $this->estado, true);
-        $criteria->compare('t.cantidad_vivienda', $this->cantidad_vivienda);
-        $criteria->compare('t.id_estatus', $this->id_estatus);
-        $criteria->compare('t.estatus', $this->estatus, true);
-        $criteria->compare('t.estatus_msj', $this->estatus_msj, true);
-        $criteria->compare('vsw_asignaciones_documentos.fk_usuario_asignado', Yii::app()->user->id);
-        $criteria->group = 't.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones, t.id_desarrollo';
-
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-        ));
-
-    }
 
     public function searchGroupBy()
     {

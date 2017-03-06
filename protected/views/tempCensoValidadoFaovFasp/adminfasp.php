@@ -151,7 +151,7 @@ $this->widget('booster.widgets.TbGridView', array(
                 ),
                 'acreditacion' => array(
                     'label' => 'Análisis Financiero/Crédito',
-                    'icon' => 'glyphicon glyphicon-euro',
+                    'icon' => 'glyphicon glyphicon-list-alt',
                     'size' => 'medium',
                     'options' => array('style' => 'margin-left:17px;'),
                     'visible' => '((Yii::app()->user->checkAccess("action_analisiscredito_create")) && $data->estatus == "ASIGNADO"  || $data->estatus == "DEVUELTO")',
