@@ -3,21 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/analisisCredito/create.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/controllers/GrupoFamiliarController.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/controllers/TempCensoValidadoFaovFaspController.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/tempCensoValidadoFaovFasp/_search.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/analisisCredito/adminanalisiscredito.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/grupoFamiliar/actualizarPersona.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/controllers/FuenteFinanciamientoController.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/js/validacion.js</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/controllers/CargaMasivaController.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/controllers/AnalisisCreditoController.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/documentacion/adminsarenBene.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/analisisCredito/_form.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/documentacion/adminbeneficiario.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/views/tempCensoValidadoFaovFasp/_view.php</file>
-            <file>file:/var/www/html/protocolizacion_calidad/protected/controllers/DocumentacionController.php</file>
+            <file>file:/var/www/sisprov_ds/protected/views/documentacion/adminmultifamiliarFiltro.php</file>
+            <file>file:/var/www/sisprov_ds/protected/views/tempCensoValidadoFaovFasp/admin.php</file>
+            <file>file:/var/www/sisprov_ds/protected/controllers/DocumentacionController.php</file>
+            <file>file:/var/www/sisprov_ds/protected/models/AnalisisCredito.php</file>
+            <file>file:/var/www/sisprov_ds/protected/views/analisisCredito/admin.php</file>
+            <file>file:/var/www/sisprov_ds/protected/views/analisisCredito/adminanalisiscredito.php</file>
+            <file>file:/var/www/sisprov_ds/protected/controllers/TempCensoValidadoFaovFaspController.php</file>
+            <file>file:/var/www/sisprov_ds/protected/models/TempCensoValidadoFaovFasp.php</file>
+            <file>file:/var/www/sisprov_ds/protected/controllers/AnalisisCreditoController.php</file>
+            <file>file:/var/www/sisprov_ds/protected/models/VswMultifamiliar.php</file>
+            <file>file:/var/www/sisprov_ds/protected/models/Documentacion.php</file>
+            <file>file:/var/www/sisprov_ds/protected/models/VswAsignacionesDocumentos.php</file>
         </group>
     </open-files>
 </project-private>
