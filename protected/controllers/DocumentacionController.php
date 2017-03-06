@@ -147,6 +147,22 @@ class DocumentacionController extends Controller {
         ));
     }
     
+    public function actionAdminmultifamiliarFiltro()
+    {
+
+        $modelVswMultifamiliar = new VswMultifamiliar('search');
+            $modelVswMultifamiliar->unsetAttributes();
+        if (isset($_GET['VswMultifamiliar'])){
+            $modelVswMultifamiliar->attributes = $_GET['VswMultifamiliar'];
+        }    
+        
+        
+        $asignaciones = new Asignaciones;
+        $this->render('adminmultifamiliarFiltro', array('asignaciones' => $asignaciones,
+            'modelVswMultifamiliar' => $modelVswMultifamiliar,
+        ));
+    }
+    
         /**
      * Manages all models.
      */
