@@ -22,6 +22,7 @@
  */
 class Asignaciones extends CActiveRecord
 {
+    public $asignar_label;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -78,6 +79,7 @@ class Asignaciones extends CActiveRecord
 			'usuario_id_actualizacion' => 'Usuario Id Actualizacion',
 			'es_activo' => 'Es Activo',
 			'fk_estatus' => 'Fk Estatus',
+			'asignar_label' => 'Asignación de Analista para el Proceso de Documentación',
 		);
 	}
 

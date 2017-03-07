@@ -125,6 +125,7 @@ class VswMultifamiliar extends CActiveRecord {
         $criteria = new CDbCriteria;
 //        $criteria->order = 'id_unidad_habitacional DESC';
         $criteria->select = ''
+                . 't.nombre_desarrollo, '
                 . 't.id_unidad_habitacional, '
                 . 't.nombre_unidad_habitacional , '
                 . 't.estado , '
@@ -148,11 +149,11 @@ class VswMultifamiliar extends CActiveRecord {
          
         
         if (Yii::app()->user->checkAccess("administrador_documentacion")){
-            $criteria->group = 't.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones';
+            $criteria->group = 't.nombre_desarrollo, t.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones';
         }elseif (Yii::app()->user->checkAccess("analista_documentacion")){
             $criteria->with = array('vsw_asignaciones_documentos'=>array('select'=>''));
             $criteria->compare('vsw_asignaciones_documentos.fk_usuario_asignado', Yii::app()->user->id);
-            $criteria->group = 't.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones, t.id_desarrollo';
+            $criteria->group = 't.nombre_desarrollo, t.id_unidad_habitacional, t.nombre_unidad_habitacional , t.estado, t.estatus_msj, t.observaciones, t.id_desarrollo';
         }
             
 

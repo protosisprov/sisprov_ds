@@ -245,6 +245,52 @@ class Beneficiario extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
+    
+    public function searchBeneficiariosDocumentacion()
+    {
+//        $criteria = new CDbCriteria;
+//        $criteria->join = 'join beneficiario_temporal tmp ON t.beneficiario_temporal_id = tmp.id_beneficiario_temporal
+//                       join vsw_asignaciones_documentos doc ON doc.fk_caso_asignado = tmp.unidad_habitacional_id and doc.es_activo=true';
+//        return new CActiveDataProvider($this, array(
+//            'criteria' => $criteria,
+//        ));
+        
+        $criteria = new CDbCriteria;
+//        $criteria->order = 'id_beneficiario DESC';
+        $criteria->compare('id_beneficiario', $this->id_beneficiario);
+        $criteria->compare('persona_id', $this->persona_id);
+        $criteria->compare('rif', $this->rif, true);
+        $criteria->compare('condicion_trabajo_id', $this->condicion_trabajo_id);
+        $criteria->compare('fuente_ingreso_id', $this->fuente_ingreso_id);
+        $criteria->compare('relacion_trabajo_id', $this->relacion_trabajo_id);
+        $criteria->compare('sector_trabajo_id', $this->sector_trabajo_id);
+        $criteria->compare('nombre_empresa', $this->nombre_empresa, true);
+        $criteria->compare('direccion_empresa', $this->direccion_empresa, true);
+        $criteria->compare('telefono_trabajo', $this->telefono_trabajo, true);
+        $criteria->compare('gen_cargo_id', $this->gen_cargo_id);
+        $criteria->compare('ingreso_mensual', $this->ingreso_mensual, true);
+        $criteria->compare('ingreso_declarado', $this->ingreso_declarado, true);
+        $criteria->compare('ingreso_promedio_faov', $this->ingreso_promedio_faov, true);
+        $criteria->compare('cotiza_faov', $this->cotiza_faov);
+        $criteria->compare('direccion_anterior', $this->direccion_anterior, true);
+        $criteria->compare('parroquia_id', $this->parroquia_id);
+        $criteria->compare('urban_barrio', $this->urban_barrio, true);
+        $criteria->compare('av_call_esq_carr', $this->av_call_esq_carr, true);
+        $criteria->compare('zona', $this->zona, true);
+        $criteria->compare('fecha_ultimo_censo', $this->fecha_ultimo_censo, true);
+        $criteria->compare('protocolizado', $this->protocolizado);
+        $criteria->compare('fecha_creacion', $this->fecha_creacion, true);
+        $criteria->compare('fecha_actualizacion', $this->fecha_actualizacion, true);
+        $criteria->compare('usuario_id_creacion', $this->usuario_id_creacion);
+        $criteria->compare('usuario_id_actualizacion', $this->usuario_id_actualizacion);
+        $criteria->compare('estatus_beneficiario_id', $this->estatus_beneficiario_id);
+        $criteria->compare('codigo_trab', $this->codigo_trab, true);
+        $criteria->compare('condicion_laboral', $this->condicion_laboral);
+        $criteria->compare('beneficiario_temporal_id', $this->beneficiario_temporal_id);
+        $criteria->compare('observacion', $this->observacion, true);
+        $criteria->compare('estatus', $this->estatus, true);
+        $criteria->compare('documento_beneficiario',$this->documento_beneficiario);
+    }
 
     /**
      * Returns the static model of the specified AR class.

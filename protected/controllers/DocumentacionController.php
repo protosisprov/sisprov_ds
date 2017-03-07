@@ -118,6 +118,18 @@ class DocumentacionController extends Controller {
             'model' => $model, 'asignaciones' => $asignaciones,
         ));
     }
+    
+    public function actionAdminbeneficiarioFiltro() {
+        $asignaciones = new Asignaciones;
+        $model = new Beneficiario('search');
+        $model->unsetAttributes();  // clear any default values
+
+        if (isset($_GET['Beneficiario']))
+            $model->attributes = $_GET['Beneficiario'];
+        $this->render('adminbeneficiarioFiltro', array(
+            'model' => $model, 'asignaciones' => $asignaciones,
+        ));
+    }
     /*
      * FUNCION QUE CONSULTA SI EL DOCUMENTO EXISTE (MULTIFAMILIAR)
      */

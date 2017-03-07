@@ -53,7 +53,16 @@ function PorcentajeVivienda($iD) {
     }
 
 
+
     return $porcentaje;
+}
+
+function PorcentajeTotalViviendas($cantidad, $censadas)
+{
+    $porcentaje = $censadas*100/$cantidad;
+//    return $cantidad." - ".$censadas. " = ".$porcentaje;
+//    return $cantidad." - ".$censadas;
+    return ($porcentaje)==0? "0 %": number_format($porcentaje, 2, '.', '')." %";
 }
 
 function Censadas($idUnidadHabitacional) {
@@ -164,7 +173,8 @@ function ColorEstatus($color) {
 
 
 
-<h1>Gestión de Unidades Multifamiliares</h1>
+<!--<h1>Gestión de Unidades Multifamiliares</h1>-->
+<h1>Proceso y Gestión de Documentación</h1>
 <?php if (Yii::app()->user->checkAccess('administrador_documentacion')) { ?>
     <div class="col-md-3">
         <div class="well">
@@ -174,14 +184,15 @@ function ColorEstatus($color) {
             $criteria->join = 'join cruge_authassignment a ON a.userid = t.iduser';
             $criteria->condition = "a.itemname ='analista_documentacion'";
             echo $form->dropDownListGroup(
-                    $asignaciones, 'fk_usuario_asignado', array(
+                    $asignaciones, 'asignar_label', array(
                 'wrapperHtmlOptions' => array(
                     'class' => 'col-sm-6',
                 ),
                 'widgetOptions' => array(
                     'data' => CHtml::listData(CrugeFieldValue::model()->findAll($criteria), 'iduser', 'value'),
                     'htmlOptions' => array(
-                        'empty' => 'SELECCIONE',
+                        //'empty' => 'SELECCIONE',
+                        'empty' => 'Selecciones el Analista de Documentación',
                     ),
                 )
                     )
@@ -254,37 +265,49 @@ $this->widget('booster.widgets.TbGridView', array(
 //            'htmlOptions' => array('width' => '80', 'style' => 'text-align: center;'),
 //            //'filter' => false
 //        ),
-        
-        'nombre_desarrollo' => array(
-            'header' => 'Nombre de la Unidad Multifamiliar',
-            'name' => 'nombre_unidad_habitacional',
-            'value' => '$data["nombre_unidad_habitacional"]',
-        //'filter' => CHtml::listData(Desarrollo::model()->findAll(array('order' => 'nombre ASC')), 'nombre', 'nombre')
-        ),
         'estado' => array(
-            'header' => 'Estado',
+            'header' => '<span title="Nombre del Estado">Estado</span>',
             'name' => 'estado',
             'value' => '$data["estado"]',
             'filter' => CHtml::listData(Tblestado::model()->findAll(array('order' => 'strdescripcion ASC')), 'strdescripcion', 'strdescripcion')
         ),
+        'nombre_desarrollo' => array(
+            'header' => '<span title="Nombre del Desarrollo">Desarrollo</span>',
+            'name' => 'nombre_desarrollo',
+            'value' => '$data["nombre_desarrollo"]',
+        //'filter' => CHtml::listData(Desarrollo::model()->findAll(array('order' => 'nombre ASC')), 'nombre', 'nombre')
+        ),
+        'nombre_unidad_habitacional' => array(
+            'header' => '<span title="Nombre de la Unidad Multifamiliar">Unidad Multifamiliar</span>',
+            'name' => 'nombre_unidad_habitacional',
+            'value' => '$data["nombre_unidad_habitacional"]',
+        //'filter' => CHtml::listData(Desarrollo::model()->findAll(array('order' => 'nombre ASC')), 'nombre', 'nombre')
+        ),
         'cantidad' => array(
-            'header' => 'Cantidad de viviendas en la Unidad Multifamiliar',
+            //'header' => 'Cantidad de viviendas en la Unidad Multifamiliar',
+            'header' => '<span title="Cantidad de Viviendas en la Unidad Multifamiliar" style="cursor:pointer">N° Viviendas Registradas</span>',
             'name' => 'cantidad',
             'value' => '$data["cantidad"]',
             'filter' => false
         ),
-        'porcentaje' => array(
-            'header' => '17% de la Unidad Multifamiliar',
-            'name' => 'porcentaje',
-            'value' => 'PorcentajeVivienda($data["id_unidad_habitacional"])',
-            'filter' => false
-        ),
         'total_para_documentar' => array(
-            'header' => 'Total de viviendas por documentación',
+            'header' => '<pan title="Total de viviendas por documentación">N° Viviendas Disponibles para Documentar</span>',
             'name' => 'total_para_documentar',
             'value' => ' Censadas($data["id_unidad_habitacional"])',
             'filter' => false
         ),
+        'porcentaje_total' => array(
+            'header' => 'Porcentaje Viviendas Disponibles',
+            'name' => 'porcentaje',
+            'value' => '($data["cantidad"])==0?"0 %":PorcentajeTotalViviendas($data["cantidad"],Censadas($data["id_unidad_habitacional"]))',
+            'filter' => false
+        ),
+//        'porcentaje' => array(
+//            'header' => '17% de la Unidad Multifamiliar',
+//            'name' => 'porcentaje',
+//            'value' => 'PorcentajeVivienda($data["id_unidad_habitacional"])',
+//            'filter' => false
+//        ),
         'estatus_msj' => array(
             'header' => 'Estatus Documento',
             'name' => 'estatus_msj',
