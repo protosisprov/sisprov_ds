@@ -53,9 +53,9 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
     'enableAjaxValidation' => false,
     'enableClientValidation' => true,
     'clientOptions' => array(
-        'validateOnSubmit' => true,
-        'validateOnChange' => true,
-        'validateOnType' => true,
+    'validateOnSubmit' => true,
+    'validateOnChange' => true,
+    'validateOnType' => true,
     ),
         ));
 ?>
@@ -64,10 +64,10 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 <?php 
         $this->widget(
                 'booster.widgets.TbLabel', array(
-            'context' => 'warning',
-            'htmlOptions' => array('style' => 'padding:3px;text-aling:center; font-size:13px; span{color:red;}'),
-            // 'success', 'warning', 'important', 'info' or 'inverse'
-            'label' => 'Los campos marcados con * son requeridos',
+                'context' => 'warning',
+                'htmlOptions' => array('style' => 'padding:3px;text-aling:center; font-size:13px; span{color:red;}'),
+                // 'success', 'warning', 'important', 'info' or 'inverse'
+                'label' => 'Los campos marcados con * son requeridos',
                 )
         ); ?>
         <br><br>
@@ -95,7 +95,7 @@ if (isset($sms) && !empty($sms)) {
 <div>
     <?php
     $this->widget(
-            'booster.widgets.TbPanel', array(
+        'booster.widgets.TbPanel', array(
         'title' => 'Unidad Multifamiliar',
         'context' => 'danger',
         'headerIcon' => 'user',
@@ -108,16 +108,7 @@ if (isset($sms) && !empty($sms)) {
 
 <div class="well">
     <div class="pull-center" style="text-align: right;">
-        <?php
-        $this->widget('booster.widgets.TbButton', array(
-            'buttonType' => 'submit',
-            'icon' => 'glyphicon glyphicon-floppy-saved',
-            'size' => 'large',
-            'id' => 'guardarUnidad',
-            'context' => 'success',
-            'label' => 'Guardar',
-        ));
-        ?>
+
         <?php
         $this->widget('booster.widgets.TbButton', array(
             'buttonType' => 'submit',
@@ -125,8 +116,22 @@ if (isset($sms) && !empty($sms)) {
             'size' => 'large',
             'id' => 'guardar',
             'context' => 'primary',
-            'label' => 'Guardar y Agregar Nuevo Registro' ,
+            'label' => 'Guardar' ,
             'htmlOptions'=>array('name'=>'cargar_otro', 'value'=>'1')
+        ));
+        ?>
+        
+
+        
+        <?php
+        $this->widget('booster.widgets.TbButton', array(
+            'buttonType' => 'submit',
+            'icon' => 'glyphicon glyphicon-floppy-saved',
+            'size' => 'large',
+            'id' => 'guardar',
+            'context' => 'primary',
+            'label' => 'Guardar-Agregar Inmueble' ,
+            'htmlOptions'=>array('name'=>'cargar_inmueble', 'value'=>'1')
         ));
         ?>
         
@@ -138,7 +143,7 @@ if (isset($sms) && !empty($sms)) {
                 'id' => 'CancelarForm',
                 'icon' => 'ban-circle',
                 'htmlOptions' => array(
-                   'onclick' => 'document.location.href ="' . $this->createUrl('/VswMultifamiliar/admin') . '"',
+                'onclick' => 'document.location.href ="' . $this->createUrl('/VswMultifamiliar/admin') . '"',
                 )
             ));
         ?>

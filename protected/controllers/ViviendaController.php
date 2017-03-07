@@ -125,6 +125,100 @@ class ViviendaController extends Controller {
             'desarrollo' => $desarrollo
         ));
     }
+    
+    /*Action que precarga los datos partiendo de la unidad habitacional creada*/
+    public function actionPrecarga($id) {
+
+        $model = new Vivienda;
+        $unidad_habitacional = UnidadHabitacional::model()->findByAttributes(array('id_unidad_habitacional'=> $id));        
+        $estado = new Tblestado;
+        $municipio = new Tblmunicipio;
+        $parroquia = new Tblparroquia;
+        $desarrollo = new Desarrollo;
+
+        if (isset($_POST['Vivienda'])) {
+            
+            $unidad = $_POST['Vivienda']['unidad_habitacional_id'];
+            $piso = $_POST['Vivienda']['nro_piso'];
+            $vivienda = trim(strtoupper($_POST['Vivienda']['nro_vivienda']));
+            $tipo_vivienda = $_POST['Vivienda']['tipo_vivienda_id'];
+            
+            $consulta = Vivienda::model()->findByAttributes(array('unidad_habitacional_id' => $unidad, 'nro_piso' => $piso, 'nro_vivienda' => $vivienda, 'tipo_vivienda_id' => $tipo_vivienda));
+            
+
+            if (empty($consulta)) {
+                
+            
+                $model->attributes = $_POST['Vivienda'];
+                $model->tipo_vivienda_id = $_POST['Vivienda']['tipo_vivienda_id'];
+                
+                $model->construccion_mt2 = $_POST['Vivienda']['construccion_mt2'];
+                $model->porcentaje_vivienda = empty($_POST['Vivienda']['porcentaje_vivienda']) ? 0.00 : $_POST['Vivienda']['porcentaje_vivienda'];
+                $model->nro_piso = $piso;
+                $model->nro_vivienda = $vivienda;
+                $model->sala = ($_POST['Vivienda']['sala'] == 'TRUE') ? true : false;
+                $model->comedor = ($_POST['Vivienda']['comedor'] == 'TRUE') ? true : false;
+                $model->cocina = ($_POST['Vivienda']['cocina'] == 'TRUE') ? true : false;
+                $model->lavandero = ($_POST['Vivienda']['lavandero'] == 'TRUE') ? true : false;
+                $model->lindero_norte = $_POST['Vivienda']['lindero_norte'];
+                $model->lindero_sur = $_POST['Vivienda']['lindero_sur'];
+                $model->lindero_este = $_POST['Vivienda']['lindero_este'];
+                $model->lindero_oeste = $_POST['Vivienda']['lindero_oeste'];
+                $model->coordenadas = $_POST['Vivienda']['coordenadas'];
+                
+                    if (!empty($_POST['Vivienda']['precio_vivienda'])){
+                        $precio = $_POST['Vivienda']['precio_vivienda'];
+                        $precio_vivienda = str_replace(".", "", $precio);
+                        $precio_vivienda1 = str_replace(",", ".", $precio_vivienda);
+                        $model->precio_vivienda = $precio_vivienda1;
+
+                    }else{
+
+                        $model->precio_vivienda =  0.00;
+                    }
+                $model->nro_estacionamientos = $_POST['Vivienda']['nro_estacionamientos'];
+                $model->descripcion_estac = $_POST['Vivienda']['descripcion_estac'];
+                $model->nro_banos_auxiliar = $_POST['Vivienda']['nro_banos_auxiliar'];
+                $model->fuente_datos_entrada_id = 90;
+                $model->estatus_vivienda_id = 75;
+                $model->asignada = '0';
+                $model->fecha_creacion = 'now';
+                $model->fecha_actualizacion = 'now';
+                $model->usuario_id_creacion = Yii::app()->user->id;
+
+                    if ($model->save()){
+
+                        if (isset($_POST['cargar_inmueble'])) {
+
+                            $this->redirect(array('vivienda/precarga/'.$model->id_vivienda));
+                            Yii::app()->end();
+
+                        }else{
+
+                        $this->redirect(array('view', 'id' => $model->id_vivienda));
+
+                        }
+
+                    } 
+            } else {
+                $this->render('create', array(
+                    'model' => $model, 'estado' => $estado,
+                    'municipio' => $municipio, 'parroquia' => $parroquia,
+                    'desarrollo' => $desarrollo,
+                    'sms' => 1
+                ));
+                Yii::app()->end();
+            }
+                
+                
+        }
+
+        $this->render('precarga', array('model' => $model, 'estado' => $estado,
+            'municipio' => $municipio, 'parroquia' => $parroquia, 'desarrollo' => $desarrollo, 'unidad_habitacional' => $unidad_habitacional
+        ));
+    }
+    
+    
 
     /**
      * Updates a particular model.

@@ -219,6 +219,56 @@ class ValidacionJsController extends Controller {
         }
     }
 
+    
+        public function actionConsultaMunicipios() {
+        $Id = (isset($_POST['Tblestado']['clvcodigo']) ? $_POST['Tblestado']['clvcodigo'] : $_GET['clvcodigo']);
+        $Selected = isset($_GET['municipio']) ? $_GET['municipio'] : '';
+
+        if (!empty($Id)) {
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('t.clvcodigo = :clvcodigo');
+            $criteria->params = array(':clvcodigo' => $Id);
+            $criteria->order = 't.strdescripcion ASC';
+            $criteria->select = 'clvcodigo, strdescripcion';
+
+            $data = CHtml::listData(Tblmunicipio::model()->findAll($criteria), 'clvcodigo', 'strdescripcion');
+
+            foreach ($data as $id => $value) {
+
+                echo CHtml::tag('option', array('value' => $id), CHtml::encode($value), true);
+                
+            }
+            
+        } else {
+         
+            echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
+        }
+    }
+    
+    public function ConsultaUnidadHabitacional() {
+        $Id = (isset($_POST['Tblestado']['clvcodigo']) ? $_POST['Tblestado']['clvcodigo'] : $_GET['unidad']);
+        $Selected = isset($_GET['unidad']) ? $_GET['unidad'] : '';
+
+        if (!empty($Id)) {
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('t.clvcodigo = :clvcodigo');
+            $criteria->params = array(':clvcodigo' => $Id);
+            $criteria->order = 't.strdescripcion ASC';
+            $criteria->select = 'clvcodigo, strdescripcion';
+
+            $data = CHtml::listData(Tblmunicipio::model()->findAll($criteria), 'clvcodigo', 'strdescripcion');
+
+            foreach ($data as $id => $value) {
+
+                echo CHtml::tag('option', array('value' => $id), CHtml::encode($value), true);
+                
+            }
+            
+        } else {
+         
+            echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
+        }
+    }
     /**
      * FUNCION QUE MUESTRA TODOS LAS PARROQUIAS DE ACUERDO A UN ID DE UN MUNICIPIO
      */
@@ -251,6 +301,7 @@ class ValidacionJsController extends Controller {
      * FUNCION QUE MUESTRA TODOS LAS PARROQUIAS DE  
      */
     public function actionBuscarDesarrollo() {
+        
         $Id = (isset($_POST['Tblparroquia']['clvcodigo']) ? $_POST['Tblparroquia']['clvcodigo'] : $_GET['desarrollo']);
         $Selected = isset($_GET['desarrollo']) ? $_GET['desarrollo'] : '';
 
@@ -273,6 +324,29 @@ class ValidacionJsController extends Controller {
         } else {
             echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
         }
+    }
+    
+        public function actionConsultaDesarrollo() {
+        
+        $Id = (isset($_POST['Tblparroquia']['clvcodigo']) ? $_POST['Tblparroquia']['clvcodigo'] : $_GET['desarrollo']);
+        $Selected = isset($_GET['desarrollo']) ? $_GET['desarrollo'] : '';
+
+        if (!empty($Id)) {
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('t.id_desarrollo = :id_desarrollo');
+            $criteria->params = array(':id_desarrollo' => $Id);
+            $criteria->order = 't.nombre ASC';
+            $criteria->select = 'id_desarrollo, nombre';
+
+            $data = CHtml::listData(Desarrollo::model()->findAll($criteria), 'id_desarrollo', 'nombre');
+            
+            foreach ($data as $id => $value) {
+
+                    echo CHtml::tag('option', array('value' => $id), CHtml::encode($value), true);
+
+            }
+            
+        } 
     }
 
     /**
@@ -342,13 +416,53 @@ from desarrollo des Left join unidad_habitacional und_hab on des.id_desarrollo =
             $data = CHtml::listData(UnidadHabitacional::model()->findAll($criteria), 'id_unidad_habitacional', 'nombre');
             echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
             foreach ($data as $id => $value) {
+                
                 if ($Selected == $id) {
+                    
                     echo CHtml::tag('option', array('value' => $id, 'selected' => true), CHtml::encode($value), true);
+                    
                 } else {
+                    
                     echo CHtml::tag('option', array('value' => $id), CHtml::encode($value), true);
                 }
             }
+            
         } else {
+            
+            echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
+        }
+    }
+    
+        public function actionConsultarUnidadHabitacional() {
+            echo 'aqui'; exit;
+        $Id = (isset($_POST['Desarrollo']['id_desarrollo']) ? $_POST['Desarrollo']['id_desarrollo'] : $_GET['unidad']);
+        $Selected = isset($_GET['unidadHabitacion']) ? $_GET['unidadHabitacion'] : '';
+
+        if (!empty($Id)) {
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('t.desarrollo_id= :desarrollo_id');
+            $criteria->params = array(':desarrollo_id' => $Id);
+            $criteria->order = 't.nombre ASC';
+            $criteria->select = 'id_unidad_habitacional, nombre';
+
+            $data = CHtml::listData(UnidadHabitacional::model()->findAll($criteria), 'id_unidad_habitacional', 'nombre');
+            
+            //echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
+            
+            foreach ($data as $id => $value) {
+                
+               //if ($Selected == $id) {
+                    
+                   // echo CHtml::tag('option', array('value' => $id, 'selected' => true, 'name' => 'unidad_habitacional_id',), CHtml::encode($value), true);
+                    echo CHtml::tag('input', array('value' => $id, 'selected' => true, 'name' => 'unidad_habitacional_id',), CHtml::encode($value), true);
+                //} else {
+                    
+                   // echo CHtml::tag('option', array('value' => $id), CHtml::encode($value), true);
+               // }
+            }
+            
+        } else {
+            
             echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
         }
     }
