@@ -1,4 +1,4 @@
-<?php 
+<?php  
 $baseUrl = Yii::app()->baseUrl;
 $Validaciones = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/validacion.js');
 ?>
@@ -66,7 +66,7 @@ if (isset($sms) && !empty($sms)) {
     $user = Yii::app()->getComponent('user');
     $user->setFlash(
             'warning', "<strong>Número de vivienda ya se encuentra registado.</strong>"
-    );
+);}
 
 $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
     'id' => 'vivienda-form',

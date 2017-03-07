@@ -186,7 +186,7 @@ class ViviendaController extends Controller {
                 $model->fecha_actualizacion = 'now';
                 $model->usuario_id_creacion = Yii::app()->user->id;
 
-                    if ($model->save()){
+                    if ($model->save()){ 
 
                         if (isset($_POST['cargar_inmueble'])) {
 
