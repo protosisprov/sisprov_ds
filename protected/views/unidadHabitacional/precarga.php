@@ -1,4 +1,4 @@
-<?php 
+<?php  
 $baseUrl = Yii::app()->baseUrl;
 $Validaciones = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/validacion.js');
 ?>

@@ -1,4 +1,4 @@
-<?php
+<?php 
 $baseUrl = Yii::app()->baseUrl;
 $Validacion = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/js_jquery.numeric.js');
 ?>
