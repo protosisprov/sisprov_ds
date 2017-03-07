@@ -197,7 +197,28 @@ class UnidadHabitacional extends CActiveRecord {
      * @return UnidadHabitacional the static model class
      */
     public static function model($className = __CLASS__) {
+        
         return parent::model($className);
+    }
+    
+    public function FindUnidadByIdSelect($Id, $Order = false) {
+        
+
+        $criteria = new CDbCriteria;
+        
+        if (!$Order) {
+            
+            $criteria->order = 'nombre ASC';
+        } else {
+            
+            $criteria->order = $Order;
+        }
+        
+        $criteria->addColumnCondition(array('id_unidad_habitacional' => $Id,));
+        
+        $data = CHtml::listData(self::model()->findAll($criteria), 'id_unidad_habitacional', 'nombre');
+        
+        return $data;
     }
 
 }

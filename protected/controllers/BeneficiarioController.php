@@ -272,6 +272,8 @@ class BeneficiarioController extends Controller {
     //UPDATE DE BENEFICIARIO ULTIMA PANTALLA DE CENSO
     
     public function actionUpdate($id) {
+        
+        
         $model = $this->loadModel($id);
         $estado = new Tblestado;
         $municipio = new Tblmunicipio;

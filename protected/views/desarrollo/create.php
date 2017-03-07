@@ -109,7 +109,7 @@ if (isset($sms) && !empty($sms)) {
 </div>
 <div class="well">
     <div class="pull-center" style="text-align: right;">
-        <?php
+        <?php /*
         $this->widget('booster.widgets.TbButton', array(
             'buttonType' => 'submit',
             'icon' => 'glyphicon glyphicon-floppy-saved',
@@ -117,6 +117,17 @@ if (isset($sms) && !empty($sms)) {
             'id' => 'guardar',
             'context' => 'success',
             'label' => 'Guardar',
+        )); */
+        ?>
+        <?php
+        $this->widget('booster.widgets.TbButton', array(
+            'buttonType' => 'submit',
+            'icon' => 'glyphicon glyphicon-floppy-saved',
+            'size' => 'large',
+            'id' => 'guardar',
+            'context' => 'primary',
+            'label' => 'Guardar' ,
+            'htmlOptions'=>array('name'=>'CARGAR_OTRO', 'value'=>'1')
         ));
         ?>
         <?php
@@ -126,8 +137,8 @@ if (isset($sms) && !empty($sms)) {
             'size' => 'large',
             'id' => 'guardar',
             'context' => 'primary',
-            'label' => 'Guardar y Agregar Nuevo Registro' ,
-            'htmlOptions'=>array('name'=>'CARGAR_OTRO', 'value'=>'1')
+            'label' => 'Guardar-Agregar Unidad H.' ,
+            'htmlOptions'=>array('name'=>'cargar_unidad', 'value'=>'1')
         ));
         ?>
         <?php

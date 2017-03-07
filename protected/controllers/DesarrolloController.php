@@ -105,13 +105,21 @@ class DesarrolloController extends Controller {
                 $model->num_matricula = $_POST['Desarrollo']['num_matricula'];
 //                echo '<pre>';var_dump($model); die();
                 if ($model->save()) {
+                    
                     if (isset($_POST['CARGAR_OTRO'])) {
                         $this->render('create', array(
                             'model' => new Desarrollo, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'enteEjecutor' => $enteEjecutor, 'fuenteFinacimiento' => $fuenteFinacimiento, 'fuenteFinacimientoObra' => $fuenteFinacimientoObra
                         ));
                         Yii::app()->end();
-                    } else {
+                    }
+                    
+                   /* } else {
                         $this->redirect(array('admin'));
+                        Yii::app()->end();
+                    }*/
+                    
+                    if (isset($_POST['cargar_unidad'])) {
+                        $this->redirect(array('unidadHabitacional/precarga/'.$model->id_desarrollo));
                         Yii::app()->end();
                     }
                 }

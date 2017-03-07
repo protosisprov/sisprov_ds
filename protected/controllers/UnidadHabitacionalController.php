@@ -97,18 +97,33 @@ class UnidadHabitacionalController extends Controller {
 
 
                 if ($model->save()) {
+                    
                     if (isset($_POST['cargar_otro'])) {
+                        
                         $this->render('create', array(
                             'model' => new UnidadHabitacional, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia
                         ));
                         Yii::app()->end();
-                    } else {
-                        $this->redirect(array('admin'));
+                        
+                    }
+                    
+                    if (isset($_POST['cargar_inmueble'])) {
+                        
+                        $this->redirect(array('vivienda/precarga/'.$model->id_unidad_habitacional));
+                        Yii::app()->end();
+                        
+                    }
+                    
+                     if (isset($_POST['guardar'])) {
+                        
+                        $this->redirect(array('admin/'));
                         Yii::app()->end();
                     }
                     // $this->redirect(array('/VswMultifamiliar/admin'));
                 }
+                
             } else {
+                
                 $this->render('create', array('model' => $model,
                     'estado' => $estado, 'municipio' => $municipio,
                     'parroquia' => $parroquia, 'sms' => 1));
@@ -125,6 +140,7 @@ class UnidadHabitacionalController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
+        
         $model = $this->loadModel($id);
         $estado = new Tblestado;
         $municipio = new Tblmunicipio;
@@ -152,14 +168,77 @@ class UnidadHabitacionalController extends Controller {
             $model->fecha_actualizacion = 'now()';
             $model->usuario_id_creacion = Yii::app()->user->id;
             $model->estatus = 78;
-
+        
             if ($model->save())
+                           
+            
                 $this->redirect(array('view', 'id' => $model->id_unidad_habitacional));
         }
 
         $this->render('update', array('model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia));
     }
 
+    
+    public function actionPrecarga($id) {
+        
+        
+        $model = new UnidadHabitacional;
+        $desarrollo = Desarrollo::model()->findByAttributes(array('id_desarrollo'=> $id));  
+
+        $estado = new Tblestado;
+        $municipio = new Tblmunicipio;
+        $parroquia = new Tblparroquia;
+
+
+        if (isset($_POST['UnidadHabitacional'])) {
+            
+                $model->attributes = $_POST['UnidadHabitacional'];
+                $model->desarrollo_id = $_POST['UnidadHabitacional']['desarrollo_id'];
+                $model->nombre = trim(strtoupper($_POST['UnidadHabitacional']['nombre']));
+                $model->gen_tipo_inmueble_id = $_POST['UnidadHabitacional']['gen_tipo_inmueble_id'];
+                $model->lindero_norte = $_POST['UnidadHabitacional']['lindero_norte'];
+                $model->lindero_sur = $_POST['UnidadHabitacional']['lindero_sur'];
+                $model->lindero_este = $_POST['UnidadHabitacional']['lindero_este'];
+                $model->lindero_oeste = $_POST['UnidadHabitacional']['lindero_oeste'];
+                $model->total_unidades = 0;
+//                $model->fecha_registro = Generico::formatoFecha($_POST['UnidadHabitacional']['fecha_registro']);
+//                $model->ano = $_POST['UnidadHabitacional']['ano'];
+                $model->asiento_registral = 1;
+//                $model->registro_publico_id =0;
+//                $model->tipo_documento_id = 0;
+//                $model->num_protocolo =0;
+                $model->fecha_registro = 'now()';
+                $model->tomo = 0;
+                $model->folio_real = 1;
+                $model->nro_matricula = 1;
+                $model->fuente_datos_entrada_id = 90;
+                $model->fecha_creacion = 'now()';
+                $model->fecha_actualizacion = 'now()';
+                $model->usuario_id_creacion = Yii::app()->user->id;
+                $model->estatus = 78;
+            
+           
+            if ($model->save()){
+                                
+
+                if (isset($_POST['cargar_inmueble'])) {
+                    
+                    $this->redirect(array('vivienda/precarga/'.$model->id_unidad_habitacional));
+                    Yii::app()->end();
+                        
+                }else{
+
+                $this->redirect(array('view', 'id' => $model->id_unidad_habitacional));
+                
+                }
+                
+            }    
+        }
+
+        $this->render('precarga', array('model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia, 'desarrollo' => $desarrollo));
+    }
+    
+    
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -167,10 +246,10 @@ class UnidadHabitacionalController extends Controller {
      */
     public function actionDelete($id) {
         if (Yii::app()->request->isPostRequest) {
-// we only allow deletion via POST request
+
             $this->loadModel($id)->delete();
 
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else
