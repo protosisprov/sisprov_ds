@@ -31,6 +31,8 @@
 
 		<?php echo $form->textFieldGroup($model,'fuente_financiamiento_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
+		<?php echo $form->textFieldGroup($model,'id_fuente_financiamiento_obra',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
+
 		<?php echo $form->textFieldGroup($model,'ente_ejecutor_id',array('widgetOptions'=>array('htmlOptions'=>array('class'=>'span5')))); ?>
 
 		<?php echo $form->checkBoxGroup($model,'titularidad_del_terreno'); ?>

@@ -817,6 +817,7 @@ from desarrollo des Left join unidad_habitacional und_hab on des.id_desarrollo =
         $result->ingreso_mensual = $_POST['ingreso'];
         $result->tipo_persona_faov = $_POST['personaFaov'];
         $result->tipo_sujeto_atencion = $_POST['sujetoAtencion'];
+        $result->tipo_discapacidad = $_POST['TipoDiscapacidad'];
         if ($result->save()) {
             $list = Yii::app()->db->createCommand('select sum(ingreso_mensual_faov) as promedio from grupo_familiar where unidad_familiar_id =' . $result->unidadFamiliar->id_unidad_familiar)->queryAll();
             $list = number_format($list[0]['promedio'], 2, '.', '');

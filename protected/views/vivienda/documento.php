@@ -276,13 +276,25 @@ foreach ($apoderado_list as &$valor) {
                     'size' => 'large',
                     'id' => 'guardar',
                     'context' => 'primary',
-                    'label' => $model->isNewRecord ? 'Guardar' : 'Guardar',
+                    'label' => $model->isNewRecord ? 'Guardar con Observaciones' : 'Guardar con Observaciones',
+                ));
+                ?>
+                <?php
+                $this->widget('booster.widgets.TbButton', array(
+                    'context' => 'success',
+                    'label' => 'Conforme',
+                    'size' => 'large',
+                    'id' => 'CancelarForm',
+                    'icon' => 'ban-circle',
+                    'htmlOptions' => array(
+                        'onclick' => 'document.location.href ="' . $this->createUrl('documentacion/adminsarenBene') . '";'
+                    )
                 ));
                 ?>
                 <?php
                 $this->widget('booster.widgets.TbButton', array(
                     'context' => 'danger',
-                    'label' => 'Cancelar',
+                    'label' => 'Regresar',
                     'size' => 'large',
                     'id' => 'CancelarForm',
                     'icon' => 'ban-circle',
@@ -348,13 +360,25 @@ foreach ($apoderado_list as &$valor) {
                     'size' => 'large',
                     'id' => 'guardar',
                     'context' => 'primary',
-                    'label' => $model->isNewRecord ? 'Guardar' : 'Guardar',
+                    'label' => $model->isNewRecord ? 'Guardar con Observaciones' : 'Guardar con Observaciones',
+                ));
+                ?>
+                <?php
+                $this->widget('booster.widgets.TbButton', array(
+                    'context' => 'success',
+                    'label' => 'Conforme',
+                    'size' => 'large',
+                    'id' => 'CancelarForm',
+                    'icon' => 'ban-circle',
+                    'htmlOptions' => array(
+                        'onclick' => 'document.location.href ="' . $this->createUrl('documentacion/adminsarenBene') . '";'
+                    )
                 ));
                 ?>
                 <?php
                 $this->widget('booster.widgets.TbButton', array(
                     'context' => 'danger',
-                    'label' => 'Cancelar',
+                    'label' => 'Regresar',
                     'size' => 'large',
                     'id' => 'CancelarForm',
                     'icon' => 'ban-circle',

@@ -85,7 +85,7 @@ $this->widget('booster.widgets.TbGridView', array(
             'class' => 'booster.widgets.TbButtonColumn',
             'header' => 'Acciones',
             'htmlOptions' => array('width' => '85', 'style' => 'text-align: center;'),
-            'template' => '{amortizacion}{ver}',
+            'template' => '{amortizacion}{amortizacioncompleta}{ver}',
             'buttons' => array(
                 'ver' => array(
                     'label' => 'Ver censo',
@@ -95,14 +95,25 @@ $this->widget('booster.widgets.TbGridView', array(
                     'url' => 'Yii::app()->createUrl("beneficiario/view/", array("id"=>$data->id_beneficiario))',
                 ),
                 'amortizacion' => array(
-                    'label' => 'Generar Tabla de Amortizacion',
-                    'icon' => 'glyphicon glyphicon-list-alt',
+                    'label' => 'Tabla de Amortizacion Resumen',
+                    'icon' => 'glyphicon glyphicon-compressed',
                     'size' => 'medium',
                     'options' => array(
                     ),
                         'id' => 'refresh',
                     'visible' => '((Yii::app()->user->checkAccess("action_analisiscredito_tablaAmortizacionpdf")))',
                     'url' => 'Yii::app()->createUrl("analisisCredito/tablaAmortizacionpdf/", array("id"=>$data->id_beneficiario))',
+//                    'visible' => 'traza($data->id_beneficiario)==100'
+                ),
+                'amortizacioncompleta' => array(
+                    'label' => 'Tabla de Amortizacion Completa',
+                    'icon' => 'glyphicon glyphicon-list-alt',
+                    'size' => 'medium',
+                    'options' => array(
+                    ),
+                        'id' => 'refresh',
+                    'visible' => '((Yii::app()->user->checkAccess("action_analisiscredito_TablaAmortizacionCompletaPdf")))',
+                    'url' => 'Yii::app()->createUrl("analisisCredito/tablaAmortizacionCompletaPdf/", array("id"=>$data->id_beneficiario))',
 //                    'visible' => 'traza($data->id_beneficiario)==100'
                 ),
                 

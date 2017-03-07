@@ -491,6 +491,24 @@ class BeneficiarioController extends Controller {
 
         $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('/vswCensosCulminados/admin'));
     }
+    
+        public function actionActivarCredito($id) {
+        $model = Beneficiario::model()->findByPk($id);
+        //echo '<pre>'; var_dump($model); die();
+
+        $updateBene = Beneficiario::model()->updateByPk($model->id_beneficiario, array(
+            'documento_beneficiario' => 317,
+            'usuario_id_actualizacion' => Yii::app()->user->id,
+            'fecha_actualizacion' => 'now()'
+        ));
+        $updateBeneTemp = BeneficiarioTemporal::model()->updateByPk($model->beneficiario_temporal_id, array(
+            'documento_beneficiario' => 317,
+            'usuario_id_actualizacion' => Yii::app()->user->id,
+            'fecha_actualizacion' => 'now()'
+        ));
+
+        $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('/documentacion/adminactivacion'));
+    }
 
     /**
      * Displays a particular model.

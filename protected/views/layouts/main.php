@@ -198,6 +198,11 @@
                                                         <a href="<?php echo $this->createUrl('/fuenteFinanciamiento/create'); ?>">Cargar Fuentes de Financiamiento</a>
                                                     </li>
                                                 <?php } ?>
+                                                <?php if (Yii::app()->user->checkAccess('action_fuentefinanciamiento_obra_create')) { ?>
+                                                    <li>
+                                                        <a href="<?php echo $this->createUrl('/fuenteFinanciamientoObra/create'); ?>">Cargar Fuentes de Financiamiento de la Obra</a>
+                                                    </li>
+                                                <?php } ?>
                                                 <?php if (Yii::app()->user->checkAccess('action_programa_create')) { ?>
                                                     <li>
                                                         <a href="<?php echo $this->createUrl('/programa/create'); ?>">Cargar Nuevo Programa</a>
@@ -412,7 +417,7 @@
                                             <?php if (Yii::app()->user->checkAccess('action_analisicredito_adminanalisiscredito')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/analisisCredito/adminanalisiscredito'); ?>">
-                                                        <i class="glyphicon glyphicon-euro"></i>
+                                                        <i class="glyphicon glyphicon-list-alt"></i>
                                                         <span>Tabla de Amortización</span>
                                                     </a>
                                                 </li>    
@@ -432,7 +437,8 @@
                                             <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminmultifamiliar')) { ?>
                                                 <li>
-                                                    <a href="<?php echo $this->createUrl('/documentacion/adminmultifamiliar'); ?>">
+                                                    <!--<a href="<?php //echo $this->createUrl('/documentacion/adminmultifamiliar'); ?>">-->
+                                                    <a href="<?php echo $this->createUrl('/documentacion/adminmultifamiliarFiltro'); ?>">
                                                         <i class="glyphicon glyphicon-map-marker"></i>
                                                         <span>Unidad Multifamilar</span>
                                                     </a>
@@ -445,6 +451,16 @@
                                                     <a href="<?php echo $this->createUrl('/documentacion/adminbeneficiario'); ?>">
                                                         <i class="glyphicon glyphicon-user"></i>
                                                         <span>Beneficiario</span>
+                                                    </a>
+                                                </li><?php } ?>
+                                        </ul>
+                                        <ul class="sub">
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <?php if (Yii::app()->user->checkAccess('action_documentacion_adminbeneficiario')) { ?>
+                                                <li>
+                                                    <a href="<?php echo $this->createUrl('/documentacion/adminactivacion'); ?>">
+                                                        <i class="glyphicon glyphicon-asterisk"></i>
+                                                        <span>Activación del Crédito</span>
                                                     </a>
                                                 </li><?php } ?>
                                         </ul>
@@ -556,7 +572,7 @@
     </script>
 </html>
 <?php
-$url_redirect = CHtml::normalizeUrl(array('/site/index'));
+/*$url_redirect = CHtml::normalizeUrl(array('/site/index'));
 $url_redirect = CHtml::normalizeUrl(array('/cruge/ui/accessDenied'));
 $url_valida_sesion = CHtml::normalizeUrl(array('/cruge/ui/login'));
 $url_destroy_session = CHtml::normalizeUrl(array('/site/logout'));
@@ -586,7 +602,7 @@ Yii::app()->getClientScript()->registerScript("core_cruge", "
         document.getElementById('expirado').innerHTML = xmlhttp.responseText;
         document.location.href = '$url_valida_sesion';
     }
-  ", CClientScript::POS_LOAD);
+  ", CClientScript::POS_LOAD);*/
 ?>
 
 <script type="text/javascript">

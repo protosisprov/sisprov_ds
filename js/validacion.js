@@ -31,15 +31,32 @@ function Terreno() {
         $('.col2').hide('fade');
     }
 }
+
 function Tipo_discapacidad() {
     if ($('.tipo_discapacidad').is(":checked")) {
         $('#tipo_discapacidad_div').show('fade');
         
     } else {
         $('#tipo_discapacidad_div').hide('fade');
+        $('#GrupoFamiliar_tipo_discapacidad').val('');
     }
 }
+
+function Tipo_discapacidad_update() {
+   var value = $("#tipo_sujeto_atencion").val(); 
+   
+   if(value=='231')
+   {
+       $('#div_tipo_discapacidad').show('fade');
+   }
+   else
+   {
+       $('#div_tipo_discapacidad').hide('fade');
+       $('#tipo_discapacidad').val('');
+   }
+}
 function Matricula() {
+
     
     if ($('.matri').is(":checked")) {
         $('.col1').show('fade');
@@ -50,7 +67,7 @@ function Matricula() {
         $('.col2').show('fade');
         
     }
-}
+}  
 /*
  *
  * FUNCION QUE BUSCA EN SAIME Y EN PERSONA POR NUMERO DE CEDULA Y NACIONALIDAD
@@ -1530,21 +1547,55 @@ function aceptanteupdate(id) {
         bootbox.alert('Declare un ingreso mensual.');
         return false;
     }
-    if (parentesco == 155 || parentesco == 161) {
-        if (total_tems = $('#tipo_persona_faov').find('option').length == 2) {
-            $("#tipo_persona_faov").append("<option value='236'>ACEPTANTE</option>");
+    
+    if (parentesco == 155 || parentesco == 161) {  //155=CONYUGUE - 161=CONCUBINO(A)
+                
+        $("#tipo_persona_faov option[value='235']").remove(); 
+        $("#tipo_persona_faov option[value='236']").remove(); 
+        $("#tipo_persona_faov option[value='316']").remove(); 
+        
+        $('#tipo_persona_faov').append("<option value='236'> ACEPTANTE </option>");
+        $('#tipo_persona_faov').append("<option value='235'> COSOLICITANTE </option>");
+        $('#tipo_persona_faov').attr('disabled', false); 
+        
+    }else{
+        
+        $("#tipo_persona_faov option[value='235']").remove(); 
+        $("#tipo_persona_faov option[value='236']").remove(); 
+        $("#tipo_persona_faov option[value='316']").remove(); 
+        
 
-        }
-        $('#tipo_persona_faov').attr('disabled', true);
-        if ($('#ingreso_mensual').val() == 0) {
-            $('#tipo_persona_faov').val('236');   // ACEPTANTE
-        } else {
-            $('#tipo_persona_faov').val('235');   // COSOLICITANTE
-        }
-    } else {
-        $("#tipo_persona_faov option[value='236']").remove();
-        $('#tipo_persona_faov').attr('disabled', false);
+        $('#tipo_persona_faov').append("<option value='236'> ACEPTANTE </option>");
+        $('#tipo_persona_faov').append("<option value='316'> NO APLICA </option>");
+            
+      
     }
+    
+    if ($('#ingreso_mensual').val() == 0) {
+        $("#tipo_persona_faov option[value='']").remove(); 
+        $("#tipo_persona_faov option[value='235']").remove(); 
+        $("#tipo_persona_faov option[value='236']").remove(); 
+        $("#tipo_persona_faov option[value='316']").remove(); 
+        
+        $('#tipo_persona_faov').append("<option value='236'> ACEPTANTE </option>");
+        $('#tipo_persona_faov').attr('disabled', true); 
+    }
+    
+//    if (parentesco == 155 || parentesco == 161) {
+//        if (total_tems = $('#tipo_persona_faov').find('option').length == 2) {
+//            $("#tipo_persona_faov").append("<option value='236'>ACEPTANTE</option>");
+//
+//        }
+//        $('#tipo_persona_faov').attr('disabled', true);
+//        if ($('#ingreso_mensual').val() == 0) {
+//            $('#tipo_persona_faov').val('236');   // ACEPTANTE
+//        } else {
+//            $('#tipo_persona_faov').val('235');   // COSOLICITANTE
+//        }
+//    } else {
+//        $("#tipo_persona_faov option[value='236']").remove();
+//        $('#tipo_persona_faov').attr('disabled', false);
+//    }
 }
 
 function CambiarEstatusDocumento(codigo, actor, caso) {

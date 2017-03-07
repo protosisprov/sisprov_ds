@@ -90,6 +90,8 @@ $html="<table align='right' width='100%' border='0'>
 					<br>
 					<span class='subtitulo'>Fuente de Finaciamiento:</span> ".$model->fuenteFinanciamiento->nombre_fuente_financiamiento."
 					<br>
+					<span class='subtitulo'>Fuente de Finaciamiento de la Obra:</span> ".$model->fuenteFinanciamientoObra->nombre_fuente_financiamiento_obra."
+					<br>
 					<span class='subtitulo'>Ente Ejecutor:</span> ".$model->enteEjecutor->nombre_ente_ejecutor."
 				</td>
 				<td>

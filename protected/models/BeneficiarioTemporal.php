@@ -20,6 +20,7 @@
  * @property integer $usuario_id_actualizacion
  * @property integer $estatus
  * @property integer $carga_masiva_id
+ * @property integer $documento_beneficiario
  *
  * The followings are the available model relations:
  * @property Desarrollo $desarrollo
@@ -72,14 +73,14 @@ class BeneficiarioTemporal extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('persona_id, desarrollo_id, unidad_habitacional_id, vivienda_id, nacionalidad, cedula, nombre_completo, fecha_creacion, fecha_actualizacion, usuario_id_creacion', 'required'),
-            array('persona_id, desarrollo_id, unidad_habitacional_id, vivienda_id, id_control, nacionalidad, cedula, usuario_id_creacion, usuario_id_actualizacion, estatus, carga_masiva_id', 'numerical', 'integerOnly' => true),
+            array('persona_id, desarrollo_id, unidad_habitacional_id, vivienda_id, id_control, nacionalidad, cedula, usuario_id_creacion, usuario_id_actualizacion, estatus, carga_masiva_id, documento_beneficiario', 'numerical', 'integerOnly' => true),
             array('nombre_completo, nombre_archivo', 'length', 'max' => 200),
             array('primer_nombre, primer_apellido, segundo_nombre, segundo_apellido', 'length', 'max' => 25),
             array('cedula', 'length', 'max' => 8),
             array('telf_celular,telf_habitacion', 'length', 'max' => 12),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id_beneficiario_temporal, persona_id, desarrollo_id, unidad_habitacional_id, vivienda_id, id_control, nacionalidad, cedula, nombre_completo, nombre_archivo, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus, carga_masiva_id','safe', 'on' => 'search'),
+            array('id_beneficiario_temporal, persona_id, desarrollo_id, unidad_habitacional_id, vivienda_id, id_control, nacionalidad, cedula, nombre_completo, nombre_archivo, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus, carga_masiva_id, documento_beneficiario','safe', 'on' => 'search'),
         );
     }
 
@@ -134,6 +135,7 @@ class BeneficiarioTemporal extends CActiveRecord {
 	    'piso' => 'Piso  <span  class="required">*<span>',
 	    'vivienda_nro' => 'Número de vivienda   <span  class="required">*<span>',
 	    'tipo_vivienda' => 'Tipo de vivienda   <span  class="required">*<span>',
+            'documento_beneficiario' => 'Documento Beneficiario',
         );
     }
 
@@ -191,6 +193,7 @@ inner join vivienda on bt.vivienda_id = vivienda.id_vivienda WHERE bt.nacionalid
         $criteria->compare('usuario_id_actualizacion', $this->usuario_id_actualizacion);
         $criteria->compare('estatus', $this->estatus);
 	$criteria->compare('carga_masiva_id',$this->carga_masiva_id);
+        $criteria->compare('documento_beneficiario',$this->documento_beneficiario);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

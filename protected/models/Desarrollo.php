@@ -50,6 +50,7 @@
  * @property EnteEjecutor $enteEjecutor
  * @property Maestro $fuenteDatosEntrada
  * @property FuenteFinanciamiento $fuenteFinanciamiento
+ * @property FuenteFinanciamientoObra $fuenteFinanciamientoObra
  * @property Programa $programa
  * @property Maestro $estatus0
  * @property CrugeUser $usuarioIdCreacion
@@ -80,7 +81,7 @@ class Desarrollo extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nombre, parroquia_id, fuente_financiamiento_id, ente_ejecutor_id,programa_id,  fuente_datos_entrada_id, fecha_creacion, fecha_actualizacion, usuario_id_creacion, estatus, descripcion, urban_barrio, av_call_esq_carr', 'required'),
+            array('nombre, parroquia_id, fuente_financiamiento_id, id_fuente_financiamiento_obra, ente_ejecutor_id,programa_id,  fuente_datos_entrada_id, fecha_creacion, fecha_actualizacion, usuario_id_creacion, estatus, descripcion, urban_barrio, av_call_esq_carr', 'required'),
             array('parroquia_id, fuente_financiamiento_id, ente_ejecutor_id, total_viviendas, total_viviendas_protocolizadas, fuente_datos_entrada_id, usuario_id_creacion, usuario_id_actualizacion, programa_id, estatus, modalidad_documento_id, propiedad_terreno_id, ente_titular_terreno_id, registro_publico_id, tipo_documento_id, ano, asiento_registral, folio_real, num_protocolo', 'numerical', 'integerOnly' => true),
             array('nombre, urban_barrio, av_call_esq_carr, zona, coordenadas', 'length', 'max' => 200),
             array('lindero_norte, lindero_sur, lindero_este, lindero_oeste', 'length', 'max' => 2000),
@@ -94,7 +95,7 @@ class Desarrollo extends CActiveRecord {
             array('lote_terreno_mt2, titularidad_del_terreno, matricula, fecha_transferencia,fecha_registro, total_unidades', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id_desarrollo, nombre, parroquia_id, descripcion, urban_barrio, av_call_esq_carr, zona, lindero_norte, lindero_sur, lindero_este, lindero_oeste, coordenadas, lote_terreno_mt2, fuente_financiamiento_id, ente_ejecutor_id, titularidad_del_terreno, matricula, total_viviendas, total_viviendas_protocolizadas, fecha_transferencia, fuente_datos_entrada_id, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, programa_id, total_unidades, estatus, modalidad_documento_id, propiedad_terreno_id, ente_titular_terreno_id, 
+            array('id_desarrollo, nombre, parroquia_id, descripcion, urban_barrio, av_call_esq_carr, zona, lindero_norte, lindero_sur, lindero_este, lindero_oeste, coordenadas, lote_terreno_mt2, fuente_financiamiento_id, id_fuente_financiamiento_obra, ente_ejecutor_id, titularidad_del_terreno, matricula, total_viviendas, total_viviendas_protocolizadas, fecha_transferencia, fuente_datos_entrada_id, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, programa_id, total_unidades, estatus, modalidad_documento_id, propiedad_terreno_id, ente_titular_terreno_id, 
                  registro_publico_id, tipo_documento_id, fecha_registro, tomo, ano, nro_documento, asiento_registral,folio_real, num_matricula, num_protocolo ', 'safe', 'on' => 'search'),
         );
     }
@@ -109,6 +110,7 @@ class Desarrollo extends CActiveRecord {
             'enteEjecutor' => array(self::BELONGS_TO, 'EnteEjecutor', 'ente_ejecutor_id'),
             'fuenteDatosEntrada' => array(self::BELONGS_TO, 'Maestro', 'fuente_datos_entrada_id'),
             'fuenteFinanciamiento' => array(self::BELONGS_TO, 'FuenteFinanciamiento', 'fuente_financiamiento_id'),
+            'fuenteFinanciamientoObra' => array(self::BELONGS_TO, 'FuenteFinanciamientoObra', 'id_fuente_financiamiento_obra'),
             'programa' => array(self::BELONGS_TO, 'Programa', 'programa_id'),
             'estatus0' => array(self::BELONGS_TO, 'Maestro', 'estatus'),
             'usuarioIdCreacion' => array(self::BELONGS_TO, 'CrugeUser', 'usuario_id_creacion'),
@@ -145,6 +147,7 @@ class Desarrollo extends CActiveRecord {
             'coordenadas' => 'Coordenadas',
             'lote_terreno_mt2' => 'Lote Terreno Mt2',
             'fuente_financiamiento_id' => 'Fuente Financiamiento del Crédito',
+            'id_fuente_financiamiento_obra' => 'Fuente Financiamiento de la Obra',
             'ente_ejecutor_id' => 'Ente Ejecutor',
             'titularidad_del_terreno' => 'Titularidad Del Terreno',
             'matricula' => 'Posee Matricula',
@@ -208,6 +211,7 @@ class Desarrollo extends CActiveRecord {
         $criteria->compare('coordenadas', $this->coordenadas, true);
         $criteria->compare('lote_terreno_mt2', $this->lote_terreno_mt2, true);
         $criteria->compare('fuente_financiamiento_id', $this->fuente_financiamiento_id);
+        $criteria->compare('id_fuente_financiamiento_obra', $this->id_fuente_financiamiento_obra);
         $criteria->compare('ente_ejecutor_id', $this->ente_ejecutor_id);
         $criteria->compare('titularidad_del_terreno', $this->titularidad_del_terreno);
         $criteria->compare('matricula', $this->matricula);

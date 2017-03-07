@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'vsw_busqueda_avanzada':
  * @property integer $id_beneficiario_temporal
+ * @property integer $cedula
  * @property string $rif
  * @property integer $id_nacionalidad
  * @property string $nacionalidad
@@ -116,7 +117,7 @@ class VswBusquedaAvanzada extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_beneficiario_temporal, id_nacionalidad, id_estatus_adjudicado, id_desarrollo, cod_estado, cod_municipio, cod_parroquia, id_parcela, id_unidad_habitacional, id_tipo_inmueble, id_vivienda, nro_banos, nro_habitaciones, nro_banos_auxiliar, tipo_vivienda_id, id_fuente_financiamiento, id_programa, id_ente_ejecutor, id_beneficiario, condicion_trabajo_id, condicion_laboral_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, gen_cargo_id, cod_estado_anterior, cod_municipio_anterior, cod_parroquia_anterior, condicion_unidad_familiar_id, total_personas_cotizando', 'numerical', 'integerOnly'=>true),
+			array('id_beneficiario_temporal, id_nacionalidad, id_estatus_adjudicado, id_desarrollo, cod_estado, cod_municipio, cod_parroquia, id_parcela, id_unidad_habitacional, id_tipo_inmueble, id_vivienda, nro_banos, nro_habitaciones, nro_banos_auxiliar, tipo_vivienda_id, id_fuente_financiamiento, id_programa, id_ente_ejecutor, id_beneficiario, condicion_trabajo_id, condicion_laboral_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, gen_cargo_id, cod_estado_anterior, cod_municipio_anterior, cod_parroquia_anterior, condicion_unidad_familiar_id, total_personas_cotizando, cedula', 'numerical', 'integerOnly'=>true),
 			array('rif', 'length', 'max'=>12),
 			array('nombre_completo, nombre_desarrollo, urban_barrio, av_call_esq_carr, zona, lindero_norte_desarrollo, lindero_sur_desarrollo, lindero_este_desarrollo, lindero_oeste_desarrollo, lindero_norte_unidad_habitacional, lindero_sur_unidad_habitacional, lindero_este_unidad_habitacional, lindero_oeste_unidad_habitacional, lindero_norte_vivienda, lindero_sur_vivienda, lindero_este_vivienda, lindero_oeste_vivienda, nombre_fuente_financiamiento, nombre_ente_ejecutor, nombre_empresa, direccion_empresa, direccion_anterior, urban_barrio_anterior, av_call_esq_carr_anterior, zona_anterior', 'length', 'max'=>200),
 			array('estado, municipio, parroquia, estado_anetrior, municipio_anterior, parroquia_anterior', 'length', 'max'=>250),
@@ -128,7 +129,7 @@ class VswBusquedaAvanzada extends CActiveRecord
 			array('nacionalidad, estatus_adjudicado, nombre_parcela, tipo_inmueble, tipo_vivienda, condicion_trabajo, condicion_laboral, fuente_ingreso, relacion_trabajo, sector_trabajo, cargo, ingreso_mensual, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, condicion_unidad_familiar, ingreso_total_familiar_suma_faov', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_beneficiario_temporal, rif, id_nacionalidad, nacionalidad, nombre_completo, id_estatus_adjudicado, estatus_adjudicado, id_desarrollo, nombre_desarrollo, cod_estado, estado, cod_municipio, municipio, cod_parroquia, parroquia, urban_barrio, av_call_esq_carr, zona, lindero_norte_desarrollo, lindero_sur_desarrollo, lindero_este_desarrollo, lindero_oeste_desarrollo, id_parcela, nombre_parcela, id_unidad_habitacional, nombre_unidad_habitacional, lindero_norte_unidad_habitacional, lindero_sur_unidad_habitacional, lindero_este_unidad_habitacional, lindero_oeste_unidad_habitacional, id_tipo_inmueble, tipo_inmueble, id_vivienda, nro_piso, nro_vivienda, lindero_norte_vivienda, lindero_sur_vivienda, lindero_este_vivienda, lindero_oeste_vivienda, nro_banos, nro_habitaciones, nro_banos_auxiliar, construccion_mt2, tipo_vivienda_id, tipo_vivienda, id_fuente_financiamiento, nombre_fuente_financiamiento, id_programa, nombre_programa, id_ente_ejecutor, nombre_ente_ejecutor, id_beneficiario, condicion_trabajo_id, condicion_trabajo, condicion_laboral_id, condicion_laboral, fuente_ingreso_id, fuente_ingreso, relacion_trabajo_id, relacion_trabajo, sector_trabajo_id, sector_trabajo, nombre_empresa, direccion_empresa, telefono_trabajo, gen_cargo_id, cargo, ingreso_mensual, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, direccion_anterior, urban_barrio_anterior, av_call_esq_carr_anterior, zona_anterior, cod_estado_anterior, estado_anetrior, cod_municipio_anterior, municipio_anterior, cod_parroquia_anterior, parroquia_anterior, nombre_unidad_familiar, condicion_unidad_familiar_id, condicion_unidad_familiar, total_personas_cotizando, ingreso_total_familiar, ingreso_total_familiar_suma_faov, observacion', 'safe', 'on'=>'search'),
+			array('id_beneficiario_temporal, cedula, rif, id_nacionalidad, nacionalidad, nombre_completo, id_estatus_adjudicado, estatus_adjudicado, id_desarrollo, nombre_desarrollo, cod_estado, estado, cod_municipio, municipio, cod_parroquia, parroquia, urban_barrio, av_call_esq_carr, zona, lindero_norte_desarrollo, lindero_sur_desarrollo, lindero_este_desarrollo, lindero_oeste_desarrollo, id_parcela, nombre_parcela, id_unidad_habitacional, nombre_unidad_habitacional, lindero_norte_unidad_habitacional, lindero_sur_unidad_habitacional, lindero_este_unidad_habitacional, lindero_oeste_unidad_habitacional, id_tipo_inmueble, tipo_inmueble, id_vivienda, nro_piso, nro_vivienda, lindero_norte_vivienda, lindero_sur_vivienda, lindero_este_vivienda, lindero_oeste_vivienda, nro_banos, nro_habitaciones, nro_banos_auxiliar, construccion_mt2, tipo_vivienda_id, tipo_vivienda, id_fuente_financiamiento, nombre_fuente_financiamiento, id_programa, nombre_programa, id_ente_ejecutor, nombre_ente_ejecutor, id_beneficiario, condicion_trabajo_id, condicion_trabajo, condicion_laboral_id, condicion_laboral, fuente_ingreso_id, fuente_ingreso, relacion_trabajo_id, relacion_trabajo, sector_trabajo_id, sector_trabajo, nombre_empresa, direccion_empresa, telefono_trabajo, gen_cargo_id, cargo, ingreso_mensual, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, direccion_anterior, urban_barrio_anterior, av_call_esq_carr_anterior, zona_anterior, cod_estado_anterior, estado_anetrior, cod_municipio_anterior, municipio_anterior, cod_parroquia_anterior, parroquia_anterior, nombre_unidad_familiar, condicion_unidad_familiar_id, condicion_unidad_familiar, total_personas_cotizando, ingreso_total_familiar, ingreso_total_familiar_suma_faov, observacion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -150,6 +151,7 @@ class VswBusquedaAvanzada extends CActiveRecord
 	{
 		return array(
 			'id_beneficiario_temporal' => 'Id Beneficiario Temporal',
+			'cedula' => 'Cedula',
 			'rif' => 'Rif',
 			'id_nacionalidad' => 'Nacionalidad',
 			'nacionalidad' => 'Nacionalidad',
@@ -259,6 +261,7 @@ class VswBusquedaAvanzada extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_beneficiario_temporal',$this->id_beneficiario_temporal);
+                $criteria->compare('cedula',$this->cedula);
 		$criteria->compare('rif',$this->rif,true);
 		$criteria->compare('id_nacionalidad',$this->id_nacionalidad);
 		$criteria->compare('nacionalidad',$this->nacionalidad,true);

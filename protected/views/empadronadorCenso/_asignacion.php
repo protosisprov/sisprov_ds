@@ -112,7 +112,7 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
     </div>
     <div class="col-md-4" id="enviarAsignacion">
         <a>
-            <img src="<?php echo Yii::app()->baseUrl; ?>/images/agregar.jpg" width="60px" height="60px" > Agregar Beneficiarios a un Empadronador
+            <img src="<?php echo Yii::app()->baseUrl; ?>/images/agregar.jpg" width="85px" height="70px" > Agregar Beneficiarios a un Empadronador
         </a>
     </div>
 </div>

@@ -17,7 +17,7 @@ $cabecera = '<img src="' . Yii::app()->request->baseUrl . '/images/cintillo.jpg"
 
 $html = "<table align='right'   width='100%' border='0'>     
                         <tr>
-                            <td colspan='4' align='center'><b><font size='4'>DATOS DEL BENEFICIARIO</br></br></font></td>
+                            <td colspan='4' align='center'><b><font size='5'>DATOS DEL BENEFICIARIO</br></br></font></td>
                         </tr>		
         </table> 
         
@@ -43,7 +43,7 @@ $html = "<table align='right'   width='100%' border='0'>
         "</td>
                         </tr>
 
-        </table> <br/>
+        </table> <br/> <br/>
 ";
 //.($analicredito->unidadFamiliar->beneficiario->beneficiarioTemporal->fkNacionalidad->descripcion=='VENEZOLANO')?'V':'E';
 
@@ -52,7 +52,7 @@ $html.=$htmlprincipal;
 
 
 
-//$html.= $tablaAmortiz;
+$html.= $tablaAmortiz;
 
 
 
