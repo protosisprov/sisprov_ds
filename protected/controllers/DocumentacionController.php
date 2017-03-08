@@ -153,9 +153,20 @@ class DocumentacionController extends Controller {
 //        $model->unsetAttributes();  // clear any default values
 //        if (isset($_GET['VswMultifamiliar']))
 //            $model->attributes = $_GET['VswMultifamiliar'];
+        #$asignaciones = new Asignaciones;
+        #$this->render('adminmultifamiliar', array('asignaciones' => $asignaciones,
+//            'model' => $model,
+        #));
+        $modelVswMultifamiliar = new VswMultifamiliar('search');
+            $modelVswMultifamiliar->unsetAttributes();
+        if (isset($_GET['VswMultifamiliar'])){
+            $modelVswMultifamiliar->attributes = $_GET['VswMultifamiliar'];
+        }    
+        
+        
         $asignaciones = new Asignaciones;
         $this->render('adminmultifamiliar', array('asignaciones' => $asignaciones,
-//            'model' => $model,
+            'modelVswMultifamiliar' => $modelVswMultifamiliar,
         ));
     }
     

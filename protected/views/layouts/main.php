@@ -437,8 +437,8 @@
                                             <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminmultifamiliar')) { ?>
                                                 <li>
-                                                    <!--<a href="<?php //echo $this->createUrl('/documentacion/adminmultifamiliar'); ?>">-->
-                                                    <a href="<?php echo $this->createUrl('/documentacion/adminmultifamiliarFiltro'); ?>">
+                                                    <a href="<?php echo $this->createUrl('/documentacion/adminmultifamiliar'); ?>">
+                                                    <!--<a href="<?php //echo $this->createUrl('/documentacion/adminmultifamiliarFiltro'); ?>">-->
                                                         <i class="glyphicon glyphicon-map-marker"></i>
                                                         <span>Unidad Multifamilar</span>
                                                     </a>

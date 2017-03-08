@@ -59,10 +59,13 @@ function PorcentajeVivienda($iD) {
 
 function PorcentajeTotalViviendas($cantidad, $censadas)
 {
-    $porcentaje = $censadas*100/$cantidad;
-//    return $cantidad." - ".$censadas. " = ".$porcentaje;
-//    return $cantidad." - ".$censadas;
-    return ($porcentaje)==0? "0 %": number_format($porcentaje, 2, '.', '')." %";
+    if($cantidad == 0)
+        return 0;
+    else{
+        $porcentaje = $censadas*100/$cantidad;
+//    return ($porcentaje)==0? "0 %": number_format($porcentaje, 2, '.', '')." %";
+        return ($porcentaje)==0? 0: round($porcentaje);
+    }
 }
 
 function Censadas($idUnidadHabitacional) {
@@ -171,7 +174,15 @@ function ColorEstatus($color) {
 
 </style>
 
-
+<script>
+    $(document).on('ready',function(){
+//        if ($('input[type=checkbox]').is(':disabled'))
+//            alert($(this).attr('id'));
+var $deshabilitados = $(':checkbox:disabled');
+$desabilitados.addClass('Hola');
+            
+    });
+</script>
 
 <!--<h1>Gestión de Unidades Multifamiliares</h1>-->
 <h1>Proceso y Gestión de Documentación</h1>
@@ -255,7 +266,11 @@ $this->widget('booster.widgets.TbGridView', array(
             'selectableRows' => 2, // Allow multiple selections 
             'value' => '$data["id_unidad_habitacional"]',
             'id' => 'check_analista_doc_multi',
-            'visible' => (Yii::app()->user->checkAccess("administrador_documentacion"))
+//            'disabled'=>'$data->cantidad==21',
+            'disabled'=>'PorcentajeTotalViviendas($data["cantidad"],Censadas($data["id_unidad_habitacional"]))<17',
+//            'cssClassExpression'=>'$data->cantidad==21 ? "deshabilitado" : ""',
+//            'visible' => '(Yii::app()->user->checkAccess("administrador_documentacion")) && (PorcentajeTotalViviendas($data["cantidad"],Censadas($data["id_unidad_habitacional"])))>=17',
+            //'visible' =>'$data->cantidad"==21',
         ),
         //'id_unidad_habitacional',
 //        'id_unidad_habitacional' => array(
@@ -269,7 +284,9 @@ $this->widget('booster.widgets.TbGridView', array(
             'header' => '<span title="Nombre del Estado">Estado</span>',
             'name' => 'estado',
             'value' => '$data["estado"]',
-            'filter' => CHtml::listData(Tblestado::model()->findAll(array('order' => 'strdescripcion ASC')), 'strdescripcion', 'strdescripcion')
+            'filter' => CHtml::listData(Tblestado::model()->findAll(array('order' => 'strdescripcion ASC')), 'strdescripcion', 'strdescripcion'),
+//            'visible'=>'$data->cantidad==21 ? true : false',
+//            'visible' =>false,
         ),
         'nombre_desarrollo' => array(
             'header' => '<span title="Nombre del Desarrollo">Desarrollo</span>',
@@ -291,15 +308,16 @@ $this->widget('booster.widgets.TbGridView', array(
             'filter' => false
         ),
         'total_para_documentar' => array(
-            'header' => '<pan title="Total de viviendas por documentación">N° Viviendas Disponibles para Documentar</span>',
+            'header' => '<pan title="Total de viviendas por documentación" style="cursor:pointer">N° Viviendas para Documentar</span>',
             'name' => 'total_para_documentar',
             'value' => ' Censadas($data["id_unidad_habitacional"])',
             'filter' => false
         ),
         'porcentaje_total' => array(
-            'header' => 'Porcentaje Viviendas Disponibles',
+            'header' => '<pan title="Total de viviendas por documentación" style="cursor:pointer">Porcentaje de Viviendas para Documentar</span>',
             'name' => 'porcentaje',
-            'value' => '($data["cantidad"])==0?"0 %":PorcentajeTotalViviendas($data["cantidad"],Censadas($data["id_unidad_habitacional"]))',
+//            'value' => '($data["cantidad"])==0? (int)0 ." %":PorcentajeTotalViviendas($data["cantidad"],Censadas($data["id_unidad_habitacional"]))." %"',
+            'value' => 'PorcentajeTotalViviendas($data["cantidad"],Censadas($data["id_unidad_habitacional"]))." %"',
             'filter' => false
         ),
 //        'porcentaje' => array(
@@ -465,3 +483,7 @@ $this->widget('booster.widgets.TbGridView', array(
 //var_dump($data);die;
 ?>
 <?php $this->endWidget(); ?>
+
+<div class="alert" style="color:#000; font-size:13px;">
+    <span class="well" style="color: red; padding: 5px">Nota:</span> Sólo se podrán seleccionar aquellas Unidades Multifamiliares que cumplan con los requerimientos mínimos para el proceso de Documentación.
+</div>
