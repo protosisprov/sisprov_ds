@@ -273,8 +273,7 @@ function MostrarFlat() {
 
 function   AsignacionAnalista(asignado, caso, checked) {
     
-alert(asignado);
-alert(' Leggor');
+
     if (caso == 308) {
 
         var checked = $('#tempcensovalidadofaovfaspGrid').yiiGridView.getChecked('tempcensovalidadofaovfaspGrid', 'check_analista');
