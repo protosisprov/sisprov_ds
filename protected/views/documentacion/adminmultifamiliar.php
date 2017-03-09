@@ -191,7 +191,7 @@ function ColorEstatus($color) {
             $criteria->join = 'join cruge_authassignment a ON a.userid = t.iduser';
             $criteria->condition = "a.itemname ='analista_documentacion'";
             echo $form->dropDownListGroup(
-                    $asignaciones, 'asignar_label', array(
+                    $asignaciones, 'fk_usuario_asignado', array(
                 'wrapperHtmlOptions' => array(
                     'class' => 'col-sm-6',
                 ),
@@ -255,12 +255,13 @@ $this->widget('booster.widgets.TbGridView', array(
     'id' => 'unidad-habitacional-grid',
     'type' => 'striped bordered condensed',
     'dataProvider' => $modelVswMultifamiliar->search(),
+    
     'filter' => $modelVswMultifamiliar,
     'columns' => array(
         array(
             'class' => 'CCheckBoxColumn', // Checkboxes
             'selectableRows' => 2, // Allow multiple selections 
-            'value' => '$data["id_unidad_habitacional"]',
+            'value' => '$data->id_unidad_habitacional',
             'id' => 'check_analista_doc_multi',
 //            'disabled'=>'$data->cantidad==21',
             'disabled'=>'PorcentajeTotalViviendas($data["cantidad"],Censadas($data["id_unidad_habitacional"]))<17',
@@ -269,13 +270,13 @@ $this->widget('booster.widgets.TbGridView', array(
             //'visible' =>'$data->cantidad"==21',
         ),
         //'id_unidad_habitacional',
-//        'id_unidad_habitacional' => array(
-//            'header' => 'Unidad Multifamiliar',
-//            'name' => 'id_unidad_habitacional',
-//            'value' => '$data->id_unidad_habitacional',
-//            'htmlOptions' => array('width' => '80', 'style' => 'text-align: center;'),
-//            //'filter' => false
-//        ),
+        'id_unidad_habitacional' => array(
+            'header' => 'Unidad Multifamiliar',
+            'name' => 'id_unidad_habitacional',
+            'value' => '$data->id_unidad_habitacional',
+            'htmlOptions' => array('width' => '80', 'style' => 'text-align: center;'),
+            //'filter' => false
+        ),
         'estado' => array(
             'header' => '<span title="Nombre del Estado">Estado</span>',
             'name' => 'estado',
@@ -349,7 +350,7 @@ $this->widget('booster.widgets.TbGridView', array(
         'analista' => array(
             'header' => 'Analista Asignado',
             'name' => 'analista',
-            'value' => 'VswAsignacionesDocumentos::buscarUsuAsignado($data["id_unidad_habitacional"])',
+            'value' => 'VswAsignacionesDocumentos::buscarUsuAsignado($data->id_unidad_habitacional)',
             'filter' => false
         ),
         

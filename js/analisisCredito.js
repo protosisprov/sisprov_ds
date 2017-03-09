@@ -272,7 +272,9 @@ function MostrarFlat() {
 
 
 function   AsignacionAnalista(asignado, caso, checked) {
-//alert(checked);return false;
+    
+alert(asignado);
+alert(' Leggor');
     if (caso == 308) {
 
         var checked = $('#tempcensovalidadofaovfaspGrid').yiiGridView.getChecked('tempcensovalidadofaovfaspGrid', 'check_analista');
@@ -282,7 +284,16 @@ function   AsignacionAnalista(asignado, caso, checked) {
 //        
 //    }
     else if (caso == 309) {
-        var checked = $('#unidad-habitacional-grid').yiiGridView.getChecked('unidad-habitacional-grid', 'check_analista_doc_multi');
+       //var checked = $('#unidad-habitacional-grid').yiiGridView.getChecked('unidad-habitacional-grid', 'check_analista_doc_multi');
+       // var checked =  $("input:checkbox:checked").val();
+        
+        var valor = new Array(); 
+
+            $("input:checkbox:checked").each(function() {
+                valor.push($(this).val());
+            });
+        
+        var checked = valor;
 
     }
     var count = checked.length;

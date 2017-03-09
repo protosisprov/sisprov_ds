@@ -161,7 +161,7 @@ class AsignacionesController extends Controller {
 
     public function actionAsignarAnalista() {
 
-       //  var_dump($_POST);dIE;
+        // var_dump($_POST);dIE;
         $check_list = $_POST['checked'];
         $id_seleccionado = explode(',', $check_list); // SEPARO LOS ID SELECCIONADOS POR COMA
         $asignado = (int) $_POST['asignado'];
