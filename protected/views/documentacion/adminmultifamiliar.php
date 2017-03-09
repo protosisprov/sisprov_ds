@@ -270,13 +270,13 @@ $this->widget('booster.widgets.TbGridView', array(
             //'visible' =>'$data->cantidad"==21',
         ),
         //'id_unidad_habitacional',
-        'id_unidad_habitacional' => array(
-            'header' => 'Unidad Multifamiliar',
-            'name' => 'id_unidad_habitacional',
-            'value' => '$data->id_unidad_habitacional',
-            'htmlOptions' => array('width' => '80', 'style' => 'text-align: center;'),
-            //'filter' => false
-        ),
+//        'id_unidad_habitacional' => array(
+//            'header' => 'Unidad Multifamiliar',
+//            'name' => 'id_unidad_habitacional',
+//            'value' => '$data->id_unidad_habitacional',
+//            'htmlOptions' => array('width' => '80', 'style' => 'text-align: center;'),
+//            //'filter' => false
+//        ),
         'estado' => array(
             'header' => '<span title="Nombre del Estado">Estado</span>',
             'name' => 'estado',
