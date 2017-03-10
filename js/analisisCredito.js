@@ -277,6 +277,7 @@ function   AsignacionAnalista(asignado, caso, checked) {
     if (caso == 308) {
 
         var checked = $('#tempcensovalidadofaovfaspGrid').yiiGridView.getChecked('tempcensovalidadofaovfaspGrid', 'check_analista');
+        var count = checked.length;
     }
 //    else if (caso == 2){
 //    var checked = $('#beneficiario-grid').yiiGridView.getChecked('beneficiario-grid', 'check_analista_doc_uni');
@@ -293,9 +294,14 @@ function   AsignacionAnalista(asignado, caso, checked) {
             });
         
         var checked = valor;
+        var count = checked.length;
+        
+        if (valor[0] == 1){ count = count-1 }
 
+        alert(count);
+         
     }
-    var count = checked.length;
+   
 
 //    console.log(asignado);
 
@@ -310,10 +316,10 @@ function   AsignacionAnalista(asignado, caso, checked) {
     }
 
     if (count == 0) {
-        bootbox.alert('Por favor seleccione los beneficiarios a los que desea asignar');
+        bootbox.alert('Por favor seleccione  los que desea asignar');
         return false;
     }
-    if (count > 0 && confirm('Ha seleccionado  ' + count + ' beneficiarios.  ¿Está seguro de fijar los beneficiarios indicados al analista?')) {
+    if (count > 0 && confirm('Ha seleccionado  ' + count + ' items.  ¿Está seguro de fijar lo indicado al analista?')) {
         $('.loaderr').fadeIn('slow');
         $.ajax({
             url: baseUrl + "/Asignaciones/AsignarAnalista",
