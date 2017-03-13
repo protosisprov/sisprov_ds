@@ -20,7 +20,6 @@ Yii::app()->clientScript->registerScript('desarollo', "
     });  
 ");
 
-
 ?>
 
 

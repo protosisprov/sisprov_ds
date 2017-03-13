@@ -55,3 +55,4 @@ $titulo = 'Reporte Por Documentación (Multifamiliares)';
         $pdfEstadisticas = new PdfEstadisticas();
         $pdfEstadisticas->subTitulo = 'Generado Al '.date("d/m/Y h:m A");
         $pdfEstadisticas->imprimirPdf($titulo, $contenido);
+        

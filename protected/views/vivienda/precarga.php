@@ -13,7 +13,6 @@ $this->breadcrumbs = array(
 ?>
 <?php
 
-
 if (!empty($unidad_habitacional->id_unidad_habitacional)) {
     
     
