@@ -61,7 +61,7 @@ class VswMultifamiliar extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'vsw_asignaciones_documentos' => array(self::BELONGS_TO, 'VswAsignacionesDocumentos','','on'=>'t.id_unidad_habitacional=vsw_asignaciones_documentos.fk_caso_asignado'),
+            'vsw_asignaciones_documentos' => array(self::BELONGS_TO, 'VswAsignacionesDocumentos','','on'=>'t.id_unidad_habitacional=vsw_asignaciones_documentos.fk_caso_asignado and es_activo=true'),
 //            'vsw_asignaciones_documentos' => array(self::HAS_MANY, 'VswAsignacionesDocumentos','','on'=>'t.id_unidad_habitacional=vsw_asignaciones_documentos.fk_caso_asignado'),
 //            'vsw_multifamiliar_relation' => array(self::MANY_MANY, 'VswAsignacionesDocumentos','','on'=>'t.id_unidad_habitacional=vsw_asignaciones_documentos.fk_caso_asignado'),
             //'asignaciones' => array(self::BELONGS_TO, 'Asignaciones','','on'=>'t.id_unidad_habitacional=asignaciones.fk_caso_asignado'),
