@@ -480,6 +480,7 @@ $this->widget('booster.widgets.TbGridView', array(
     ),
 ));
 
+
 //var_dump($data);die;
 ?>
 <?php $this->endWidget(); ?>
