@@ -27,3 +27,4 @@ $this->menu=array(
 		'fecha_actualizacion',
 	),
 )); ?>
+

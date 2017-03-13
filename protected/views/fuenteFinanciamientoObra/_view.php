@@ -3,6 +3,7 @@
 /* @var $data FuenteFinanciamientoObra */
 ?>
 
+
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id_fuente_financiamiento_obra')); ?>:</b>
