@@ -66,11 +66,17 @@ $this->widget('booster.widgets.TbGridView', array(
             'value' => '$data->fuenteFinanciamiento->nombre_fuente_financiamiento',
             'filter' => CHtml::listData(FuenteFinanciamiento::model()->findall(), 'id_fuente_financiamiento', 'nombre_fuente_financiamiento'),
         ),
-        'parroquia_id' => array(
-            'header' => 'Estado',
-            'name' => 'parroquia_id',
-            'value' => '$data->fkParroquia->clvmunicipio0->clvestado0->strdescripcion',
+//        'parroquia_id' => array(
+//            'header' => 'Estado',
+//            'name' => 'parroquia_id',
+//            'value' => '$data->fkParroquia->clvmunicipio0->clvestado0->strdescripcion',
 //            'filter' => CHtml::listData(Tblestado::model()->findall(), 'clvcodigo', 'strdescripcion'),
+////            'filter' => Maestro::FindMaestrosByPadreSelect(71),
+        'estado_rel' => array(
+            'header' => 'Estado',
+            'name' => 'estado_rel',
+            'value' => '$data->fkParroquia->clvmunicipio0->clvestado0->strdescripcion',
+            'filter' => CHtml::listData(Tblestado::model()->findall(), 'clvcodigo', 'strdescripcion'),
 //            'filter' => Maestro::FindMaestrosByPadreSelect(71),
         ),
 

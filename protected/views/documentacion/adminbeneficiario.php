@@ -123,7 +123,8 @@ function ColorEstatus($color) {
 
 </style>
 
-<h1 class="text-center">Documentación Beneficiario</h1>
+<!--<h1 class="text-center">Documentación Beneficiario</h1>-->
+<h1 class="text-center">Proceso de Documentación del Beneficiario</h1>
 
 
 <div class="row">
@@ -147,48 +148,58 @@ function ColorEstatus($color) {
 <?php
 
 $model->estatus_beneficiario_id = 271;
-if(Yii::app()->user->checkAccess("analista_documentacion")){
-    $DataProviderGridUNI = new CActiveDataProvider('Beneficiario', array(
-        'criteria' => array(
-            'order' => 't.id_beneficiario ASC',
-            'join' => 'join beneficiario_temporal tmp ON t.beneficiario_temporal_id = tmp.id_beneficiario_temporal
-                       join vsw_asignaciones_documentos doc ON doc.fk_caso_asignado = tmp.unidad_habitacional_id and doc.es_activo=true
-                       ',
-            'condition' => 'doc.fk_usuario_asignado ='.Yii::app()->user->id,
-        ),
-        'pagination' => array('pageSize' => Yii::app()->user->getState('pageSize', 10),),
-            )
-            );
-}else if(Yii::app()->user->checkAccess("administrador_documentacion")){
-    $DataProviderGridUNI =$model->search();
-}
+//if(Yii::app()->user->checkAccess("analista_documentacion")){
+//    $DataProviderGridUNI = new CActiveDataProvider('Beneficiario', array(
+//        'criteria' => array(
+//            'order' => 't.id_beneficiario ASC',
+//            'join' => 'join beneficiario_temporal tmp ON t.beneficiario_temporal_id = tmp.id_beneficiario_temporal
+//                       join vsw_asignaciones_documentos doc ON doc.fk_caso_asignado = tmp.unidad_habitacional_id and doc.es_activo=true
+//                       ',
+//            //'condition' => 'doc.fk_usuario_asignado ='.Yii::app()->user->id,
+//        ),
+//        'pagination' => array('pageSize' => Yii::app()->user->getState('pageSize', 10),),
+//            )
+//            );
+//}else if(Yii::app()->user->checkAccess("administrador_documentacion")){
+//    $DataProviderGridUNI =$model->search();
+//}
 
 //$model->estatus_beneficiario_id = 269;
 $this->widget('booster.widgets.TbGridView', array(
     'id' => 'beneficiario-grid',
-//    'dataProvider' => $model->search(),
+    'dataProvider' => $model->searchBeneficiariosDocumentacion(),
+    'filter' => $model,
     'type' => 'striped bordered condensed',
-    'dataProvider' => $DataProviderGridUNI,
+//    'dataProvider' => $DataProviderGridUNI,
     'columns' => array(
-        array(
-            'name' => 'id_beneficiario',
-            'header' => 'N°',
-            'value' => '$data->id_beneficiario',
-            'htmlOptions' => array('style' => 'text-align: center', 'width' => '90px'),
+//        array(
+//            'name' => 'id_beneficiario',
+//            'header' => 'N°',
+//            'value' => '$data->id_beneficiario',
+//            'htmlOptions' => array('style' => 'text-align: center', 'width' => '90px'),
+//        ),
+        'cedula_rel' =>array(
+            'name' => 'cedula_rel',
+            'header' => 'Cédula',
+            'value' => '$data->beneficiarioTemporal->cedula',
         ),
         array(
             'name' => 'persona_id',
             'header' => 'Nombre',
             'value' => 'nombre("PRIMER_NOMBRE",$data->persona_id)',
+            'filter' => false,
+            'sortable' => false
         ),
         array(
             'name' => 'persona_id',
             'header' => 'Apellido',
             'value' => 'apellido("PRIMER_APELLIDO",$data->persona_id)',
+            'filter' => false,
+            'sortable' => false
         ),
         'Estado' => array(
             'header' => 'Estado',
-            'name' => 'beneficiarioTemporal',
+            'name' => 'estado_rel',
             'value' => 'Tblparroquia::model()->findByPK(Desarrollo::model()->findByPK($data->beneficiarioTemporal->desarrollo_id)->parroquia_id)->clvmunicipio0->clvestado0->strdescripcion',
             'filter' => CHtml::listData(Tblestado::model()->findall(), 'clvcodigo', 'strdescripcion'),
         ),
@@ -198,18 +209,39 @@ $this->widget('booster.widgets.TbGridView', array(
 //            'value' => '$data->beneficiarioTemporal->desarrollo->nombre',
 //            'filter' => CHtml::listData(Desarrollo::model()->findall(), 'id_desarrollo', 'nombre'),
 //        ),
-        'Unidad Habitacional' => array(
+        'Desarrollo' => array(
+            'header' => 'Desarrollo',
+            'name' => 'desarrollo_rel',
+            'value' => '$data->beneficiarioTemporal->desarrollo->nombre',
+            'filter' => CHtml::listData(Desarrollo::model()->findall(), 'id_desarrollo', 'nombre'),
+        ),
+//        'Unidad Habitacional' => array(
+//            'header' => 'UNIDAD<br/>MULTIFAMILIAR',
+//            'name' => 'beneficiarioTemporal',
+//            'value' => '$data->beneficiarioTemporal->unidadHabitacional->nombre',
+//            'filter' => CHtml::listData(UnidadHabitacional::model()->findall(), 'id_unidad_habitacional', 'nombre'),
+//        ),
+        'Unidad_multifamiliar' => array(
             'header' => 'UNIDAD<br/>MULTIFAMILIAR',
-            'name' => 'beneficiarioTemporal',
+            'name' => 'unidad_multifamiliar_rel',
             'value' => '$data->beneficiarioTemporal->unidadHabitacional->nombre',
             'filter' => CHtml::listData(UnidadHabitacional::model()->findall(), 'id_unidad_habitacional', 'nombre'),
+        ),
+        'n_vivienda_piso' => array(
+            'header' => 'N° Vivienda/Piso',
+            'name' => 'n_vivienda_piso_rel',
+            'value' => ('$data->beneficiarioTemporal->vivienda->nro_piso')!=""?'"N° ". $data->beneficiarioTemporal->vivienda->nro_vivienda." / Piso. ".$data->beneficiarioTemporal->vivienda->nro_piso':'"N° ".$data->beneficiarioTemporal->vivienda->nro_vivienda',
+            //'filter' => CHtml::listData(UnidadHabitacional::model()->findall(), 'id_unidad_habitacional', 'nombre'),
+            'filter' => false
         ),
         array(
             'header' => 'Estatus Documento',
             'name' => 'estatus_msj',
             'value' => '$data->estatus_msj',
             'cssClassExpression' => 'ColorEstatus($data["estatus_msj"])',
+            'filter' =>  array('VALIDADO POR SAREN'=>"VALIDADO POR SAREN","VALIDADO POR BANAVIH (EN ESPERA DE SAREN)"=>"VALIDADO POR BANAVIH (EN ESPERA DE SAREN)","DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)"=>"DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)"),
 //            'filter' => CHtml::listData(Desarrollo::model()->findall(), 'id_desarrollo', 'nombre'),
+            'sortable' => false
         ),
 //            'estatus' => array(
 //           // 'header' => 'Estatus',

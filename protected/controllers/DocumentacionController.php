@@ -107,7 +107,7 @@ class DocumentacionController extends Controller {
 //                    where doc.fk_usuario_asignado = 3';
 //          $result = Yii::app()->db->createCommand($SLQ)->queryAll();
         //    var_dump($result);Die;
-        $model = new Beneficiario('search');
+        $model = new Beneficiario('searchBeneficiariosDocumentacion');
         $model->unsetAttributes();  // clear any default values
 // $llaves = implode('["id_beneficiario"]=>', $ids);
 //    var_dump($ids);
@@ -121,7 +121,7 @@ class DocumentacionController extends Controller {
     
     public function actionAdminbeneficiarioFiltro() {
         $asignaciones = new Asignaciones;
-        $model = new Beneficiario('search');
+        $model = new Beneficiario('searchBeneficiariosDocumentacion');
         $model->unsetAttributes();  // clear any default values
 
         if (isset($_GET['Beneficiario']))
