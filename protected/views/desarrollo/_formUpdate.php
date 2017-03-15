@@ -302,7 +302,7 @@ Yii::app()->clientScript->registerScript('desarollo', "
 </div>
 
     <div class="row">
-    <div class="col-md-4 " style="display: ">
+        <div class="col-md-4 fecha" style="display: none" >
         <?php echo CHtml::activeLabel($model, 'matricula'); ?><br>
         <?php
         $this->widget('booster.widgets.TbSwitch', array(
@@ -313,7 +313,7 @@ Yii::app()->clientScript->registerScript('desarollo', "
                 'offText' => 'NO',
             ),
             'htmlOptions' => array(
-                'class' => 'matricula',
+                'class' => 'matricula matri',
                 'onChange' => 'Matricula()',
             )
                 )

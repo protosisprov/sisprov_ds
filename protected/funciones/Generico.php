@@ -6,6 +6,10 @@ class Generico {
      */
 
     public function formatoFecha($fechaIn) {
+        
+        if(strlen($fechaIn)>10)
+            $fechaIn = substr($fechaIn, 0, 10);
+
 //        var_dump($fechaIn);exit;
         $fecha = $fechaIn; //FECHA SIN FORMATO
         $fechaRemplazando = str_replace('/', '-', $fecha);

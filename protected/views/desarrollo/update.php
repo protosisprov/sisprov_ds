@@ -24,76 +24,104 @@ if (!empty($model->parroquia_id)) {
                    bootbox.alert('Por favor indique el nombre del Desarrollo');
                     return false;
                 }
-                if($('#Desarrollo_registro_publico_id').val()==''){
+                /*if($('#Desarrollo_registro_publico_id').val()==''){
                    bootbox.alert('Por favor indique el registro Público');
                     return false;
-                }
-                if($('#Desarrollo_fecha_registro').val()==''){
+                }*/
+                /*if($('#Desarrollo_fecha_registro').val()==''){
                    bootbox.alert('Por favor indique la fecha de Registro');
                     return false;
-                }
+                }*/
                 /*if($('#Desarrollo_nro_documento').val()==''){
                    bootbox.alert('Por favor indique el nombre del Desarrollo');
                     return false;
                 }*/
                 
-                
-                
-                if($('#matricula').is(':checked')){
-                if($('#Desarrollo_asiento_registral').val()==''){
-                   bootbox.alert('Por favor indique el Asiento Registral');
-                    return false;
-                }
-                
-                if($('#Desarrollo_folio_real').val()==''){
-                   bootbox.alert('Por favor indique el Folio Real');
-                    return false;
-                }
-                if($('#Desarrollo_num_matricula').val()==''){
-                   bootbox.alert('Por favor indique el número de Matrícula');
-                    return false;
-                }
-
-                }else{
-                if($('#Desarrollo_ano').val()==''){
-                   bootbox.alert('Por favor indique el año');
-                    return false;
-                }
-                if($('#Desarrollo_num_protocolo').val()==''){
-                   bootbox.alert('Por favor indique el número de Protocolo');
-                    return false;
-                }
-                if($('#Desarrollo_tomo').val()==''){
-                   bootbox.alert('Por favor indique el Tomo');
-                    return false;
-                }
-                }
-                if($('#Tblestado_clvcodigo').val()==''){
-                 alert('Por favor seleccione Estado');
-                    return false;
-                }
-                if($('#Tblmunicipio_clvcodigo').val()==''){
-                   alert('Por favor seleccione Municipio');
-                    return false;
-                }
-                if($('#Desarrollo_parroquia_id').val()==''){
-                   alert('Por favor seleccione Parroquia');
-                    return false;
-                }
                 if($('#titularidad_del_terreno').is(':checked')){
                     if($('#Desarrollo_fecha_transferencia').val()== ''){
                         bootbox.alert('Por favor indique Fecha de transferencia');
                         return false;       
                     }
+                    
+                    if($('#Desarrollo_registro_publico_id').val()==''){
+                        bootbox.alert('Por favor indique el registro Público');
+                        return false;
+                    }
+                    
+                    if($('#Desarrollo_fecha_registro').val()==''){
+                        bootbox.alert('Por favor indique la fecha de Registro');
+                        return false;
+                    }
+                    
+                    if($('#Desarrollo_nro_documento').val()==''){
+                        bootbox.alert('Por favor indique el Número del Documento');
+                        return false;
+                    }
+                    
                 }
+                
+                if($('#matricula').is(':checked')){
+                    if($('#Desarrollo_asiento_registral').val()==''){
+                       bootbox.alert('Por favor indique el Asiento Registral');
+                        return false;
+                    }
+                
+                    if($('#Desarrollo_folio_real').val()==''){
+                       bootbox.alert('Por favor indique el Folio Real');
+                        return false;
+                    }
+                
+                    if($('#Desarrollo_num_matricula').val()==''){
+                       bootbox.alert('Por favor indique el número de Matrícula');
+                        return false;
+                    }
+
+                }else{
+                
+                    /*if($('#Desarrollo_ano').val()==''){
+                       bootbox.alert('Por favor indique el año');
+                        return false;
+                    }
+                    if($('#Desarrollo_num_protocolo').val()==''){
+                       bootbox.alert('Por favor indique el número de Protocolo');
+                        return false;
+                    }
+                    if($('#Desarrollo_tomo').val()==''){
+                       bootbox.alert('Por favor indique el Tomo');
+                        return false;
+                    }*/
+                    }
+                    if($('#Tblestado_clvcodigo').val()==''){
+                     alert('Por favor seleccione Estado');
+                        return false;
+                    }
+                    if($('#Tblmunicipio_clvcodigo').val()==''){
+                       alert('Por favor seleccione Municipio');
+                        return false;
+                    }
+                    if($('#Desarrollo_parroquia_id').val()==''){
+                       alert('Por favor seleccione Parroquia');
+                        return false;
+                    }
+                    if($('#titularidad_del_terreno').is(':checked')){
+                        if($('#Desarrollo_fecha_transferencia').val()== ''){
+                            bootbox.alert('Por favor indique Fecha de transferencia');
+                            return false;       
+                        }
+                    }
                 });
 
         $(document).ready(function(){
             var titularidad ='".$model->titularidad_del_terreno."';
                 if(titularidad== true){
                     $('#titularidad_del_terreno').bootstrapSwitch('state', true, true);
-                }   else {
+                    $('.fecha').show('fade');
+                    $('.col2').show('fade');
+                }else{
                     $('#titularidad_del_terreno').bootstrapSwitch('state', false, false);
+                    $('.fecha').hide('fade');
+                    $('.col1').hide('fade');
+                    $('.col2').hide('fade');
                 }
                 
             var matricula ='".$model->matricula."';
@@ -101,6 +129,7 @@ if (!empty($model->parroquia_id)) {
                     $('#matricula').bootstrapSwitch('state', true, true);
                 }   else {
                     $('#matricula').bootstrapSwitch('state', false, false);
+                    $('.col2').css('display','none');
                 }    
                 
 

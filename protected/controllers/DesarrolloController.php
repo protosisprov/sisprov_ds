@@ -145,6 +145,13 @@ class DesarrolloController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        
+        if(!empty($model->fecha_transferencia) && $model->fecha_transferencia!='0001-01-01 00:00:00')
+            $model->fecha_transferencia = date('d/m/Y', strtotime($model->fecha_transferencia));
+        
+        
+        if(!empty($model->fecha_registro) && $model->fecha_registro!='0001-01-01 00:00:00')
+            $model->fecha_registro = date('d/m/Y', strtotime($model->fecha_registro));
 
         //$model = new Desarrollo;
         $estado = new Tblestado;
@@ -157,6 +164,8 @@ class DesarrolloController extends Controller {
 // $this->performAjaxValidation($model);
         
         if (isset($_POST['Desarrollo'])) {
+            //echo "<script>alert('$model->fecha_transferencia / $model->fecha_registro')</script>";
+            
             $model->attributes = $_POST['Desarrollo'];
             $model->nombre = trim(strtoupper($_POST['Desarrollo']['nombre']));
             $model->descripcion = trim(strtoupper($_POST['Desarrollo']['descripcion']));
@@ -176,7 +185,7 @@ class DesarrolloController extends Controller {
             $model->fecha_transferencia = ($model->titularidad_del_terreno) ? Generico::formatoFecha($_POST['Desarrollo']['fecha_transferencia']) : '0001-01-01 00:00:00';
             // nuevos campos;
             
-            //$model->fecha_registro = ($model->titularidad_del_terreno) ? Generico::formatoFecha($_POST['Desarrollo']['fecha_registro']) : '0001-01-01 00:00:00';
+            $model->fecha_registro = ($model->titularidad_del_terreno) ? Generico::formatoFecha($_POST['Desarrollo']['fecha_registro']) : '0001-01-01 00:00:00';
             //$model->ano = $_POST['Desarrollo']['ano'];
             //$model->asiento_registral = $_POST['Desarrollo']['asiento_registral'];
             //$model->registro_publico_id = $_POST['Desarrollo']['registro_publico_id'];
