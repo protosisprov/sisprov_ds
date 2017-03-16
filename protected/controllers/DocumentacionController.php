@@ -107,13 +107,16 @@ class DocumentacionController extends Controller {
 //                    where doc.fk_usuario_asignado = 3';
 //          $result = Yii::app()->db->createCommand($SLQ)->queryAll();
         //    var_dump($result);Die;
-        $model = new Beneficiario('searchBeneficiariosDocumentacion');
+        $model = new VswDocumentacionBeneficiario('search');
+        
         $model->unsetAttributes();  // clear any default values
 // $llaves = implode('["id_beneficiario"]=>', $ids);
 //    var_dump($ids);
 //die;
-        if (isset($_GET['Beneficiario']))
-            $model->attributes = $_GET['Beneficiario'];
+        if (isset($_GET['VswDocumentacionBeneficiario'])){
+            $model->attributes = $_GET['VswDocumentacionBeneficiario'];
+            
+        }
         $this->render('adminbeneficiario', array(
             'model' => $model, 'asignaciones' => $asignaciones,
         ));

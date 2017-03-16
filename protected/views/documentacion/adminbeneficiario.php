@@ -167,8 +167,34 @@ $model->estatus_beneficiario_id = 271;
 //$model->estatus_beneficiario_id = 269;
 $this->widget('booster.widgets.TbGridView', array(
     'id' => 'beneficiario-grid',
-    'dataProvider' => $model->searchBeneficiariosDocumentacion(),
+    'dataProvider' => $model->search(),
     'filter' => $model,
+    'beforeAjaxUpdate' => 'js:function(id,options){
+        //RECOGE LOS VALORES DE LOS CAMPOS ANTES DEL SUBMIT
+        desarrolloSeleccionado = $("#VswDocumentacionBeneficiario_id_desarrollo").val(); 
+        unidadSeleccionado = $("#VswDocumentacionBeneficiario_id_unidad_habitacional").val();
+     }',
+    //DESPUES DEL RECARGAR EL GRID CARGA LOS COMBOS Y SELECCIONA EL VALOR CORRESPONDIENTE 
+    'afterAjaxUpdate' => 'js:function(id,options){
+           $("#VswDocumentacionBeneficiario_cod_estado option:selected").each(function () {
+           elegido=$(this).val();
+           $.get("' . CController::createUrl('ValidacionJs/BuscarDesarrollosEstado') . '", { cod_estado: elegido}, function(data){
+               $("#VswDocumentacionBeneficiario_id_desarrollo").html(data);     
+               if(data){
+                   $("#VswDocumentacionBeneficiario_id_desarrollo").val(desarrolloSeleccionado);
+                    $("#VswDocumentacionBeneficiario_id_desarrollo option:selected").each(function () {
+                      elegido=$(this).val();
+                        $.get("' . CController::createUrl('ValidacionJs/BuscarUnidadH') . '", { id_desarrollo: elegido}, function(data){  
+                             $("#VswDocumentacionBeneficiario_id_unidad_habitacional").html(data);
+                                if(data){
+                                    $("#VswDocumentacionBeneficiario_id_unidad_habitacional").val(unidadSeleccionado);
+                                }
+                        }); // fin unidad_habitacional_id
+                     }); // fin id_desarrollo
+              } //fin data 
+            });
+        }); //fin cod_estado
+    }',
     'type' => 'striped bordered condensed',
 //    'dataProvider' => $DataProviderGridUNI,
     'columns' => array(
@@ -178,10 +204,10 @@ $this->widget('booster.widgets.TbGridView', array(
 //            'value' => '$data->id_beneficiario',
 //            'htmlOptions' => array('style' => 'text-align: center', 'width' => '90px'),
 //        ),
-        'cedula_rel' =>array(
-            'name' => 'cedula_rel',
+        'cedula_beneficiario' =>array(
+            'name' => 'cedula_beneficiario',
             'header' => 'Cédula',
-            'value' => '$data->beneficiarioTemporal->cedula',
+            'value' => '$data->cedula_beneficiario',
         ),
         array(
             'name' => 'persona_id',
@@ -197,10 +223,10 @@ $this->widget('booster.widgets.TbGridView', array(
             'filter' => false,
             'sortable' => false
         ),
-        'Estado' => array(
+        'cod_estado' => array(
             'header' => 'Estado',
-            'name' => 'estado_rel',
-            'value' => 'Tblparroquia::model()->findByPK(Desarrollo::model()->findByPK($data->beneficiarioTemporal->desarrollo_id)->parroquia_id)->clvmunicipio0->clvestado0->strdescripcion',
+            'name' => 'cod_estado',
+            'value' => '$data->estado_desarrollo',
             'filter' => CHtml::listData(Tblestado::model()->findall(), 'clvcodigo', 'strdescripcion'),
         ),
 //        'Desarrollo' => array(
@@ -211,9 +237,10 @@ $this->widget('booster.widgets.TbGridView', array(
 //        ),
         'Desarrollo' => array(
             'header' => 'Desarrollo',
-            'name' => 'desarrollo_rel',
-            'value' => '$data->beneficiarioTemporal->desarrollo->nombre',
-            'filter' => CHtml::listData(Desarrollo::model()->findall(), 'id_desarrollo', 'nombre'),
+            'name' => 'id_desarrollo',
+            'value' => '$data->nombre_desarrollo',
+            //'filter' => CHtml::listData(Desarrollo::model()->findall(), 'id_desarrollo', 'nombre'),
+            'filter' => CHtml::listData(array(), 'id_desarrollo', 'nombre'),
         ),
 //        'Unidad Habitacional' => array(
 //            'header' => 'UNIDAD<br/>MULTIFAMILIAR',
@@ -221,24 +248,27 @@ $this->widget('booster.widgets.TbGridView', array(
 //            'value' => '$data->beneficiarioTemporal->unidadHabitacional->nombre',
 //            'filter' => CHtml::listData(UnidadHabitacional::model()->findall(), 'id_unidad_habitacional', 'nombre'),
 //        ),
-        'Unidad_multifamiliar' => array(
-            'header' => 'UNIDAD<br/>MULTIFAMILIAR',
-            'name' => 'unidad_multifamiliar_rel',
-            'value' => '$data->beneficiarioTemporal->unidadHabitacional->nombre',
-            'filter' => CHtml::listData(UnidadHabitacional::model()->findall(), 'id_unidad_habitacional', 'nombre'),
+        'id_unidad_habitacional' => array(
+            'header' => 'Unidad<br/>Multifamiliar',
+            'name' => 'id_unidad_habitacional',
+            'value' => '$data->nombre_unidad_habitacional',
+            //'filter' => CHtml::listData(UnidadHabitacional::model()->findall(), 'id_unidad_habitacional', 'nombre'),
+            'filter' => CHtml::listData(array(), 'id_unidad_habitacional', 'nombre'),
         ),
         'n_vivienda_piso' => array(
             'header' => 'N° Vivienda/Piso',
             'name' => 'n_vivienda_piso_rel',
-            'value' => ('$data->beneficiarioTemporal->vivienda->nro_piso')!=""?'"N° ". $data->beneficiarioTemporal->vivienda->nro_vivienda." / Piso. ".$data->beneficiarioTemporal->vivienda->nro_piso':'"N° ".$data->beneficiarioTemporal->vivienda->nro_vivienda',
+            //'value' => ('$data->beneficiarioTemporal->vivienda->nro_piso')!=""?'"N° ". $data->beneficiarioTemporal->vivienda->nro_vivienda." / Piso. ".$data->beneficiarioTemporal->vivienda->nro_piso':'"N° ".$data->beneficiarioTemporal->vivienda->nro_vivienda',
+            'value' => ('$data->numero_piso')!=""?'"N° ". $data->numero_vivienda." / Piso. ".$data->numero_piso':'"N° ".$data->numero_vivienda',
+            //'value' => '"N° ".$data->numero_vivienda." / Piso. ".$data->numero_piso',
             //'filter' => CHtml::listData(UnidadHabitacional::model()->findall(), 'id_unidad_habitacional', 'nombre'),
             'filter' => false
         ),
         array(
             'header' => 'Estatus Documento',
-            'name' => 'estatus_msj',
-            'value' => '$data->estatus_msj',
-            'cssClassExpression' => 'ColorEstatus($data["estatus_msj"])',
+            'name' => 'estatus_documento',
+            'value' => '$data->estatus_documento',
+            'cssClassExpression' => 'ColorEstatus($data["estatus_documento"])',
             'filter' =>  array('VALIDADO POR SAREN'=>"VALIDADO POR SAREN","VALIDADO POR BANAVIH (EN ESPERA DE SAREN)"=>"VALIDADO POR BANAVIH (EN ESPERA DE SAREN)","DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)"=>"DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)"),
 //            'filter' => CHtml::listData(Desarrollo::model()->findall(), 'id_desarrollo', 'nombre'),
             'sortable' => false
@@ -268,14 +298,14 @@ $this->widget('booster.widgets.TbGridView', array(
                     'icon' => 'glyphicon glyphicon-list-alt',
                     'size' => 'medium',
 //                    'visible' => '((Yii::app()->user->checkAccess("action_vivienda_documento")))',
-                    'visible' => '($data["estatus_msj"] == "") && (Yii::app()->user->checkAccess("action_vivienda_documento")) && GenerarDocumento($data->id_beneficiario) && DocumentoExist($data->id_beneficiario) || ($data["estatus_msj"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_msj"] == "DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario)',
+                    'visible' => '($data["estatus_documento"] == "") && (Yii::app()->user->checkAccess("action_vivienda_documento")) && GenerarDocumento($data->id_beneficiario) && DocumentoExist($data->id_beneficiario) || ($data["estatus_documento"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_documento"] == "DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario)',
                     'url' => 'Yii::app()->createUrl("vivienda/documento/", array("id"=>$data->id_beneficiario))',
                 ),
                 'Genratedocumento' => array(
                     'label' => 'Generar Documento',
                     'icon' => 'glyphicon glyphicon-pencil',
                     'size' => 'medium',
-                    'visible' => '($data["estatus_msj"] == "") && ((Yii::app()->user->checkAccess("action_vivienda_documento")) && GenerarDocumento($data->id_beneficiario) && !DocumentoExist($data->id_beneficiario) || ($data["estatus_msj"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario)&& EstatusDocumentoDevuelto($data->id_beneficiario))',
+                    'visible' => '($data["estatus_documento"] == "") && ((Yii::app()->user->checkAccess("action_vivienda_documento")) && GenerarDocumento($data->id_beneficiario) && !DocumentoExist($data->id_beneficiario) || ($data["estatus_documento"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario)&& EstatusDocumentoDevuelto($data->id_beneficiario))',
                     'url' => 'Yii::app()->createUrl("documentacion/generar/", array("id"=>$data->id_beneficiario))',
                 ),
                 'imprimir' => array(
@@ -284,7 +314,7 @@ $this->widget('booster.widgets.TbGridView', array(
                     'size' => 'medium',
                     'url' => 'Yii::app()->createUrl("documentacion/pdf", array("id"=>$data->id_beneficiario))',
                     'options' => array("target" => "_blank"),
-                    'visible' => 'DocumentoExist($data->id_beneficiario) && EstatusDocumentoAprobado($data->id_beneficiario) && !EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_msj"] == "VALIDADO POR SAREN")'
+                    'visible' => 'DocumentoExist($data->id_beneficiario) && EstatusDocumentoAprobado($data->id_beneficiario) && !EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_documento"] == "VALIDADO POR SAREN")'
                 ),
                 'registral' => array(
                     'label' => 'Datos Magistrales',
@@ -335,7 +365,7 @@ $this->widget('booster.widgets.TbGridView', array(
 //                    'size' => 'medium',
 //                    'url' => 'Yii::app()->createUrl("documentacion/pdf", array("id"=>$data->id_beneficiario))',
 //                    'options' => array("target" => "_blank"),
-//                    'visible' => 'DocumentoExist($data->id_beneficiario) && EstatusDocumentoAprobado($data->id_beneficiario) && !EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_msj"] == "VALIDADO POR SAREN")'
+//                    'visible' => 'DocumentoExist($data->id_beneficiario) && EstatusDocumentoAprobado($data->id_beneficiario) && !EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_documento"] == "VALIDADO POR SAREN")'
 //                ),
 //                'tablaamortizacion' => array(
 //                    'label' => 'Descargar Tabla de Amortización',
@@ -351,7 +381,7 @@ $this->widget('booster.widgets.TbGridView', array(
                     'options' => array('style' => 'margin-left:28px;',),
                     'url' => '$data["id_beneficiario"]',
                     'click' => 'js: function(s){CambiarEstatusDocumento($(this).attr("href"), 1 ,3); return false; }',
-                    'visible' => '($data["estatus_msj"] == "") && DocumentoExist($data->id_beneficiario) || ($data["estatus_msj"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_msj"] == "DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario)',
+                    'visible' => '($data["estatus_documento"] == "") && DocumentoExist($data->id_beneficiario) || ($data["estatus_documento"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_documento"] == "DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario)',
                     'options' => array(
                         'style' => 'margin-left:17px;', 'id' => 'cambiarEstatus'
                     ),
@@ -361,7 +391,7 @@ $this->widget('booster.widgets.TbGridView', array(
                     'icon' => 'glyphicon glyphicon-list-alt',
                     'size' => 'medium',
 //                    'visible' => '((Yii::app()->user->checkAccess("action_vivienda_documento")))',
-                    'visible' => '($data["estatus_msj"] == "") && (Yii::app()->user->checkAccess("action_vivienda_documento")) && GenerarDocumento($data->id_beneficiario) && DocumentoExist($data->id_beneficiario) || ($data["estatus_msj"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_msj"] == "DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario)',
+                    'visible' => '($data["estatus_documento"] == "") && (Yii::app()->user->checkAccess("action_vivienda_documento")) && GenerarDocumento($data->id_beneficiario) && DocumentoExist($data->id_beneficiario) || ($data["estatus_documento"] == "") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario) || ($data["estatus_documento"] == "DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)") && !EstatusDocumentoAprobado($data->id_beneficiario) && EstatusDocumentoDevuelto($data->id_beneficiario)',
                     'url' => 'Yii::app()->createUrl("vivienda/documento/", array("id"=>$data->id_beneficiario))',
                 ),
             ),
