@@ -112,13 +112,13 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
                data: 'idUnidadMulti=' +idUnidadMulti,
                dataType: 'json',
                success: function(data) {
-                    if(data == 'PARCELA'){
-                        html = '<option value=\'\'>SELECCIONE</option><option value=\'93\'>CASA</option><option value=\'95\'>TOWNHOUSE</option>';
+                    if(data == 'PARCELA' || data == 'TETRA' || data == 'PENDIENTE'){
+                        html = '<option value=\'\'>SELECCIONE</option><option value=\'93\'>CASA</option><option value=\'94\'>APARTAMENTO</option><option value=\'95\'>TOWNHOUSE</option>';
                         $('#Vivienda_tipo_vivienda_id').html(html);
                         $('#Vivienda_nro_piso').val('');
                         $('#piso_vivienda').hide();
                     }else{
-                        html = '<option value=\'\'>SELECCIONE</option><option value=\'94\'>APARTAMENTO</option>';
+                        html = '<option value=\'\'>SELECCIONE</option><option value=\'94\'>APARTAMENTO</option><option value=\'95\'>TOWNHOUSE</option>';
                         $('#Vivienda_tipo_vivienda_id').html(html);
                         $('#piso_vivienda').show();
                         $('#Vivienda_nro_piso').val('');

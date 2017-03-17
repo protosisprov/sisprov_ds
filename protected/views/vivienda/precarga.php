@@ -11,6 +11,63 @@ $this->breadcrumbs = array(
     'Precarga',
 );
 ?>
+
+<?php Yii::app()->clientScript->registerScript('desarrolloVal', "
+            
+    $(document).ready(function(){
+        var fieldDescripcion = $('#Maestro_descripcion').val();
+            if(fieldDescripcion == 'PARCELA' || fieldDescripcion == 'TETRA' || fieldDescripcion == 'PENDIENTE'){
+                html = '<option value=\'\'>SELECCIONE</option><option value=\'93\'>CASA</option><option value=\'94\'>APARTAMENTO</option><option value=\'95\'>TOWNHOUSE</option>';
+                $('#Vivienda_tipo_vivienda_id').html(html);
+                $('#Vivienda_nro_piso').val('');
+                $('#piso_vivienda').hide();
+            }else{
+                html = '<option value=\'\'>SELECCIONE</option><option value=\'94\'>APARTAMENTO</option><option value=\'95\'>TOWNHOUSE</option>';
+                $('#Vivienda_tipo_vivienda_id').html(html);
+                $('#piso_vivienda').show();
+                $('#Vivienda_nro_piso').val('');
+            }
+            //$('#Vivienda_tipo_vivienda').val(fieldDescripcion);
+    });
+"); ?>
+
+<?php
+if (isset($sms) && !empty($sms)) {
+    $user = Yii::app()->getComponent('user');
+    switch ($sms) {
+        case 1:
+            $user->setFlash(
+                'warning', "<strong>Número de vivienda ya se encuentra registado.</strong>"
+            );
+            $tipo = 'warning';
+            break;
+        case 2:
+            $user->setFlash(
+                'success', "<strong>Vivienda registrada exitósamente.</strong>"
+            );
+            $tipo = 'success';
+            break;
+    }
+
+    $this->widget('booster.widgets.TbAlert', array(
+        'fade' => true,
+        'closeText' => '&times;', // false equals no close link
+        'events' => array(),
+        'htmlOptions' => array(),
+        'userComponentId' => 'user',
+        'alerts' => array(// configurations per alert type
+            $tipo => array('closeText' => false),
+        ),
+    ));
+    
+    Yii::app()->clientScript->registerScript(
+        'myHideEffect',
+        '$("#yw0").animate({opacity: 0.2}, 5000, function(){$("#yw0").css("visibility","hidden")});',
+        CClientScript::POS_READY
+    );
+}
+?>
+
 <?php
 
 if (!empty($unidad_habitacional->id_unidad_habitacional)) {
@@ -60,12 +117,6 @@ Yii::app()->clientScript->registerScript('vivienda', "
 <h1> Precarga del Inmueble Familiar</h1>
 
 <?php
-
-if (isset($sms) && !empty($sms)) {
-    $user = Yii::app()->getComponent('user');
-    $user->setFlash(
-            'warning', "<strong>Número de vivienda ya se encuentra registado.</strong>"
-);}
 
 $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
     'id' => 'vivienda-form',
@@ -119,6 +170,18 @@ $this->widget('booster.widgets.TbButton', array(
             'id' => 'guardar',
             'context' => 'primary',
             'label' => $model->isNewRecord ? 'Guardar' : 'Actualizar',
+        ));
+        ?>
+        
+        <?php
+        $this->widget('booster.widgets.TbButton', array(
+            'buttonType' => 'submit',
+            'icon' => 'glyphicon glyphicon-floppy-saved',
+            'size' => 'large',
+            'id' => 'cargar_inmueble',
+            'context' => 'primary',
+            'label' => 'Guardar y Cargar Nueva Vivienda' ,
+            'htmlOptions'=>array('name'=>'cargar_inmueble', 'value'=>'1')
         ));
         ?>
     </div>
