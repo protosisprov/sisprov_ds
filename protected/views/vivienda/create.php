@@ -116,11 +116,11 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
                         html = '<option value=\'\'>SELECCIONE</option><option value=\'93\'>CASA</option><option value=\'94\'>APARTAMENTO</option><option value=\'95\'>TOWNHOUSE</option>';
                         $('#Vivienda_tipo_vivienda_id').html(html);
                         $('#Vivienda_nro_piso').val('');
-                        $('#piso_vivienda').hide();
+                       // $('#piso_vivienda').hide();
                     }else{
                         html = '<option value=\'\'>SELECCIONE</option><option value=\'94\'>APARTAMENTO</option><option value=\'95\'>TOWNHOUSE</option>';
                         $('#Vivienda_tipo_vivienda_id').html(html);
-                        $('#piso_vivienda').show();
+                       // $('#piso_vivienda').show();
                         $('#Vivienda_nro_piso').val('');
                     }
                     $('#Vivienda_tipo_vivienda').val(data);
@@ -130,11 +130,26 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
                 }
             });
         });
+        
+        $('#Vivienda_tipo_vivienda_id').change(function(){
+            //alert($('#Vivienda_tipo_vivienda_id option:selected').text());
+            var tipoVivienda = $('#Vivienda_tipo_vivienda_id option:selected').text();
+            var tipoUnidadMultifamiliar = $('#Vivienda_tipo_vivienda').val();
+            
+            if(tipoVivienda == 'APARTAMENTO')
+                $('#piso_vivienda').show();
+            else{
+                if(tipoVivienda == 'TOWNHOUSE' && tipoUnidadMultifamiliar == 'EDIFICIO DE APARTAMENTO')
+                    $('#piso_vivienda').show();
+                else
+                    $('#piso_vivienda').hide();
+            }
+        });
 "); ?>
 
 
-<?php Yii::app()->clientScript->registerScript('vivienda', "
-
+<?php /*Yii::app()->clientScript->registerScript('vivienda', "
+    
         $('#guardarVivienda').click(function(){
             if($('#Tblestado_clvcodigo').val()==''){
                 bootbox.alert('Por favor seleccione Estado');
@@ -166,6 +181,18 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 //                bootbox.alert('Por favor indique número piso');
 //                return false;
 //            }
+            if($('#Vivienda_tipo_vivienda_id option:selected').text() == 'APARTAMENTO'){
+                if($('#Vivienda_nro_piso').val()==''){
+                    bootbox.alert('Por favor indique número piso');
+                    return false;
+                }
+            }else{
+                if($('#Vivienda_tipo_vivienda_id option:selected').text() == 'TOWNHOUSE' && $('#Vivienda_tipo_vivienda').val() == 'EDIFICIO DE APARTAMENTO'){
+                    if($('#Vivienda_nro_piso').val()==''){
+                        bootbox.alert('Por favor indique número piso');
+                        return false;
+                    }
+                }
             if($('#Vivienda_nro_vivienda').val()==''){
                 bootbox.alert('Por favor indique número de vivienda');
                 return false;
@@ -184,8 +211,76 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 //                bootbox.alert('Por favor indique número de baños');
 //                return false;
 //            }
+            }
         });
-") ?>
+") */ ?>
+
+<?php Yii::app()->clientScript->registerScript('vivienda', "
+    
+       function validarForm(){
+            if($('#Tblestado_clvcodigo').val()==''){
+                bootbox.alert('Por favor seleccione Estado');
+                return false;
+            }
+            if($('#Tblmunicipio_clvcodigo').val()==''){
+               bootbox.alert('Por favor seleccione Municipio');
+                return false;
+            }
+            if($('#Tblparroquia_clvcodigo').val()==''){
+                bootbox.alert('Por favor seleccione Parroquia');
+                return false;
+            }
+            if($('#Desarrollo_id_desarrollo').val()==''){
+                bootbox.alert('Por favor seleccione el Desarrollo');
+                return false;
+            }
+
+            if($('#Vivienda_unidad_habitacional_id').val()==''){
+                bootbox.alert('Por favor seleccione nombre de la unidad habitacional');
+                return false;
+            }
+            if($('#Vivienda_tipo_vivienda_id').val()==''){
+                bootbox.alert('Por favor seleccione tipo de vivienda');
+                return false;
+            }
+
+//            if($('#Vivienda_nro_piso').val()==''){
+//                bootbox.alert('Por favor indique número piso');
+//                return false;
+//            }
+            if($('#Vivienda_tipo_vivienda_id option:selected').text() == 'APARTAMENTO'){
+                if($('#Vivienda_nro_piso').val()==''){
+                    bootbox.alert('Por favor indique número piso');
+                    return false;
+                }
+            }else{
+                if($('#Vivienda_tipo_vivienda_id option:selected').text() == 'TOWNHOUSE' && $('#Vivienda_tipo_vivienda').val() == 'EDIFICIO DE APARTAMENTO'){
+                    if($('#Vivienda_nro_piso').val()==''){
+                        bootbox.alert('Por favor indique número piso');
+                        return false;
+                    }
+                }
+            if($('#Vivienda_nro_vivienda').val()==''){
+                bootbox.alert('Por favor indique número de vivienda');
+                return false;
+            }
+//            if($('#Vivienda_construccion_mt2').val()==''){
+//                bootbox.alert('Por favor indique metros cuadrado de la vivienda');
+//                return false;
+//            }
+
+//            if($('#Vivienda_nro_habitaciones').val()==''){
+//                bootbox.alert('Por favor indique número de habitaciones');
+//                return false;
+//            }
+
+//            if($('#Vivienda_nro_banos').val()==''){
+//                bootbox.alert('Por favor indique número de baños');
+//                return false;
+//            }
+            }
+        };
+", CClientScript::POS_END) ?>
 
 <?php
 if (isset($sms) && !empty($sms)) {
@@ -247,6 +342,7 @@ $this->widget(
             'id' => 'guardarVivienda',
             'context' => 'success',
             'label' => 'Guardar',
+            'htmlOptions'=>array('onclick'=>'validarForm()')
         ));
         ?>
         <?php
@@ -257,7 +353,7 @@ $this->widget(
             'id' => 'guardar',
             'context' => 'primary',
             'label' => 'Guardar y Agregar Nuevo Registro' ,
-            'htmlOptions'=>array('name'=>'cargar_otro', 'value'=>'1')
+            'htmlOptions'=>array('name'=>'cargar_otro', 'value'=>'1','onclick'=>'validarForm()')
         ));
         ?>
         <?php
