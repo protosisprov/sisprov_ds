@@ -26,6 +26,7 @@ class FaspController extends Controller {
 //    }
 
 
+    
     public function filters() {
         return array(array('CrugeAccessControlFilter'));
     }
@@ -131,4 +132,3 @@ class FaspController extends Controller {
     }
 
 }
-
