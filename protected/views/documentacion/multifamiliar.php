@@ -203,6 +203,7 @@ foreach ($apoderado_list as &$valor) {
                 )
             ));
             ?>
+
         </div>
     <?php } ?>
 

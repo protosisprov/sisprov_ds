@@ -1468,6 +1468,7 @@ class DocumentacionController extends Controller {
             }
         }
     }
+
     public function actionMultifamiliarGuardar($id) {
         if (isset($id)) {
             $buscarDocumentoDevuelto = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 295, 'es_multi' => 1, 'ente_documento' => 311));

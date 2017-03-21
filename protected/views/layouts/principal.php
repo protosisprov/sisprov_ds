@@ -37,7 +37,7 @@
                 height: 100%;
                 z-index: 9999;
                 /*opacity:0.1;*/
-                //background: url('images/loading_prueba.gif') 50% 50% no-repeat rgb(249,249,249);
+                /* background: url('images/loading_prueba.gif') 50% 50% no-repeat rgb(249,249,249);*/
                 background:url("<?php echo Yii::app()->baseUrl; ?>/images/loading_prueba.gif") 50% 50% no-repeat;
             }
 

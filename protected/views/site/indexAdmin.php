@@ -2,6 +2,9 @@
     .huge {
         font-size: 40px;
     }
+    .huge2 {
+        font-size: 60px;
+    }
 </style>
 <section class="row">
     <div class="col-lg-12">
@@ -87,5 +90,30 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+<section class="row" >
+    <div class="col-lg-3 col-md-35">
+
+    </div>
+    <div class="col-lg-6 col-md-35">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        <i class="glyphicon glyphicon-globe" style=" font-size: 75px;"></i>
+                    </div>
+                    <div class="col-xs-6 text-left">
+                        <div class="huge2">
+                            <a href="../../mapa_s/index.php">Mapa</a>
+                            <!--<a href="<?php // echo $this->createUrl('/salarioMinimo/create'); ?>">Mapa</a>-->
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-35">
+
     </div>
 </section>
