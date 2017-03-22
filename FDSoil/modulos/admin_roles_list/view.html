@@ -1,0 +1,87 @@
+<!-- BEGIN: main -->
+
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>   
+
+        <!--JS-->
+        <script src="js/submit.js" type="text/javascript"></script>
+        <script src="../../config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="../../js/mootools.js" type="text/javascript"></script>
+        <script src="../../js/sexyalertbox.v1.1.js" type="text/javascript"></script>
+        <script src="js/sumit.js" type="text/javascript" language="javascript"></script>
+        <script src="js/reqs.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript" language="javascript"></script>
+    </head>
+    <body onload="inicio('{MENU}');">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <br>
+                <img src="../../../{APP}/img/32x32/logo_sy.png" style="margin-left: -1%; width: 9%" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend >
+                            <img src="../../images/principal/actualizar.png">
+                            <b>Actualizar datos del Sistema (Perfiles de Usuarios)</b>
+                        </legend>
+                    </fieldset>
+                    <div id="addReg" align="right" >
+                        <a href="../admin_roles_row/">
+                            <IMG src="../../images/32x32/nuevo.jpg" border="0" title="" style='cursor:pointer;'></a>		
+                    </div>
+                    <table class="table table-bordered" style="width: 60%; margin-left: 20%;" >
+                        <thead>	
+                            <tr>
+                                <th>Orden</th>
+                                <th>Acci&oacute;n(es)</th>
+                            </tr>
+                        </thead>
+                        <tbody align="center">
+                            <!-- BEGIN: rows -->
+                            <tr>
+                                <td>{DESCRIPCION}</td>
+                                <td>
+                                    <a onclick="submitEdit('{ID_ROW}');">
+                                        <IMG src="../../images/24x24/edit.png" 
+                                             border="0" title="Editar" style='cursor:pointer;'>
+                                    </a>
+                                    <a onclick="submitDelete('{ID_ROW}');">
+                                        <IMG src="../../images/24x24/delete.png" 
+                                             border="0" title="Eliminar" style='cursor:pointer;'>
+                                    </a>      
+                                </td>
+                            </tr>
+                            <!-- END: rows -->
+                        </tbody>    
+                    </table>
+                    <br><br>
+                    <div style="text-align: center;">
+                        <button id="idconfir" class="btn btn-danger btn-medium" value="Confirmar" onClick="history.back(-1);">Salir</button>
+                    </div>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

@@ -1,0 +1,1 @@
+SELECT descripcion FROM seguridad.msj WHERE id={fld:id};

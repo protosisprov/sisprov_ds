@@ -1,0 +1,1 @@
+UPDATE sistema.usuario SET clave=md5('123456') WHERE id_usuario='{fld:id_usuario}'; 

@@ -1,0 +1,13 @@
+/*ESTILOS DEL PAGINADOR*/
+
+.divpaginas{
+    float: left;
+    margin-left: 8%;
+    margin-top: -1%;
+}
+.divcantpaginas{
+    float: right;
+     margin-top: -1%;
+    margin-right: 10%;
+    width: auto;
+}

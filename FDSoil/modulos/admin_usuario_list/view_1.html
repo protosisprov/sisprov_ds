@@ -1,0 +1,86 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <!--JS-->
+        <script src="js/submit.js" type="text/javascript"></script>
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript"></script>     
+        <script src="js/submit.js" type="text/javascript"></script>
+        
+    </head>
+    <body onload="inicio('{MENU}');">
+        <div class="container">
+            <div class="row-fluid bg-container">
+                <div id=""></div>
+                <br><br>
+                <div id="titulo" style="display: none"></div>
+                 <div id="encabezado"  >
+                    <div><img src="{ID_CBE}" alt="cabecera"></div>
+                    <div style="position: absolute; top: 35%; left: 75%">
+                        <b>Usuario:</b>&nbsp;{NOMBRE_APELLIDO}<br><b>Último acceso:</b>&nbsp;{ULT}
+                    </div>
+                </div>
+                <div id='divMenu'></div>
+                <div id='contenido'>
+                    <br>
+                    <div id="sub_titulo">Lista de Usuarios</div>
+                    <div id="addReg" align="right">
+                        <a href="../admin_usuario_row_admin">
+                            <IMG src="../../../FDSoil/images/32x32/new-registroFD.png" border="0" title=" Nueva Usuario" style='cursor:pointer;'></a>		
+                    </div>
+                    <br>
+                    <table class="table table-bordered">
+                        <tr>
+                            <TH>C&eacute;dula</TH>
+                            <TH>Nombre</TH>
+                            <TH>Apellido</TH>
+                            <TH>Usuario</TH>
+                            <TH>Correo</TH>
+                            <TH>Perfil</TH>
+                            <TH>Status</TH>
+                            <TH>Acci&oacute;n(es)</TH>
+                        </tr>
+                        <!-- BEGIN: rows -->
+                        <tr>
+                            <td>{CEDULA}</td>
+                            <td>{NOMBRE}</td>				
+                            <td>{APELLIDO}</td>
+                            <td>{USUARIO}</td>
+                            <td>{CORREO}</td>
+                            <td>{PERFIL}</td>
+                            <td>{STATUS}</td>
+                            <td>&nbsp;
+                                <a onclick="submitEdit('{ID_USUARIO}');">
+                                    <img src="../../../FDSoil/images/24x24/editarFD.png" 
+                                         border="0" title="Editar" style='cursor:pointer;'>
+                                </a>
+                                &nbsp;
+                                <a onclick="submitKeyReset('{ID_USUARIO}');">
+                                    <img src="../../../FDSoil/images/24x24/llaveFD.png"
+                                         border="0" title="Reset Clave" style='cursor:pointer;'>
+                                </a>
+                                &nbsp;
+                                <a onclick="submitDelete('{ID_USUARIO}');">
+                                    <img src="../../../FDSoil/images/24x24/eliminaFD.png" 
+                                         border="0" title="Eliminar" style='cursor:pointer;'>
+                                </a>  
+                            </td>
+                        </tr>
+                        <!-- END: rows -->
+                    </table>
+                    <br>
+                </div>
+            <br><br>
+            <div class='botonera'>
+                <button id="idconfir" class="btn btn-danger btn-medium" value="Confirmar" onClick="window.location.href = '../admin_inicio/';">Salir</button>
+            </div>
+            <br><br>
+            <footer class="bg-footer">
+                <div id='id_firma'></div>
+            </footer>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

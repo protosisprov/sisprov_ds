@@ -1,0 +1,99 @@
+<!-- BEGIN: main -->
+  <html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/submit.js" type="text/javascript"></script>
+        <script src="../../config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/jquery-latest.min.js" type="text/javascript"> </script>
+        <script src="../../js/mootools.js" type="text/javascript"></script>
+        <script src="../../js/sexyalertbox.v1.1.js" type="text/javascript"></script>
+        <script src="../../js/menu.js" type="text/javascript" language="javascript"></script>
+        <script src="js/menuOpt.js" type="text/javascript"></script>   
+        <script src="js/sumit.js" type="text/javascript" language="javascript"></script>
+        <script src="js/reqs.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript" language="javascript"></script>
+    </head>
+    <body onload="inicio('{MENU}','{OPT_MENU}','{ROL_OPT}');">
+        <div class="container ">
+            <div class="row-fluid bg-container">
+            <div id=""></div>
+            <br><br>
+            <div id="titulo" style="display: none"></div>
+            <div id="encabezado"  >
+                <div><img src="{ID_CBE}" alt="cabecera"></div>
+                <div style="position: absolute; top: 35%; left: 75%">
+                    <b>Usuario:</b>&nbsp;{NOMBRE_APELLIDO}<br><b>Último acceso:</b>&nbsp;{ULT}
+                </div>
+            </div>
+            <div id='divMenu'></div>
+            <div id="contenido">
+                <div id='sub_titulo'>Actualizar Perfil</div>
+                <br>
+                <form action="save.php" name="form" method="POST">
+                    <input id="id_rol" type=hidden name=id_rol value={ID}>
+                    <input id="id_str_array_n0"  type=hidden name=str_array_n0>   
+                    <input id="id_str_array_n1"  type=hidden name=str_array_n1>   
+                    <input id="id_str_array_n2"  type=hidden name=str_array_n2>   
+                    <input id="id_str_array_n3"  type=hidden name=str_array_n3>
+                    <div class=divGroupField align='center'>
+                        <table class="table table-bordered" style="width: 30%;" >
+                            <tr>
+                                <th><b>&nbsp;&nbsp;Indique los Datos&nbsp;&nbsp;</b></th>
+                            </tr>            
+                            <tr>
+                                <td>
+                                    <dl>
+                                        <dt><b>&nbsp;&nbsp;Perfil:&nbsp;&nbsp;</b></dt>
+                                        <dd style="text-align: center;">
+                                          <input id="id_rol_name" 
+                                           class="input-xlarge"
+                                           type=text 
+                                           name="rol_name" 
+                                           size="32" 
+                                           onkeyup="javascript:this.value=this.value.toUpperCase();" 
+                                           value="{ROL_NAME}">
+                                        </dd>
+                                    </dl>
+                                </td>    
+                            </tr>            
+                            <tr>
+                                <td>
+                                    <dl>
+                                        <dt><b>&nbsp;&nbsp;Estatus:&nbsp;&nbsp;</b></dt>
+                                        <dd  style="text-align: center;">
+                                            <select id="id_status" name="status" class="input-xlarge">
+                                                <option value=null selected>Seleccione...</option>
+                                                <!-- BEGIN: status -->
+                                                <option value={ID_STATUS} {SELECTED_STATUS}>{DES_STATUS}</option>
+                                                <!-- END: status -->
+                                            </select>
+                                        </dd>
+                                    </dl>
+                                </td>    
+                            </tr>            
+                        </table>
+                    </div>
+                    <br>
+                    <div class=divGroupField align='center'>
+                        <table id="tbl" class="table table-bordered" style="width: 60%; text-align: center;" >
+                            <tr>
+                                <th colspan=7>Seleccione los Permiso(s) del Men&uacute;</th>
+                            </tr>
+                        </table>
+                    </div>
+                </form>    
+            </div>
+            <div class='botonera'>
+                <button class="btn btn-danger btn-medium" id=id_regresar type=button value='Regresar' onClick="history.back(-1);">Regresar</button>
+                <button class="btn btn-success btn-medium" id=id_guardar  type=button value='Guardar' onClick="sweepTable();">Guardar</button>
+            </div>
+            <br><br>
+            <footer class="bg-footer">
+                <div id='id_firma'></div>
+            </footer>
+            </div>
+        </div>  
+    </body>
+</html>             
+<!-- END: main -->

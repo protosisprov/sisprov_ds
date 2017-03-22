@@ -1,0 +1,2 @@
+select seguridad.usuario_registrar('{fld:usuario}', '{fld:correo}', '{fld:cedula}', '{fld:clave}', '{fld:nombre}', '{fld:apellido}', '{fld:celular}', '{fld:telefono1}', '{fld:telefono2}', {fld:id_rol}, {fld:id_status}, '{fld:pregunta_seguridad}', '{fld:respuesta_seguridad}');
+  

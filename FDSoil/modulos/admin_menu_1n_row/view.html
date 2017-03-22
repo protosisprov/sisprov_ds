@@ -1,0 +1,102 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/submit.js" type="text/javascript"></script>       
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript"></script>     
+        <script src="js/submit.js" type="text/javascript"></script>     
+        <script src="js/reqs.js" type="text/javascript"></script>     
+
+    </head>
+    <body onload="inicio('{MENU}');">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <br>
+                <img src="../../../{APP}/img/logo_sy.png" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend>
+                            <img src="../../images/principal/list.png">
+                            <b>Actualizar Registro del Men&uacute; (Nivel 1)</b>
+                        </legend>
+                    </fieldset>
+                    <input id="id_n0" name="id_n0" type='hidden' value='{ID_OPCION_0}'>     
+                    <input id="id_row" name="id_row" type='hidden' value='{ID_ROW}'> 
+                    <div class=divGroupField align='center'>
+                        <table class="table table-bordered" style=" width: 50%; " >
+                            <tr>
+                                <th colspan=4>Datos del Men&uacute; (Nivel 1)</th>
+                            </tr>
+                            <tr>
+                                <td colspan="1"><b>&nbsp;&nbsp;Nivel 0:&nbsp;&nbsp;</b></td>
+                                <td colspan=3 style="color:#8B0000; ">{DES_OPCION_0}</td>    
+                            </tr>
+                            <tr>
+                                <td><b>&nbsp;&nbsp;Opci&oacute;n:&nbsp;&nbsp;</b></td>
+                                <td>
+                                    <input id="id_opcion" name="opcion" class="input-large"
+                                            value="{OPCION}" maxlength="90">
+                                    <div id="msjerrror_opci" class="alert-danger"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>&nbsp;&nbsp;Ruta:&nbsp;&nbsp;</b></td>
+                                <td>
+                                    <input id="id_ruta" name="ruta" class="input-large"
+                                            value="{RUTA}" maxlength="90"> 
+                                    <div id="msjerrror_rut" class="alert-danger"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>&nbsp;&nbsp;Orden:&nbsp;&nbsp;</b></td>
+                                <td>
+                                    <input id="id_orden" name="orden" class="input-large"
+                                            value="{ORDEN}" maxlength="90" onKeyPress="return acceptNum(event);">
+                                    <div id="msjerrror_orde" class="alert-danger"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>&nbsp;&nbsp;Estatus:&nbsp;&nbsp;</b></td>
+                                <td>
+                                    <select id="id_status" name="status" class="input-large">
+                                        <option value="" selected>Seleccione...</option>
+                                        <!-- BEGIN: status -->
+                                        <option value={ID_STATUS} {SELECTED_STATUS}>{DES_STATUS}</option>
+                                        <!-- END: status -->
+                                    </select>
+                                    <div id="msjerrror_esta" class="alert-danger"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class='botonera'>
+                        <button class="btn btn-danger btn-medium" id=id_regresar type=button value='Regresar' onClick="history.back(-1);">Regresar</button>
+                        <button class="btn btn-success btn-medium" id=id_guardar  type=button value='Guardar' onClick="valida_nivel_1();">Guardar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

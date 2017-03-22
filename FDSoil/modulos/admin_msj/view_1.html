@@ -1,0 +1,50 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <!--Archivo JS-->
+        <script src="../../js/app.js" type="text/javascript" language="javascript"></script> 
+        <script src="../../js/relocate.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/numero.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript" language="javascript"></script>
+    </head>  
+    <body onload="firma();">
+        <div class="container ">
+            <div class="container ">
+                <div class="row-fluid bg-container">
+                    <div id=""></div>
+                    <br><br>
+                    <div id="titulo" style="display: none;"></div>
+                    <div id="encabezado"  >
+                        <div><img src="{ID_CBE}" alt="cabecera"></div>
+                        <div style="position: absolute; top: 35%; left: 75%">
+                            <b>Usuario:</b>&nbsp;{NOMBRE_APELLIDO}<br><b>&Uacute;ltimo acceso:</b>&nbsp;{ULT}
+                        </div>
+                    </div>
+                    <div id='contenido'>
+                        <form action="" name="form">
+                            <div class='ventana_modal_msj'>
+                                <table class="table table-bordered" style="width: 100%; " >
+                                    <th>{TITLE}</th>
+                                    <!-- BEGIN: row -->
+                                    <tr class={CLASS_TR}>
+                                        <td style="font-size: 15px; " align='center'>{MSG}</td>
+                                    </tr>
+                                    <!-- END: row -->
+                                </table>
+                                <div class='botonera'>
+                                    <button class="btn btn-danger btn-medium" id=id_continuar type=button value='Continuar' onClick="goToPag('{NUM_PAG}');">Continuar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class='fondo_opaco_msj'></div>
+                    <footer class="bg-footer">
+                        <div id='id_firma'></div>
+                    </footer>
+                </div>
+            </div>    
+        </div>
+    </body>
+</html>
+<!-- END: main -->

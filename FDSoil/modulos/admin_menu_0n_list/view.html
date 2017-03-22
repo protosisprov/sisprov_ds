@@ -1,0 +1,74 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <!--JS-->
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript"></script>     
+        <script src="js/submit.js" type="text/javascript"></script>
+
+    </head>
+    <body onload="inicio('{MENU}');">
+        <div id="content">
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <!--<img src="{ID_CBE}" class="logo">-->
+		<img src="../../../{APP}/img/32x32/logo_sy.png" style="margin-top: 2px; margin-left: -1%; width: 10%" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header> <!-- ENCABEZADO DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend>
+                            <img src="../../images/principal/list.png">
+                            <b>Lista de Opciones del Men&uacute; (Nivel 0)</b>
+                        </legend>
+                    </fieldset>
+                    <div id="addReg" align="right">
+                        <a href="../admin_menu_0n_row/">
+                            <img src="../../images/32x32/nuevo.png" border="0" title="Nueva Opci&oacute;n" style='cursor:pointer;'></a>		
+                    </div>
+                    <br>
+                    <table class="table table-bordered" style="width: 80%; margin-left: 10%;">
+                        <tr>
+                            <th>Orden</th><th>Opción</th><th>Ruta</th><th>Status</th><th>Acción(es)</th>
+                        </tr>
+                        <!-- BEGIN: rows--> 
+                        <tr style="text-align: center;">	
+                            <td>{ORDEN}</td>
+                            <td>{OPCION}</td>
+                            <td>{RUTA}</td>				
+                            <td>{STATUS}</td>
+                            <td>
+                                <a onclick="submitEdit('{ID_ROW}');">
+                                    <IMG src="../../images/24x24/edit.png" 
+                                         border="0" title="Editar" style='cursor:pointer;'>
+                                </a>
+                                <a onclick="submitDelete('{ID_ROW}');">
+                                    <IMG src="../../images/24x24/delete.png" 
+                                         border="0" title="Eliminar" style='cursor:pointer;'>
+                                </a>                                    
+                            </td>
+                        </tr>
+                        <!-- END: rows--> 
+                    </table>
+                    <div class='botonera'>
+                        <button class="btn btn-danger btn-medium" id=id_regresar type=button value='Regresar' onClick="history.back(-1);">Regresar</button>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

@@ -1,0 +1,1 @@
+UPDATE seguridad.usuario SET clave='{fld:clave}' WHERE id={fld:usuario};
