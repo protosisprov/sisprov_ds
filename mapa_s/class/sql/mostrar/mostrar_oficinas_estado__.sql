@@ -1,0 +1,1 @@
+SELECT nombre_oficina from vsw_oficina where estado ilike '{fld:estado}'
