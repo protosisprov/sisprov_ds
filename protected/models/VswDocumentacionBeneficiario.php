@@ -27,7 +27,7 @@ class VswDocumentacionBeneficiario extends CActiveRecord
 	{
 		return 'vsw_documentacion_beneficiario';
 	}
-
+        
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -47,7 +47,7 @@ class VswDocumentacionBeneficiario extends CActiveRecord
 			array('id_beneficiario, persona_id, estatus_documento, estatus_beneficiario_id, cedula_beneficiario, id_desarrollo, nombre_desarrollo, id_unidad_habitacional, nombre_unidad_habitacional, numero_piso, numero_vivienda, cod_estado, estado_desarrollo', 'safe', 'on'=>'search'),
 		);
 	}
-
+        
 	/**
 	 * @return array relational rules.
 	 */
@@ -59,7 +59,7 @@ class VswDocumentacionBeneficiario extends CActiveRecord
                     'vsw_asignaciones_documentos' => array(self::BELONGS_TO, 'VswAsignacionesDocumentos', '','on'=>'vsw_asignaciones_documentos.fk_caso_asignado = t.id_unidad_habitacional'),
 		);
 	}
-
+        
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -81,7 +81,7 @@ class VswDocumentacionBeneficiario extends CActiveRecord
 			'estado_desarrollo' => 'Estado Desarrollo',
 		);
 	}
-
+        
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -97,9 +97,9 @@ class VswDocumentacionBeneficiario extends CActiveRecord
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
-
+            
 		$criteria=new CDbCriteria;
-
+                
 		$criteria->compare('id_beneficiario',$this->id_beneficiario);
 		$criteria->compare('persona_id',$this->persona_id);
 		$criteria->compare('estatus_documento',$this->estatus_documento,true);
@@ -119,12 +119,12 @@ class VswDocumentacionBeneficiario extends CActiveRecord
                 {
                     $criteria->join = 'JOIN vsw_asignaciones_documentos ON vsw_asignaciones_documentos.fk_caso_asignado = t.id_unidad_habitacional and vsw_asignaciones_documentos.es_activo=true and vsw_asignaciones_documentos.fk_usuario_asignado='.Yii::app()->user->id;
                 }
-
+                
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
