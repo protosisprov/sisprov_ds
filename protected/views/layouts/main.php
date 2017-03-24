@@ -15,6 +15,7 @@
             }
         </style>
 
+        
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="language" content="en" />
 
@@ -119,7 +120,7 @@
                                                     <span>Auditoria</span>
                                                 </a>
                                             </li>
-                                            <?php }?>
+                                            <?php } ?>
                                             <?php if (Yii::app()->user->checkAccess('action_maestro_admin')) { ?>
                                             <li>
                                                 <a href="<?php echo $this->createUrl('/maestro/admin'); ?>">
@@ -127,7 +128,7 @@
                                                     <span>Tabla Maestro</span>
                                                 </a>
                                             </li>
-                                            <?php }?>
+                                            <?php } ?>
                                         </ul>    
                                     </li>
                                 <?php } ?>
@@ -193,11 +194,11 @@
                                                         <?php } ?>
                                                     </ul>
                                                 </li>
-                                                <?php if (Yii::app()->user->checkAccess('action_fuentefinanciamiento_create')) { ?>
-                                                    <li>
-                                                        <a href="<?php echo $this->createUrl('/fuenteFinanciamiento/create'); ?>">Cargar Fuentes de Financiamiento</a>
-                                                    </li>
-                                                <?php } ?>
+                                                <?php // if (Yii::app()->user->checkAccess('action_fuentefinanciamiento_create')) { ?>
+                                                <!--<li>-->
+                                                    <!--<a href="<?php // echo $this->createUrl('/fuenteFinanciamiento/create');  ?>">Cargar Fuentes de Financiamiento</a>-->
+                                                <!--</li>-->
+                                                <?php // } ?>
                                                 <?php if (Yii::app()->user->checkAccess('action_fuentefinanciamiento_obra_create')) { ?>
                                                     <li>
                                                         <a href="<?php echo $this->createUrl('/fuenteFinanciamientoObra/create'); ?>">Cargar Fuentes de Financiamiento de la Obra</a>
@@ -318,16 +319,18 @@
                                                     <a href="<?php echo $this->createUrl('/beneficiarioTemporal/admin'); ?>"><i class="glyphicon glyphicon-user"></i><span>Listado de Adjudicados</span></a>
                                                 </li><?php } ?>
                                         </ul>
-                                        <ul class="sub-menu">
-                                            <?php if (Yii::app()->user->checkAccess('action_cargamasiva_create')) { ?>
-                                                <li>
-                                                    <a href="<?php echo $this->createUrl('/cargaMasiva/create'); ?>"><i class="glyphicon glyphicon-cloud-upload"></i><span>Carga Masiva</span></a>
-                                                </li><?php } ?>
-                                            <?php if (Yii::app()->user->checkAccess('action_cargamasiva_admin')) { ?>
-                                                <li>
-                                                    <a href="<?php echo $this->createUrl('/cargaMasiva/admin'); ?>"><i class="glyphicon glyphicon-cloud-download"></i><span>Listado Carga Masivas</span></a>
-                                                </li><?php } ?>
-                                        </ul>
+                                        <!--<ul class="sub-menu">-->
+                                        <?php // if (Yii::app()->user->checkAccess('action_cargamasiva_create')) { ?>
+                                        <!--<li>-->
+                                            <!--<a href="<?php // echo $this->createUrl('/cargaMasiva/create');  ?>"><i class="glyphicon glyphicon-cloud-upload"></i><span>Carga Masiva</span></a>-->
+                                        <!--</li>-->
+                                        <?php // } ?>
+                                        <?php // if (Yii::app()->user->checkAccess('action_cargamasiva_admin')) { ?>
+                                        <!--<li>-->
+                                            <!--<a href="<?php // echo $this->createUrl('/cargaMasiva/admin');  ?>"><i class="glyphicon glyphicon-cloud-download"></i><span>Listado Carga Masivas</span></a>-->
+                                        <!--</li>-->
+                                        <?php // } ?>
+                                        <!--</ul>-->
 
 
                                     </li>
@@ -352,23 +355,28 @@
                                     </li>
                                 <?php } ?>
                                 <?php if (Yii::app()->user->checkAccess('controller_empadronadorcenso')) { ?>
-                                    <li class="sub-menu">
-                                        <a href="javascript:;">
+                                    <li >
+                                        <!--                                        <a href="javascript:;">
                                             <i class="glyphicon glyphicon-tasks"></i>
                                             <span> Gestión Empadronador</span>
-                                        </a>
-                                        <ul class="sub">
-                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                                                                </a>-->
+                                        <!--<ul class="sub">-->
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                            ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_vswempadronadorcensos_admin')) { ?>
-                                                <li>
+                                            <!--<li>-->
                                                     <a href="<?php echo $this->createUrl('/vswEmpadronadorCensos/admin'); ?>">
                                                         <i class="glyphicon glyphicon-home"></i>
                                                         <span>Gestión de Empadronador</span>
                                                     </a>
-                                                </li><?php } ?>
-                                        </ul>
+                                            <!--</li>-->
+                                        <?php } ?>
+                                        <!--</ul>-->
                                     </li>
                                 <?php } ?>
+
+
+
+
                                 <?php if (Yii::app()->user->checkAccess('action_reasignacionvivienda_admin')) { ?>
                                     <li>
                                         <a href="<?php echo $this->createUrl('/reasignacionVivienda/admin'); ?>">
@@ -396,16 +404,16 @@
                                         <ul class="sub">
                                             <?php if (Yii::app()->user->checkAccess('action_tempCensoValidadoFaovFasp_admin')) { ?>
                                                 <li>
-                                                     <!--<a href="<?php // echo $this->createUrl('/VswCensoValidadoFaovFasp/admin');  ?>">--> 
+                                                     <!--<a href="<?php // echo $this->createUrl('/VswCensoValidadoFaovFasp/admin');   ?>">--> 
                                                     <a href="<?php echo $this->createUrl('/TempCensoValidadoFaovFasp/admin'); ?>">
                                                         <i class="glyphicon glyphicon-asterisk"></i>
                                                         <span>FAOV</span>
                                                     </a>
                                                 </li>   
                                             <?php } ?>
-                                            <?php if (Yii::app()->user->checkAccess('action_tempcensovalidadofaovfasp_adminfasp')) {?>
+                                            <?php if (Yii::app()->user->checkAccess('action_tempcensovalidadofaovfasp_adminfasp')) { ?>
                                                 <li>
-                                                     <!--<a href="<?php // echo $this->createUrl('/VswCensoValidadoFaovFasp/adminfasp');  ?>">--> 
+                                                     <!--<a href="<?php // echo $this->createUrl('/VswCensoValidadoFaovFasp/adminfasp');   ?>">--> 
                                                     <a href="<?php echo $this->createUrl('/TempCensoValidadoFaovFasp/adminfasp'); ?>">
                                                         <i class="glyphicon glyphicon-asterisk"></i>
                                                         <span>FASP</span>
@@ -434,7 +442,7 @@
                                             <span> Documentación</span>
                                         </a>
                                         <ul class="sub">
-                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                            ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminmultifamiliar')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/documentacion/adminmultifamiliar'); ?>">
@@ -445,7 +453,7 @@
                                                 </li><?php } ?>
                                         </ul>
                                         <ul class="sub">
-                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                            ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminbeneficiario')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/documentacion/adminbeneficiario'); ?>">
@@ -455,7 +463,7 @@
                                                 </li><?php } ?>
                                         </ul>
                                         <ul class="sub">
-                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                            ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminbeneficiario')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/documentacion/adminactivacion'); ?>">
@@ -510,7 +518,7 @@
                                             <span> Saren</span>
                                         </a>
                                         <ul class="sub">
-                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                            ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminsarenMulti')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/documentacion/adminsarenMulti'); ?>">
@@ -520,7 +528,7 @@
                                                 </li><?php } ?>
                                         </ul>
                                         <ul class="sub">
-                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                           ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
+                                            <!--<li><a href="<?php // echo $this->createUrl('/beneficiario/create');                                                                                                                                                                                                                                            ?>"><i class="glyphicon glyphicon-home"></i><span>Censo</span></a></li>-->
                                             <?php if (Yii::app()->user->checkAccess('action_documentacion_adminsarenBene')) { ?>
                                                 <li>
                                                     <a href="<?php echo $this->createUrl('/documentacion/adminsarenBene'); ?>">
@@ -547,7 +555,7 @@
                 <div id="expirado"></div>
 
                 <!--            <footer class='container col-md-12 col-xs-12 text-center'>
-                                Copyright &copy; <?php // echo date('Y');                                                                                                                                                                                                                                                                                                                                                            ?> by My Company.<br/>
+                                Copyright &copy; <?php // echo date('Y');                                                                                                                                                                                                                                                                                                                                                             ?> by My Company.<br/>
                                 All Rights Reserved.<br/>
                 <?php // echo Yii::powered(); ?>
                             </footer>-->
@@ -564,7 +572,7 @@
     <script src="<?php echo Yii::app()->baseUrl; ?>/js/administrador/gauge/gauge.js"></script>
     <script src="<?php echo Yii::app()->baseUrl; ?>/js/administrador/css3clock/js/css3clock.js"></script>
     <script src="<?php echo Yii::app()->baseUrl; ?>/js/administrador/scripts.js"></script>
-    <!--<script src="<?php // echo Yii::app()->baseUrl; ?>/js/administrador/jquery-1.10.2.min.js"></script>-->
+    <!--<script src="<?php // echo Yii::app()->baseUrl;  ?>/js/administrador/jquery-1.10.2.min.js"></script>-->
     <script type="text/javascript">
         $(window).load(function () {
             $(".loader").fadeOut("slow");

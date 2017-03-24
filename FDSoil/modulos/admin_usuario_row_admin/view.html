@@ -1,0 +1,265 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <!--JS-->
+        
+        <script src="js/validar.js" type="text/javascript"></script>     
+        <script src="js/submit.js" type="text/javascript"></script>
+    </head>
+    <body onload="inicio('{MENU}', '{INSER_EDIT}');">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <img src="../../../{APP}/img/32x32/logo_sy.png" style="margin-top: 2px; margin-left: -1%; width: 10%" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend >
+                            <img src="../../images/principal/actualizar.png">
+                            <b>Actualizar datos del Sistema (Actualiza Usuarios)</b>
+                        </legend>
+                    </fieldset>
+                    <form name="reg" method="POST" action="save.php">
+                        <input id="id_usuario" type="hidden" name="id_usuario" value={ID}>
+                        <br>
+                        <table class="table table-bordered" style="width: 50%; margin-left: 25%;">
+                            <tr>
+                                <th colspan="3">Registro de Usuario</th>
+                            </tr>
+                            <tr>
+                                <td>N° de C.I.:  *</td>
+                                <td>
+                                    <select id="id_nacionalidad" name="nacionalidad" onchange="val_pasaporte();" 
+                                            class=comboBoxNacionalidad style="width: 100%">
+                                        <option value="V" selected>V</option>
+                                        <option value="E">E</option>
+                                        <!--option value="P">P</option-->
+                                    </select>
+                                </td>
+                                <td>  
+                                    <INPUT id="id_cedula" name="cedula" type="text"  maxlength="18" style="width: 100%" 
+                                           value="{CEDULA_USUARIO}"
+                                           onKeyPress="return entero(event);" onchange ="send_cedula(nacionalidad.value, this.value);" 
+                                           autocomplete="off"/><!--val_num_id();-->
+
+                                </td>
+                            </tr>
+                            <tr><td></td>
+                                <td colspan="2"><div id='div_cedula' align="center" class='alerta_mensajes'></div></td>
+                            </tr>
+                            <tr>
+                                <td>Nombre(s):  *</td>
+                                <td colspan="2"><INPUT id="id_nombres" 
+                                                       name="nombres" 
+                                                       type="text"  
+                                                       maxlength="25"  
+                                                       style="width: 100%" 
+                                                       value="{NOMBRE_USUARIO}"
+                                                       onKeyUp="javascript:this.value = this.value.toUpperCase();" />
+                                    <div id='div_nombre' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Apellido(s):  *</td>
+                                <td colspan="2">
+                                    <INPUT id="id_apellidos" 
+                                           name="apellidos" 
+                                           type="text" 
+                                           maxlength="25" 
+                                           style="width: 100%"
+                                           value="{APELLIDO_USUARIO}"
+                                           onchange="nameusuario();"
+                                           onKeyUp="javascript:this.value = this.value.toUpperCase();"  
+                                           autocomplete="off">
+                                    <div id='div_apellido' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Correo Electrónico:  *</td>
+                                <td colspan="2">
+                                    <INPUT id="id_correo" 
+                                           name="correo" 
+                                           type="email" 
+                                           maxlength="100" 
+                                           title="Indique su correo electrónico" 
+                                           style="width: 100%" 
+                                           value="{CORREO_USUARIO}"
+                                           onblur="val_email(this.value, 'div_correo')" 
+                                           autocomplete="off">
+                                    <div id='div_correo' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Telefono Celular:  *</td>
+                                <td colspan="2">
+                                    <INPUT id="id_celular" 
+                                           name="celular" 
+                                           type="text" 
+                                           maxlength="25" 
+                                           title="Indique su Numero de celular" 
+                                           style="width: 100%"  
+                                           onKeyPress="return entero(event);"
+                                           value="{CELULAR_USUARIO}"
+                                           autocomplete="off">
+                                    <div id='div_celular' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Telefono Local:  *</td>
+                                <td colspan="2">
+                                    <INPUT id="id_telefono1" 
+                                           name="telefono1" 
+                                           type="text" 
+                                           maxlength="25" 
+                                           title="Indique su numero de telefono local" 
+                                           style="width: 100%"  
+                                           value="{TELEFONO1_USUARIO}"
+                                           onKeyPress="return entero(event);" 
+                                           autocomplete="off">
+                                    <div id='div_telefono1' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Otro Telefono:</td>
+                                <td colspan="2">
+                                    <INPUT id="id_telefono2" 
+                                           name="telefono2" 
+                                           type="text" 
+                                           maxlength="25" 
+                                           title="Indique su numero de telefono local" 
+                                           style="width: 100%"  
+                                           onKeyPress="return entero(event);
+				            vaciarCombo(combo)" 
+                                           value="{TELEFONO2_USUARIO}"
+                                           autocomplete="off">
+                                    <div id='div_telefono2' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nombre de Usuario:  *</td>
+                                <td colspan="2">
+                                    <input id="id_usuar" name="usuario" 
+                                           type="text" 
+                                           readonly="" 
+                                           title="Indique un nombre de usuario para ingresar a la aplicacion" 
+                                           style="width: 100%" 
+                                           value="{USUARIO_USUARIO}">
+                                    <!--<INPUT id="id_usuario" name="usuario" type="text" maxlength="25" 
+                                        title="Indique un nombre de usuario para ingresar a la aplicación" style="width: 100%" 
+                                        value="{USUARIO_USUARIO}"
+                                    >-->
+                                    <div id='div_usuario' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+			    <tr>
+				<td>Oficina a la que pertenece: *</td>
+				<td colspan="2">
+                                    <select id="direccion" name="n_direccion">
+                                        <option value="0" selected>--Seleccione--</option>
+                                        <!-- BEGIN: oficina-->
+                                        <option value="{ID_DIRECCION}">{NOMBRE_DIRECCION}</option>
+                                        <!-- END: oficina-->
+                                    </select>
+                                </td>
+		           </tr>
+                            <tr id="tr_clave1">
+                                <td>Clave de Acceso:  *</td>
+                                <td colspan="2">
+                                    <INPUT id="id_clave" name="clave" type="password" maxlength="25" 
+                                           title="Ingrese la clave con la cual podra ingresar a la aplicación" style="width: 100%" 
+                                           onblur="val_clave('div_clave2')" autocomplete="off">
+                                    <div id='div_clave' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr id="tr_clave2">
+                                <td>Confirme Clave de Acceso:  *</td>
+                                <td colspan="2">
+                                    <INPUT id="id_clave2" name="clave2" type="password" maxlength="25" 
+                                           title="Ingrese nuevamente la clave para confirmación" style="width: 100%" 
+                                           onblur="val_clave('div_clave2')"  autocomplete="off">
+                                    <div id='div_clave2' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pregunta de Seguridad:  *</td>
+                                <td colspan="2">
+                                    <select id="id_pregunta" name="pregunta_seguridad" style="width: 100%">
+                                        <option value="0" selected>--Seleccione--</option>
+                                        <!-- BEGIN: row-->
+                                        <option {PREGUNTA_SELECTED}>{PREGUNTA}</option>
+                                        <!-- END: row-->
+                                    </select>
+                                    <div id='div_pregunta' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Respuesta de Seguridad:   *</td>
+                                <td colspan="2">
+                                    <INPUT id="id_respuesta" name="respuesta_seguridad" type="text" maxlength="25" 
+                                           title="Indique su respuesta" style="width: 100%"
+                                           value="{RESPUESTA_SEGURIDAD_USUARIO}"
+                                           onkeyup="javascript:this.value = this.value.toUpperCase();" autocomplete="off">
+                                    <div id='div_respuesta' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>                                
+                            <tr>
+                                <td>Perfil del Usuario:  *</td>
+                                <td colspan="2">
+                                    <select id="id_rol_usuario" name="rol_usuario" style="width: 100%">
+                                        <option value="0" selected>--Seleccione--</option>
+                                        <!-- BEGIN: row_rol-->
+                                        <option value="{ID_ROL_USUARIO}" {VAL_ROL_USUARIO}>{DES_ROL_USUARIO}</option>
+                                        <!-- END: row_rol-->
+                                    </select>
+                                    <div id='div_pregunta' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Estatus:  *</td>
+                                <td colspan="2">
+                                    <select id="id_status" name="status" style="width: 100%">
+                                        <option value="0" selected>--Seleccione--</option>
+                                        <!-- BEGIN: row_status-->
+                                        <option value="{ID_STATUS}" {VAL_STATUS}>{DES_STATUS}</option>
+                                        <!-- END: row_status-->
+                                    </select>
+                                    <div id='div_pregunta' align="center" class='alerta_mensajes'></div>
+                                </td>
+                            </tr>
+                            <tr><td colspan="3"  align="center">-Nota: Los campos Marcados con asterisco son Obligatorios</td></tr>
+                            </tbody>
+                        </table>
+                        <div style="text-align: center;">
+                            <button class="btn btn-danger btn-medium" id="id_salir" type="button" name="Salir" title="Salir" value="Regresar" 
+                                    onClick="window.location.href = '../admin_usuario_list'">Salir</button>
+                            <button class="btn btn-success btn-medium" id="id_Guardar" type="button" name="Guardar" value="Guardar" onclick="val_envio();" >Guardar</button>
+                        </div>
+                        <br>
+                        <br>
+                    </form> 
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->
+

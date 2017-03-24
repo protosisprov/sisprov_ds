@@ -1,0 +1,75 @@
+<!-- BEGIN: main -->
+<html>
+     <head>
+        {HEAD}
+        <!--JS-->
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript"></script>
+        <script src="js/submit.js" type="text/javascript"></script>
+        <script src="js/reqs.js" type="text/javascript"></script>
+        <script src="js/tabla.js" type="text/javascript"></script>
+        
+    </head>
+    <body onload="inicio('{MENU}');">
+        <div class="container">
+            <div class="row-fluid bg-container">
+                <div id=""></div>
+                <br><br>
+                <div id="titulo" style="display: none"></div>
+                <div id="encabezado"  >
+                    <div><img src="{ID_CBE}" alt="cabecera"></div>
+                    <div style="position: absolute; top: 35%; left: 75%">
+                        <b>Usuario:</b>&nbsp;{NOMBRE_APELLIDO}<br><b>Último acceso:</b>&nbsp;{ULT}
+                    </div>
+                </div>
+                <div id='divMenu'></div>
+                <div id='contenido'>
+                    <div id="sub_titulo">Lista de Opciones del Menú (Nivel 1)</div>
+                    <table class="table table-bordered" style="width: 50%; margin-left: 25%;">
+                        <tr>
+                            <th colspan=2>Seleccione el Nivel Antecesor</th>
+                        </tr>
+                        <tr>
+                            <td>Menú (Nivel 0):</td>
+                            <td>
+                                <select id="id_nivel_0" 
+                                        name="nivel_0" 
+                                        class="input-large"
+                                        onChange='sendTablaNivel_1(this.value); valInsert(this.value);'>
+                                        <option value=null selected>Seleccione...</option>
+                                        <!-- BEGIN: menu_0 -->
+                                        <option value={ID_MENU_0}>{DES_MENU_0}</option>
+                                        <!-- END: menu_0 -->
+                                </select>   
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="addReg" align="right">
+                        <input id="id_img_add" type="image"
+                                   onclick="submitInsert(document.getElementById('id_nivel_0').value);" alt="Agregar" disabled>
+                    </div>
+                    <table id="tablaRows" class="table table-bordered" style="width: 80%; margin-left: 10%; clear: both;">
+                            <thead>
+                                <th>Orden</th>
+                                <th>Opci&oacute;n</th>
+                                <th>Ruta</th>
+                                <th>Status</th>
+                                <th>Acci&oacute;n(es)</th>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                    </table>
+                    <div class='botonera'>
+                        <button class="btn btn-danger btn-medium" id="id_salir" type="button" value="Salir" onClick="window.location.href = '../admin_inicio/';">Salir</button>
+                    </div>
+                </div>
+                <br>
+                <footer class="bg-footer">
+                    <div id='id_firma'></div>
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

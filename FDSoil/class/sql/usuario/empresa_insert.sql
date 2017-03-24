@@ -1,0 +1,1 @@
+SELECT sistema.empresa_usuario('{fld:rif}','{fld:raz_soc}','{fld:clave}','{fld:nombre}','{fld:apellido}','{fld:correo}') AS EXISTE;

@@ -1,0 +1,130 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript" language="javascript"></script>
+        <script src="js/reqs.js" type="text/javascript" language="javascript"></script>
+    </head>
+
+    <body onload="inicio();">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <br>
+                <img src="../../../{APP}/img/principal/logo.png" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend >
+                            <img src="../../images/principal/actualizar.png">
+                            <b>Actualizar datos del Sistema</b>
+                        </legend>
+                    </fieldset>
+                    <form action="recover.php" name="form" id="form1" method="POST">   
+                        <div id='sub_titulo'>Recuperar Clave Acceso del Sistema</div>
+                        <div id="interfaz_1">
+
+                            <div class=divGroupField align='center'>
+                                <table class="tabla_grid" id="tabla" border=0>
+                                    <tr>
+                                        <th colspan=4>Ingrese los Siguientes Datos:</th>
+                                    </tr>		
+                                    <tr>
+                                        <td colspan=1 class="colum"><div class="divTitleField">Cedula:</div></td>
+                                        <td colspan=1 style="width: 50px;">
+                                            <select name="inicial" id="id_inicial" class="comboBoxNacionalidad" style="height: 30px; width: 50px;">
+                                                <option value="V">V</option>
+                                                <option value="E">E</option>
+                                            </select>
+                                        </td>
+                                        <td colspan="2" style="width: 300px;">
+                                            <input 	id="id_cedula" 
+                                                    name="cedula"
+                                                    type="text"
+                                                    class="campos_recuperar_clave"
+                                                    onKeyPress="return entero(event);"
+                                                    maxlength="8" autocomplete="off">
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=1 class="colum"><div class="divTitleField">Correo:</div></td>
+                                        <td colspan=3 class="row">
+                                            <input 	id="id_correo" 
+                                                    name="correo"
+                                                    type="text"
+                                                    class="campos_recuperar_clave"
+                                                    onBlur="val_email(this);"
+                                                    maxlength="50" autocomplete="off">                  
+                                        </td>
+                                    </tr>
+                                </table> 
+                            </div>        
+                            <div class="botonera">
+                                <input id=id_regresar type=button value='Regresar' onClick="history.back(-1);">
+                                <input id=id_validar  type=button value='Aceptar' onClick="javascript: send_pregunta();">
+                            </div>
+                        </div>
+
+                        <div id="interfaz_2" style="display: none" >
+
+                            <div class=divGroupField align='center'>
+                                <table class="tabla_grid" id="tabla" border=0>
+                                    <tr>
+                                        <th colspan=4>Responda la pregunta Secreta:</th>
+                                    </tr>		
+                                    <tr>
+                                        <td colspan=1 class="colum"><div class="divTitleField">Pregunta:</div></td>
+                                        <td colspan=3 class="row">
+                                            <input 	id="id_pregunta" 
+                                                    name="pregunta"
+                                                    type="text"
+                                                    class="campos_recuperar_clave"
+                                                    maxlength="50" autocomplete="off">                  
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan=1 class="colum"><div class="divTitleField">Respuesta:</div></td>
+                                        <td colspan=3 class="row">
+                                            <input 	id="id_respuesta" 
+                                                    name="respuesta"
+                                                    type="text"
+                                                    class="campos_recuperar_clave" 
+                                                    maxlength="50" 
+                                                    autocomplete="off"
+                                                    onKeyUp="javascript:this.value = this.value.toUpperCase();">                  
+                                        </td>
+                                    </tr>
+                                </table> 
+                            </div>        
+                            <div class="botonera">
+                                <input id=id_regresar type=button value='Regresar' onClick="javascript:location.reload(true);">
+                                <input id=id_recuperar  type='button' value='Aceptar' onclick="javascript:validar_formulario();">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

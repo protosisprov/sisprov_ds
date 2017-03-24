@@ -1,0 +1,105 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+
+        <!--JS-->
+        <script src="js/validar.js" type="text/javascript"></script>      
+        <script src="js/reqs.js" type="text/javascript"></script>      
+        <script src="js/tabla.js" type="text/javascript"></script>   
+        <script src="js/submit.js" type="text/javascript"></script>
+
+    </head>
+
+    <body onload="inicio('{MENU}');">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+		<img src="../../../{APP}/img/32x32/logo_sy.png" style="margin-top: 2px; margin-left: -1%; width: 10%" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend >
+                            <img src="../../images/principal/list.png">
+                            <b>Lista de Opciones del Men&uacute; (Nivel 3)</b>
+                        </legend>
+                    </fieldset>
+                    <table class="table table-bordered" style="width: 50%; margin-left: 25%;">
+                        <tr>
+                            <th colspan=2>Seleccione los Niveles Antecesores</th>
+                        </tr>
+                        <tr>
+                            <td>Menú (Nivel 0):</td>
+                            <td>
+                                <select id="id_nivel_0" 
+                                        name="nivel_0" 
+                                        class="input-xlarge"
+                                        onChange='sendComboNivel_1(this.value);'>
+                                    <option value='null' selected>Seleccione...</option>
+                                    <!-- BEGIN: menu_0 -->
+                                    <option value={ID_MENU_0}>{DES_MENU_0}</option>
+                                    <!-- END: menu_0 -->
+                                </select>   
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Menú (Nivel 1):</td>
+                            <td>
+                                <select id="id_nivel_1" 
+                                        name="nivel_1" 
+                                        class="input-xlarge"
+                                        onChange='sendComboNivel_2(this.value);'>
+                                    <option value=null selected>Seleccione...</option>
+                                </select>   
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Menú (Nivel 2):</td>
+                            <td>
+                                <select id="id_nivel_2" 
+                                        name="nivel_1" 
+                                        class="input-xlarge"
+                                        onChange='sendTablaNivel_3(this.value);valInsert(this.value);'>
+                                    <option value=null selected>Seleccione...</option>
+                                </select>   
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="addReg" align="right">            
+                        <input  id="id_img_add" 
+                                type="image" 
+                                onclick="submitInsert(document.getElementById('id_nivel_2').value);"
+                                alt="Add.."
+                                disabled>   
+                    </div>
+                    <table id="tablaRows" class="table table-bordered" style="width: 80%; margin-left: 10%; clear: both;">
+                        <thead><TH>Orden</TH><TH>Opci&oacute;n</TH><TH>Ruta</TH><TH>Status</TH><TH>Acci&oacute;n(es)</TH></thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class='botonera'>
+                        <button class="btn btn-danger btn-medium" id="id_salir" type="button" value="Salir" onClick="history.back(-1);">Salir</button>
+                    </div>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

@@ -1,0 +1,93 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript"></script>     
+        <script src="js/submit.js" type="text/javascript"></script>
+        <script src="js/reqs.js" type="text/javascript"></script>
+
+    </head>
+    <body onload="inicio('{MENU}');">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <img src="../../../{APP}/img/logo_sy.png" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header> 
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend>
+                            <img src="../../images/principal/list.png">
+                            <b>Actualizar Registro del Men&uacute; (Nivel 0)</b>
+                        </legend>
+                    </fieldset>
+                    <input id="id_row" name="id_row" type='hidden' value='{ID_ROW}'>
+                    <div class=divGroupField align='center'>
+                        <table class="table table-bordered" style="width: 50%; margin-left: 3%;">
+                            <tr>
+                                <th colspan=4>Datos del Men&uacute;</th>
+                            </tr>
+                            <tr>
+                                <td colspan=1>Opci&oacute;n:</td>
+                                <td colspan=3>
+                                    <input id="id_opcion" name="opcion" size="90" class="input-large"
+                                           value="{OPCION}" maxlength="90">
+                                    <div id="msjErroresOP" class="id_msj_error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=1>Ruta:</td>
+                                <td colspan=3>
+                                    <input id="id_ruta" name="ruta" size="90" class="input-large"
+                                           value="{RUTA}" maxlength="90">
+                                    <div id="msjErroresRT" class="id_msj_error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Orden:</td>
+                                <td>
+                                    <input  id="id_orden" name="orden" size="30" class="input-large"
+                                            value="{ORDEN}" maxlength="90" onKeyPress="return acceptNum(event);">
+                                    <div id="msjErroresOR" class="id_msj_error"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Estatus:</td>
+                                <td>
+                                    <select id="id_status" name="status" class="input-large" >
+                                        <option value="" selected>Seleccione...</option>
+                                        <!-- BEGIN: status -->
+                                        <option value={ID_STATUS} {SELECTED_STATUS}>{DES_STATUS}</option>
+                                        <!-- END: status -->
+                                    </select>
+                                    <div id="msjErroresES" class="id_msj_error"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class='botonera'>
+                        <button class="btn btn-danger btn-medium" id=id_regresar type=button value='Regresar' onClick="history.back(-1);">Regresar</button>
+                        <button class="btn btn-success btn-medium" id=id_guardar  type=button value='Guardar' onClick="valida_nivel_0();">Guardar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+    <!-- END: main -->

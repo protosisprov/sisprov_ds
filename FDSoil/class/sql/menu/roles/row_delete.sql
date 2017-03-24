@@ -1,0 +1,1 @@
+SELECT seguridad.rol_delete({fld:id});

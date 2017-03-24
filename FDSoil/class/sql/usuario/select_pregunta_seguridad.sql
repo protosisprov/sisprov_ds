@@ -1,0 +1,1 @@
+SELECT id, descripcion  FROM seguridad.pregunta_seguridad;

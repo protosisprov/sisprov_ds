@@ -1,0 +1,73 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript"></script>      
+    </head>
+    <body onload="inicio('{MENU}');">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <img src="../../../{APP}/img/logo.png" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend >
+                            <img src="../../images/principal/actualizar.png">
+                            <b>Lista de Mensajes para la Aplicaci&oacute;n<br>({APP})</b>
+                        </legend>
+                    </fieldset>
+                    <div id="addReg" align="right">
+                        <a href="#">
+                            <IMG src="../../../FDSoil/images/32x32/nuevo.jpg" border="0" title=" Nuevo Banco" style='cursor:pointer;'></a>		
+                    </div>
+                    <table id="tablaRows" class="display" >
+                        <thead>	
+                            <tr>
+                                <TH>Id</TH><TH>Mensajes</TH><TH>Acci&oacute;n(es)</TH>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--BEGIN: ciclo_msj --> 
+                            <tr>
+                                <TD align="center" style="width: 5%;">{ID_ROW}</TD>
+                                <TD style="width: 80%;">{DESCRIPCION}</TD>				
+                                <TD align="center" style="width: 15%;">
+                                    <a onclick="submitEdit('{ID_ROW}');">
+                                        <IMG src="../../../FDSoil/images/24x24/edita.png" 
+                                             border="0" title="Editar" style='cursor:pointer;'>
+                                    </a>
+                                    <a onclick="submitDelete('{ID_ROW}');">
+                                        <IMG src="../../../FDSoil/images/24x24/delete.png" 
+                                             border="0" title="Eliminar" style='cursor:pointer;'>
+                                    </a>
+                                </TD>
+                            </tr>
+                            <!--END: ciclo_msj --> 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

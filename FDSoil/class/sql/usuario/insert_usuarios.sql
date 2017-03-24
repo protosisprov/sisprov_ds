@@ -1,0 +1,1 @@
+insert into sistema.usuario (usuario,clave) values('{fld:usuario}','{fld:clave}')

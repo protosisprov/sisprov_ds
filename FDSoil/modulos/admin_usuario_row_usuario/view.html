@@ -1,0 +1,199 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js"></script>
+        <script src="js/reqs.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body onload="inicio('{MENU}', '{INSER_EDIT}');">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <br>
+                <img src="../../../{APP}/img/principal/logo.png" class="logo">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend >
+                            <img src="../../images/principal/actualizar.png">
+                            <b>Actualizar datos del Sistema (Actualizar Mis Datos)</b>
+                        </legend>
+                    </fieldset>
+                    <form name="reg" method="POST" action="save.php"> 
+                        <input id="id_usuario" type=hidden name="id_usuario" value={ID}>
+                        <div align="center">
+                            <table class="tabla_grid" style="">
+                                <thead>
+                                    <tr><th colspan="2">Registro de Usuario</th></tr></thead>
+                                <tbody>
+                                    <tr>
+                                        <td>N° de C.I.:  *</td>
+                                        <td>  
+                                            <INPUT id="id_cedula" name="cedula" type="text"  maxlength="18" style="width: 100%" 
+                                                   value="{CEDULA_USUARIO}"
+                                                   onKeyPress="return entero(event);" onchange ="send_cedula(nacionalidad.value, this.value);" 
+                                                   autocomplete="off"
+                                                   disabled/><!--val_num_id();-->
+
+                                        </td>
+                                    </tr>
+                                    <tr><td></td>
+                                        <td colspan="2"><div id='div_cedula' align="center" class='alerta_mensajes'></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nombre(s):  *</td>
+                                        <td colspan="2"><INPUT id="id_nombres" 
+                                                               name="nombres" 
+                                                               type="text"  
+                                                               maxlength="25"  
+                                                               style="width: 100%" 
+                                                               value="{NOMBRE_USUARIO}"
+                                                               onKeyUp="javascript:this.value = this.value.toUpperCase();" 
+                                                               disabled/>
+                                            <div id='div_nombre' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Apellido(s):  *</td>
+                                        <td colspan="2">
+                                            <INPUT id="id_apellidos" 
+                                                   name="apellidos" 
+                                                   type="text" 
+                                                   maxlength="25" 
+                                                   style="width: 100%"
+                                                   value="{APELLIDO_USUARIO}"
+                                                   onKeyUp="javascript:this.value = this.value.toUpperCase();"  
+                                                   autocomplete="off"
+                                                   disabled>
+                                            <div id='div_apellido' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nombre de Usuario:  *</td>
+                                        <td colspan="2">
+                                            <INPUT id="id_usuario" name="usuario" type="text" maxlength="25" 
+                                                   title="Indique un nombre de usuario para ingresar a la aplicacion" style="width: 100%" 
+                                                   value="{USUARIO_USUARIO}"
+                                                   onkeyup="send_usuario(this.value);"  autocomplete="off" disabled>
+                                            <div id='div_usuario' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>        
+                                    <tr>
+                                        <td>Correo Electrónico:  *</td>
+                                        <td colspan="2">
+                                            <INPUT id="id_correo" 
+                                                   name="correo" 
+                                                   type="email" 
+                                                   maxlength="100" 
+                                                   title="Indique su correo electrónico" 
+                                                   style="width: 100%" 
+                                                   value="{CORREO_USUARIO}"
+                                                   onblur="val_email(this, 'div_correo')" 
+                                                   autocomplete="off">
+                                            <div id='div_correo' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Telefono Celular:  *</td>
+                                        <td colspan="2">
+                                            <INPUT id="id_celular" 
+                                                   name="celular" 
+                                                   type="text" 
+                                                   maxlength="25" 
+                                                   title="Indique su Numero de celular" 
+                                                   style="width: 100%"  
+                                                   onKeyPress="return entero(event);"
+                                                   value="{CELULAR_USUARIO}"
+                                                   autocomplete="off">
+                                            <div id='div_celular' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Telefono Local:  *</td>
+                                        <td colspan="2">
+                                            <INPUT id="id_telefono1" 
+                                                   name="telefono1" 
+                                                   type="text" 
+                                                   maxlength="25" 
+                                                   title="Indique su numero de telefono local" 
+                                                   style="width: 100%"  
+                                                   value="{TELEFONO1_USUARIO}"
+                                                   onKeyPress="return entero(event);" 
+                                                   autocomplete="off">
+                                            <div id='div_telefono1' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Otro Telefono:</td>
+                                        <td colspan="2">
+                                            <INPUT id="id_telefono2" 
+                                                   name="telefono2" 
+                                                   type="text" 
+                                                   maxlength="25" 
+                                                   title="Indique su numero de telefono local" 
+                                                   style="width: 100%"  
+                                                   onKeyPress="return entero(event);
+                                                    vaciarCombo(combo)" 
+                                                   value="{TELEFONO2_USUARIO}"
+                                                   autocomplete="off">
+                                            <div id='div_telefono2' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>                                                        
+                                    <tr>
+                                        <td>Pregunta de Seguridad:  *</td>
+                                        <td colspan="2">
+                                            <select id="id_pregunta" name="pregunta_seguridad" style="width: 100%">
+                                                <option value="0" selected>--Seleccione--</option>
+                                                <!-- BEGIN: row-->
+                                                <option {PREGUNTA_SELECTED}>{PREGUNTA}</option>
+                                                <!-- END: row-->
+                                            </select>
+                                            <div id='div_pregunta' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Respuesta de Seguridad:  *</td>
+                                        <td colspan="2">
+                                            <INPUT id="id_respuesta" name="respuesta_seguridad" type="text" maxlength="25" 
+                                                   title="Indique su respuesta" style="width: 100%"
+                                                   value="{RESPUESTA_SEGURIDAD_USUARIO}"
+                                                   onkeyup="javascript:this.value = this.value.toUpperCase();" autocomplete="off">
+                                            <div id='div_respuesta' align="center" class='alerta_mensajes'></div>
+                                        </td>
+                                    </tr>                                                                
+                                    <tr><td colspan="3"  align="center">-Nota: Los campos Marcados con asterisco son Obligatorios</td></tr>
+                                </tbody>
+                            </table>
+                            <div  class="botonera">
+                                <input id="id_salir" type="button" name="Salir" title="Salir" value="Salir" 
+                                       onClick="window.location.href = '../admin_inicio'">
+                                <input id="id_Guardar" type="button" name="Guardar" value="Guardar" onclick="val_envio();">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->
+

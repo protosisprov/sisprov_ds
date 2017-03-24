@@ -1,0 +1,177 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/app.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/validar.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js"></script>
+        <script src="js/reqs.js"></script>
+        <script type="text/javascript"></script>
+    </head>
+    <body onload="inicio();">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+                <img clas="logo" src="{LOGO_SY}">
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <input type="hidden" id="id_rol" value="{ROL}">
+                    <input type="hidden" id="id_status" value="{STATUS}">
+                    <fieldset style="margin-left: 20%; margin-right: 25%;">
+                        <legend><img src="../../images/32x32/usuario.png">Registro de Usuario</legend>
+                    </fieldset>
+                    <table style="margin: auto;">
+                        <tr>
+                            <td>N° de C.I.:  *</td>
+                            <td>
+                                <select id="id_nacionalidad" name="nacionalidad" onchange="val_pasaporte();" 
+                                        class="input-minix">
+                                    <option value="V" selected>V</option>
+                                    <option value="E">E</option>
+                                    <!--option value="P">P</option-->
+                                </select>
+                            </td>
+                            <td>  
+                                <input id="id_cedula" name="cedula" type="text"  maxlength="8" onKeyPress="return entero(event);" onchange ="send_cedula(nacionalidad.value, this.value);" 
+                                       autocomplete="off" class="input-large"/>
+                                <div id='div_cedula' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nombre(s):  *</td>
+                            <td colspan="2">
+                                <input id="id_nombres" name="nombres" type="text" maxlength="50" onkeypress="return soloLetras(event)" placeholder="primer nombre" maxlength="25"  style="text-transform: uppercase" onKeyUp="javascript:this.value = this.value.toUpperCase();" class="input-xlarge" />
+                                <div id='div_nombre' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Apellido(s):  *</td>
+                            <td colspan="2">
+                                <input id="id_apellidos" name="apellidos" maxlength="50" type="text" onkeypress="return soloLetras(event)"  placeholder="primer apellido" onKeyUp="javascript:this.value = this.value.toUpperCase();" maxlength="25" class="input-xlarge"
+                                       style="text-transform: uppercase" onchange="crearnombreuser();" ma  autocomplete="off">
+                                <div id='div_apellido' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Correo electr&oacute;nico:  *</td>
+                            <td colspan="2">
+                                <input name="validar_correo" disabled id="validar_correo" type="hidden" value="">
+                                <input id="id_correo" name="correo" type="email"  placeholder="nombre@ejemplo.com" maxlength="100" title="Indique su correo electrónico" 
+                                       class="input-xlarge" onblur="validarEmail('id_correo','div_correo')" autocomplete="off">
+                                <div id='div_correo' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tel&eacute;fono Celular:  </td>
+                            <td colspan="2">
+                                <input id="id_celular" name="celular" onKeyPress=" FormatoTelefono(this);" type="text" maxlength="14" title="Indique su Numero de celular" 
+                                       class="input-xlarge"  
+                                       onKeyPress="entero(this);" autocomplete="off">
+                                <div id='div_celular' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tel&eacute;fono local:  </td>
+                            <td colspan="2">
+                                <input id="id_telefono1" name="telefono1" onKeyPress=" FormatoTelefono(this);" type="text" maxlength="14" 
+                                       title="Indique su numero de telefono local" class="input-xlarge"
+                                       onKeyPress="entero(this);"
+                                       autocomplete="off">
+                                <div id='div_telefono1' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Otro Tel&eacute;fono:</td>
+                            <td colspan="2">
+                                <INPUT id="id_telefono2" name="telefono2" onKeyPress=" FormatoTelefono(this);" type="text" maxlength="14" 
+                                       title="Indique su numero de telefono local" class="input-xlarge"   
+                                       onKeyPress="entero(this);" autocomplete="off">
+                                <div id='div_telefono2' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nombre de Usuario:  *</td>
+                            <td colspan="2">
+                                <input id="id_usuario" name="usuario" type="text" maxlength="25" 
+                                       title="Indique un nombre de usuario para ingresar a la aplicacion" class="input-xlarge" readonly=""
+                                       autocomplete="off">
+<!--                                       onkeyup="send_usuario(this.value);"  autocomplete="off">-->
+                                <div id='div_usuario' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Contraseña de acceso:  *</td>
+                            <td colspan="2">
+                                <input id="id_clave" name="clave" type="password" maxlength="25" 
+                                       title="Ingrese la clave con la cual podra ingresar a la aplicación" class="input-xlarge"
+                                       onblur="val_clave('div_clave2')" autocomplete="off">
+                                <div id='div_clave' align="center" class='alert-danger'></div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Confirme Contraseña:  *</td>
+                            <td colspan="2">
+                                <input id="id_clave2" name="clave2" type="password" maxlength="25" 
+                                       title="Ingrese nuevamente la clave para confirmación" class="input-xlarge"
+                                       onblur="val_clave('div_clave2')"  autocomplete="off">
+                                <div id='div_clave2' align="center" class='alert-danger'></div>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Pregunta de Seguridad:  *</td>
+                            <td colspan="2">
+                                <select id="id_pregunta" name="pregunta_seguridad" class="input-xlarge">
+                                    <option value="0" selected>--Seleccione--</option>
+                                    <!-- BEGIN: row-->
+                                    <option>{PREGUNTA}</option>
+                                    <!-- END: row-->
+                                </select>
+                                <div id='div_pregunta' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Respuesta de Seguridad:   *</td>
+                            <td colspan="2">
+                                <INPUT id="id_respuesta" name="respuesta_seguridad" type="text" maxlength="25"
+                                       title="Indique su respuesta" class="input-xlarge"
+                                       style="text-transform: uppercase" autocomplete="off">
+                                <div id='div_respuesta' align="center" class='alert-danger'></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <br>
+                    <div  style="margin-left: 20%; margin-right: 25%;" align="center" class='alert-danger'><b>-Nota: Los campos Marcados con asterisco son Obligatorios</b></div>
+                    <br>
+                    <div  class="botonera">
+                        <button id="id_Guardar" class="btn-success" name="Guardar" value="Guardar" onclick="val_envio();"> Guardar </button>
+                        <button id="id_salir" class="btn-danger"  name="Salir"   value="Salir"   onClick="salir_registro();"> Salir </button>
+                    </div>
+                    <div class="fondo_opaco_cargando" id='img_guardando' style=" visibility: hidden;">
+                        <div  class="imagen_cargando" align="center"><img src="../../../FDSoil/images/loading.gif"><br><br>Guardando, por favor espere...</div>
+                    </div>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

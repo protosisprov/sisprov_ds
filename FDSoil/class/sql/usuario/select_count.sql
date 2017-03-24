@@ -1,0 +1,1 @@
+select count(*) from sistema.usuario where usuario='{fld:v1}';
