@@ -53,6 +53,130 @@ class EstadisticasController extends Controller {
         $this->render('index');
     }
 
+    
+        public function actionProtocolizadosPorAno() {
+            
+            
+        $titulo1 = "Beneficiarios Protocolizados en los Ultimos 3 Años";
+        $titulo = " Beneficiarios Protocolizados por Años";
+        $subtitulo = "Fecha " . date("d/m/Y");
+
+        $consulta_periodos = Yii::app()->db->createCommand("
+            select max(date_part('year',v.fecha_creacion)) maxima, max(date_part('year',v.fecha_creacion))- 1 intermedio, max(date_part('year',v.fecha_creacion))-2 minima
+	      from vivienda v, maestro m
+	     where v.estatus_vivienda_id = m.id_maestro
+	       and m.padre = 73")->queryAll();
+
+        $total = 0;
+        //Consulto los valores del maximo año...
+        $consulta_maxima = Yii::app()->db->createCommand("select a.descripcion, a.fecha 
+              from 		
+                    (select m.descripcion, count(to_char(v.fecha_creacion,'MM')) fecha
+                       from maestro m, vivienda v, maestro mv
+                      where v.estatus_vivienda_id = mv.id_maestro
+                        and m.padre = 319
+                        and mv.padre = 73
+                        and date_part('year',v.fecha_creacion) = ".$consulta_periodos[0]['maxima']."  
+                        and m.descripcion = to_char(v.fecha_creacion,'MM')
+	    group by 1
+	    UNION
+		select m.descripcion, 0 fecha
+		  from maestro m
+		 where m.padre = 319
+		   and not exists (select 'x' from vivienda v 
+		                    where m.descripcion = to_char(v.fecha_creacion,'MM') 
+				      and date_part('year',v.fecha_creacion) = ".$consulta_periodos[0]['maxima']." )) a
+            order by 1")->queryAll();
+        
+        //Consulto los valores del año intermedio ...
+        $consulta_intermedio = Yii::app()->db->createCommand("select a.descripcion, a.fecha 
+              from 		
+                    (select m.descripcion, count(to_char(v.fecha_creacion,'MM')) fecha
+                       from maestro m, vivienda v, maestro mv
+                      where v.estatus_vivienda_id = mv.id_maestro
+                        and m.padre = 319
+                        and mv.padre = 73
+                        and date_part('year',v.fecha_creacion) = ".$consulta_periodos[0]['intermedio']."  
+                        and m.descripcion = to_char(v.fecha_creacion,'MM')
+	    group by 1
+	    UNION
+		select m.descripcion, 0 fecha
+		  from maestro m
+		 where m.padre = 319
+		   and not exists (select 'x' from vivienda v 
+		                    where m.descripcion = to_char(v.fecha_creacion,'MM') 
+				      and date_part('year',v.fecha_creacion) = ".$consulta_periodos[0]['intermedio']." )) a
+            order by 1")->queryAll();
+        
+        //Consulto los valores del año minimo ...
+        $consulta_minima = Yii::app()->db->createCommand("select a.descripcion, a.fecha 
+              from 		
+                    (select m.descripcion, count(to_char(v.fecha_creacion,'MM')) fecha
+                       from maestro m, vivienda v, maestro mv
+                      where v.estatus_vivienda_id = mv.id_maestro
+                        and m.padre = 319
+                        and mv.padre = 73
+                        and date_part('year',v.fecha_creacion) = ".$consulta_periodos[0]['minima']."  
+                        and m.descripcion = to_char(v.fecha_creacion,'MM')
+	    group by 1
+	    UNION
+		select m.descripcion, 0 fecha
+		  from maestro m
+		 where m.padre = 319
+		   and not exists (select 'x' from vivienda v 
+		                    where m.descripcion = to_char(v.fecha_creacion,'MM') 
+				      and date_part('year',v.fecha_creacion) = ".$consulta_periodos[0]['minima']." )) a
+            order by 1")->queryAll();
+
+        foreach ($consulta_maxima as $id => $item_maximo) {
+            
+            $categorias_maxima[$id] = $item_maximo["descripcion"];
+            //$series_maxima[$id] = array('y' => (int) $item_maximo["fecha"]);
+            $series_maxima[$id] = $item_maximo["fecha"];
+            $total_maxima = $total + $item_maximo["fecha"];
+        }
+        
+        foreach ($consulta_intermedio as $id => $item_intermedio) {
+            
+            $categorias_intermedio[$id] = $item_intermedio["descripcion"];
+            //$series_intermedio[$id] = array('y' => (int) $item_intermedio["fecha"]);
+            $series_intermedio[$id] = $item_intermedio["fecha"];
+            $total_intermedio = $total + $item_intermedio["fecha"];
+        }
+        
+        foreach ($consulta_minima as $id => $item_minima) {
+            
+            $categorias_minima[$id] = $item_minima["descripcion"];
+            //$series_minima[$id] = array('y' => (int) $item_minima["fecha"]);
+            $series_minima[$id] =  $item_minima["fecha"];
+            $total_minima = $total + $item_minima["fecha"];
+        }
+        
+    
+        
+        
+        $s_minima = array('name'=> $consulta_periodos[0]['minima'], 'data'=> $series_minima);
+        $s_intermedio = array('name'=> $consulta_periodos[0]['intermedio'], 'data'=> $series_intermedio);
+        $s_maxima = array('name'=> $consulta_periodos[0]['maxima'], 'data'=>  $series_maxima);
+       
+ 
+        $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
+        
+                
+        $this->render('porAno', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
+            
+            'categorias' => $categorias_minima, 's_minima'=> $s_minima, 's_intermedio'=> $s_intermedio, 's_maxima'=> $s_maxima, 'total' => $total, 'event' => $event, 'br'=>true));
+      
+                
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     public function actionDesarrollosUbicacionGeografica() {
 
         $titulo1 = "Cantidad de Desarrollos Habitacionales <br> Por Ubicación Geografica";
