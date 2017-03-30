@@ -98,3 +98,4 @@ class FuenteFinanciamientoObra extends CActiveRecord
 		return parent::model($className);
 	}
 }
+

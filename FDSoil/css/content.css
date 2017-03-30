@@ -1,0 +1,367 @@
+/* Desktops and laptops -----------*/
+@media only screen and (max-width : 1924px) {
+    #content {
+        width: 100%;
+        height: 100%;
+    }
+/*-----------------ESTILO QUE PERTENECEN AL CONTROL INTERNO-------------------*/
+    .header {
+        position:fixed;
+        left: 0;
+        right: 0;
+        z-index: 1002;
+        height: 65px;
+        background: #F5F5F5;
+        background-image: url('../images/head.jpg');
+        background-repeat: no-repeat;
+        border-top: 3px solid black;
+         box-shadow: 3px 0 2px #888888;
+    }
+   
+    #left {
+        top:65px;
+        width: 210px;
+        height: 100%;
+        position: fixed;
+        box-shadow: 2px 0px 2px #888888;
+        background: #F5F5F5;
+    }
+    #center {
+        display: inline-block;
+        width: 99.9%;
+        background: #FFF;
+    }
+    #wrapper-center {
+        margin-top: 66px;
+        margin-left: 220px;
+        min-height: 700px;
+    }
+    #footer {
+        position:fixed;
+        left:0px;
+        bottom:0px;
+        height:40px;
+        width:100%;
+        background:#F5F5F5;
+    }
+/*--------------------ESTYLO RESTANTE DE LOS INICIO---------------------------*/
+    #access{
+        
+        position:relative;
+        z-index: 1;
+        top:0px;
+        min-height:100px;
+        width:auto;
+        padding-top: 15px;
+    }
+    .divGroupField{
+        margin:3px auto 3px auto; 
+        border: 0px solid;
+    }
+}
+
+/*iPads (landscape) ----------- 
+*/@media only screen and (max-width : 1224px) {
+    #content { }
+}
+
+/*iPads (portrait) ----------- */
+@media only screen and (max-width : 1024px) {
+    
+}
+
+/*Smartphones (landscape) ----------- */
+@media only screen and (max-width : 768px) {
+    #content {        
+        width: auto;
+        height: 100%;
+    }
+}
+
+/*-----------------------ESTILO ANTERIOR PARA MEJORAR----------------------*/
+
+#encabezadoMenu {
+    bottom: 0;
+    color: #000;
+    font-size: -2.2em;
+    padding: 1.25em 0;
+    position: absolute;
+    right: 1em;
+    text-align: right;
+    top: 0.5em;
+    height: 20px;
+}
+#addReg{
+    margin-right: 25px; 
+    margin-bottom: 10px;    
+}
+.botonera{
+    position:relative;
+    top:10px;
+    left: auto;  
+    text-align:center;
+    margin-top: 5px;
+    margin-left: 10px; 
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.botonera input[type="button"], input[type="submit"], input[type="reset"]{
+    opacity: 10;
+    background:#BA3131;/*#A2A2A2*/
+    border:#073100;
+    border-radius: 2px;
+    color:#fff;
+    margin-right: 8px; 
+    /*Efectos de agrandado transform de botom solo funcionan en opera, mozilla, chrome y zafari*/
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    -o-transform: scale(1);
+    -moz-transition: -moz-transform .3s ease-in;
+    -o-transition: -o-transform .3s ease-in;
+    -webkit-transition: -webkit-transform .3s ease-in;
+    -moz-box-shadow: 1px 2px 3px #000000;
+    -webkit-box-shadow: 1px 2px 3px #000000;
+    box-shadow: 1px 2px 3px #000000; 
+}
+
+.botonera input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover{
+    opacity: 10;
+    background:#BA3131;/*#A2A2A2*/
+    border:#861616;
+    color:#fff;
+    border-radius: 2px;
+    -moz-transform: scale(1.15);
+    -webkit-transform: scale(1.15);
+    -o-transform: scale(1.15);
+    -moz-transition: -moz-transform .125s ease-in;
+    -o-transition: -o-transform .125s ease-in;
+    -webkit-transition: -webkit-transform .125s ease-in;
+}
+.bg-footer{
+    padding: 10px 0;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1em;
+    background: rgba(245, 245, 245, 0.75);
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    clear:both;
+}
+.botonera{
+    position:relative;
+    top:10px;
+    left: auto;  
+    text-align:center;
+    margin-top: 5px;
+    margin-left: 10px; 
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.botonera input[type="button"], input[type="submit"], input[type="reset"]{
+    opacity: 10;
+    background:#BA3131;/*#A2A2A2*/
+    border:#073100;
+    border-radius: 2px;
+    color:#fff;
+    margin-right: 8px; 
+    /*Efectos de agrandado transform de botom solo funcionan en opera, mozilla, chrome y zafari*/
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    -o-transform: scale(1);
+    -moz-transition: -moz-transform .3s ease-in;
+    -o-transition: -o-transform .3s ease-in;
+    -webkit-transition: -webkit-transform .3s ease-in;
+    -moz-box-shadow: 1px 2px 3px #000000;
+    -webkit-box-shadow: 1px 2px 3px #000000;
+    box-shadow: 1px 2px 3px #000000; 
+}
+
+.botonera input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover{
+    opacity: 10;
+    background:#BA3131;/*#A2A2A2*/
+    border:#861616;
+    color:#fff;
+    border-radius: 2px;
+    -moz-transform: scale(1.15);
+    -webkit-transform: scale(1.15);
+    -o-transform: scale(1.15);
+    -moz-transition: -moz-transform .125s ease-in;
+    -o-transition: -o-transform .125s ease-in;
+    -webkit-transition: -webkit-transform .125s ease-in;
+}
+
+.bg-container{
+    background: rgba(255, 255, 255, 1.00);
+    padding:15px;
+}
+
+
+.lineavertcal{
+    border-right : 1px solid #e5e5e5;
+    padding-right: 150px;
+    padding-left: 80px;
+}
+.fondo_opaco{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index:1001;
+    opacity:.50;
+    -moz-opacity: 0.50;
+    filter: alpha(opacity=50);
+}
+
+.fondo_opaco_msj{
+    /*display: none;*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index:1001;
+    opacity:.50;
+    -moz-opacity: 0.50;
+    filter: alpha(opacity=50);
+}
+
+.ventana_modal_msj {
+    /* display: none;*/
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    width: auto;
+    height: auto;
+    padding: 16px;
+    background: #fff;
+    color: #333;
+    z-index:1002;
+    overflow: auto;
+    border: 5px solid;
+    border-color:gray;
+    border-radius: 10px;
+}
+.ventana_modal{
+    display: none;
+    position: fixed;
+    width:auto;
+    height:auto;
+    top: 30%;
+    padding: 2em 3em;
+    left: 40%;
+    margin-right:0;
+    background: #fff;
+    color: #333;
+    z-index:1002;
+    overflow: auto;
+    border: 2px solid;
+    border-color:#424242;
+    border-radius: 10px;
+}
+.imagen_cerrar_modal {
+    position:relative;
+    top:-29px;
+    left:42px;
+    width:30px;
+    height:30px;
+    border-bottom: 2px solid;
+    border-left:  2px solid;
+    border-color:#424242;
+    border-bottom-left-radius: 10px;
+    
+}
+
+#titulo {
+        color: #FFF;
+	margin-bottom:20px;
+	text-align:center;
+	font-weight: bold; 
+	font-size:24px;
+	font-family: arial;
+	position: relative;
+	top:15px;
+        margin: 0 auto;
+        width: 70%
+}
+
+#sub_titulo {
+	margin-bottom:40px;
+	text-align:center;
+	font-weight: bold; 
+	font-size:18px;
+	font-family: arial;
+	color: #6E6E6E;
+	position: relative;
+	top:20px;
+	left:20px;
+        width: auto;
+        height:auto;
+        float: next;
+}
+
+.divcorners{
+    background: #ededed; 
+    border: #E4E4E4 1px solid; 
+    height: auto;
+    width: auto;
+    padding: 5px;
+    /*para Firefox*/
+    -moz-border-radius: 5px 5px 5px 5px;
+    /*para Safari y Chrome*/
+    -webkit-border-radius: 5px 5px 5px 5px;
+    /* para Opera */
+    border-radius: 5px 5px 5px 5px;
+}
+
+.divoculto{
+    background: #fff; 
+    margin: 0 -8 -3 -8;
+}
+
+.tabla_grid {
+    -moz-box-shadow: 1px 2px 3px #000000;
+    -webkit-box-shadow: 1px 2px 3px #000000;
+    box-shadow: 1px 2px 3px #000000;
+    padding-bottom: 1px;
+    margin-bottom: 5px;
+    width: 100%;
+    /*-webkit-border-radius: 5px 5px;   Safari  
+    -moz-border-radius: 15px 15px;      Firefox */
+}
+
+.tabla_grid th {
+    font-size:14px;
+    padding: 3px 3px 3px 3px;
+    background-color: #BA3131;/*#A2A2A2*/
+    font-size: 13px;
+    font-family: arial;
+    font-weight: bold;
+    color:#FFFFFF;
+    border: 2px dotted #000000;
+    /*-webkit-border-radius: 5px 5px;  /* Safari  
+    -moz-border-radius: 15px 15px;      Firefox */
+}
+.container .footer{
+    clear: both;
+    height: auto;
+}
+.logo{
+     padding-left: 30px;
+     margin-top: -10px;
+}
+.logo_sy{
+     height: 60px; 
+     padding: 3px;
+     float: left;
+}
+.divcenter{
+    margin-left: 20px; 
+    margin-right: 20px; 
+}
+

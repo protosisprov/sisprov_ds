@@ -190,6 +190,20 @@ foreach ($apoderado_list as &$valor) {
                 )
             ));
             ?>
+            <?php
+            $this->widget('booster.widgets.TbButton', array(
+                'context' => 'success',
+                'label' => 'Guardar correcciones del SAREN',
+                'size' => 'large',
+                'id' => 'CancelarForm',
+                'icon' => 'glyphicon glyphicon-ok',
+                'visible' => '($data["estatus_msj"] == "") && DocumentoExistMulti($data["id_unidad_habitacional"]) || ($data["estatus_msj"] == "") && !EstatusDocumentoAprobado($data["id_unidad_habitacional"]) && EstatusDocumentoDevuelto($data["id_unidad_habitacional"]) || ($data["estatus_msj"] == "DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)") && !EstatusDocumentoAprobado($data["id_unidad_habitacional"])&& EstatusDocumentoDevuelto($data["id_unidad_habitacional"])',
+                'htmlOptions' => array(
+                    'onclick' => 'document.location.href ="' . $this->createUrl('documentacion/multifamiliarguardar', array("id" => $_GET['id'])) . '";'
+                )
+            ));
+            ?>
+
         </div>
     <?php } ?>
 

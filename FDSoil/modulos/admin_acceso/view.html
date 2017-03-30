@@ -1,0 +1,201 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <!-- CONTENIDO DEL MODELO  -->
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js"></script>
+        
+        <link media="all" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link media="all" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <body onload="inicio();">
+        <div id="content">
+            <div align="center">   
+                <div class="row" style="width: 80%;">
+                    <div align="left" class="col-md-4">
+                        <div class="logotipo-iniciar-sesion"><img src="../../../helpdesk/img/Iconos-HelpDesk.png"></div>
+                        <div class="lienzo">
+                            <div style="width: 100%; padding-left: 70px; height: 50px; background: url(&quot;../../images/barras/iniciarsesion.png&quot;) no-repeat scroll 0px 0px rgb(60, 70, 86); color: white; font-family: &quot;Helvetica Neue&quot;,Lato,Arial,sans-serif; font-weight: bold; letter-spacing: -1px; font-size: 18px; padding-top: 11px;">Iniciar Sesión</div>
+                            <div id="titulo" style="display:none" ></div>
+                            <div id="access" align="center">
+                                <form name="reg" action="login.php" method="POST">
+                                    <input name="usuario" id="id_usuario" type="hidden" />
+                                    <input name="semaforo" value="{SEMAFORO}" id="semaforo" type="hidden" />
+                                    <table border="0" align="center" width="100%">
+                                        <tr>
+                                            <td>
+                                                <div class=divGroupField id="id_login_type">
+                                                    <div id="id_opcion_tit"><strong>Tipo de Usuario</strong></div>
+                                                    <div>                                
+                                                        <select name="opcion" id="id_opcion" class="input-medium" onchange="loginOptOnOff();">
+                                                            <option value=0 selected>Seleccione...</option>
+                                                            <option value=1>Número de Rif</option>
+                                                            <option value=2>Cédula/Pasaporte</option>
+                                                            <option value=3>Correo Institucional</option>
+                                                            <option value=4>Nombre de Usuario</option>
+                                                        </select>                                        
+                                                    </div>
+                                                </div>
+                                                <div class="alert-danger" id='id_msj_error'>{MENSAJE}</div>
+                                                <div style="clear: left;"></div>
+                                                <div id="div_login" style="display:none;"></div>
+                                                <div class="divGroupField" id="div_rif">
+                                                    <!--<div><strong>RIf</strong></div>-->
+                                                    <div>                                
+                                                        <select name="rif1" id="id_rif1" class="input-mini">
+                                                            <option value="J">J</option>
+                                                            <option value="G">G</option>
+                                                            <option value="V">V</option>
+                                                        </select>
+                                                        <input type="text"  size="9" maxlength="8" name="rif2" id="id_rif2" autocomplete="off" placeholder="########" onKeyUp="javascript:this.value = this.value.toUpperCase();" class="input-medium">
+                                                        <input type="text"  size="2"  maxlength="1" name="rif3" id="id_rif3" autocomplete="off"  onKeyUp="javascript:this.value = this.value.toUpperCase();" placeholder='#' class="input-mini"/>                        
+                                                    </div>
+                                                </div>
+                                                <div style="clear: left;"></div>
+                                                <div class=divGroupField id="div_ced">
+                                                    <!--<div><strong>*C&eacute;dula/Pasaporte:</strong></div>-->
+                                                    <div>                                
+                                                        <select name="nacionalidad" id="id_nacionalidad" class="input-mini">
+                                                            <option value="V">V</option>
+                                                            <option value="P">P</option>
+                                                        </select>
+                                                        <input type="text" maxlength="8" name="cedula" id="id_cedula" autocomplete="off"
+                                                        placeholder='########' class="input-medium"/>                        
+                                                    </div>
+                                                </div>
+                                                <div style="clear: left;"></div>
+                                                <div class=divGroupField id="div_mail">
+                                                    <!--<div><strong>Correo Institucional</strong></div>-->
+                                                    <div>
+                                                        <div class="input-prepend">
+                                                            <span class="add-on"><i class="icon-envelope"></i></span>
+                                                            <input type="text" class="input-xlarge form-control" maxlength="8" name="correo" id="id_correo" autocomplete="off" placeholder='Correo Electrónico'/>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div style="clear: left;"></div>
+                                                <div class=divGroupField id="div_login" >
+                                                    <!--<div>*<strong>Nombre de Usuario</strong></div>-->
+                                                    <div id="div_user_name">
+                                                        *
+                                                        <div class="input-prepend">
+                                                            <span class="add-on"><i class="icon-user"></i></span>
+                                                            <input type="text" maxlength="20" class="input-xlarge form-control" name="user" id="id_user" autocomplete="off" placeholder='Usuario'/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class=divGroupField>
+                                                    <!--<div>*<strong>Contraseña:</strong></div>-->
+                                                    *
+                                                    <div class="input-prepend">
+                                                        <span class="add-on"><i class="icon-lock"></i></span>
+                                                        <input type="password" size="26" maxlength="50" class="input-xlarge form-control" name="clave" id="id_clave" autocomplete="off" placeholder='Contraseña' onkeypress="accesoEnter(this.value, event);"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="divGroupField" id="div_captcha">
+                                                    <div>
+                                                        <img style="margin-left: 10px; width: 300px; height: 40px;"  src="{CAP}" />
+                                                    </div><br>
+                                                    *
+                                                    <div class="input-prepend">
+                                                        <br>
+                                                        <span class="add-on"><i class="icon-refresh"></i></span>
+                                                        <input type="text" size="26" maxlength="50" class="input-xlarge form-control" name="captcha" id="id_captcha" autocomplete="off" placeholder='Ingresar el texto mostrado en la imagen' onkeypress="accesoEnter(this.value, event);"/>
+
+                                                    </div>
+                                                </div>
+                                                <div class="input-prepend"> 
+
+                                                </div>
+
+                                                <!-- END CAMPO DE CAPTCHA EN EL SISTEMA -->
+                                                <br>
+                                                <div class="alert alert-info">
+                                                    (*) Campos obligatorios.
+                                                </div>
+                                                <div id="div_webUserRow">
+                                                    <button type="button" onClick="validarForm();" class="btn btn-success btn-small">Iniciar Sesión</button>
+                                                    <a href='../admin_recover_password'><button type="button" class="btn btn-danger btn-small">Olvide la Contraseña</button></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="id_contact">
+                                                    <table align="center" >
+                                                        <tr style="display: none">
+                                                            <td class='titulo_contacto' align='center'>
+                                                                <span style="font-weight:bold;">En caso de cualquier duda puede escribirnos a </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="display: none">
+                                                            <td align="center" >
+                                                                <table id="id_contact_table">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <img src="../../images/mail.png" width="35" height="35" vspace="5">
+                                                                        </td>
+                                                                        <td id='id_email' class='titulo_contacto'></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <img src="../../images/telefono.png" width='30' height='30' vspace="5" hspace="2">
+                                                                        </td>
+                                                                        <td id='id_telefon' class='titulo_contacto'></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <footer class="bg-footer" style="display: none">
+                                        <div id="id_firma" ></div>
+                                    </footer>
+                                </form>
+                            </div>
+                            
+                        </div>                        
+                    </div>
+                    <div align="left" class="col-md-8">
+                        <input name="app_w" id="app_w" value="{APP}" type="hidden">
+                        <div class="content">
+                            <br>
+                            <div id="defecto" style="display: block">
+                                <h2 class="rtecenter" align="center">Bienvenidos y bienvenidas al<br>
+                                    Sistema de Ayuda de la <br> Gerencia de Tecnología de la Información.</h2>
+                                </div>
+                            </div>
+                            <!--<p class="rtejustify">La Intranet está dirigida a los trabajadores y trabajadoras del MPPTAA cuyo proposito es el de compartir información interna relacionada al ministerio y a las personas que de alguna forma u otra participan directa&nbsp;o indirectamente.</p>-->
+                            
+                            <div class="row">
+                            <div class="col-md-12">
+                            <p align="center"><img style="height:92px; width:187px" src="../../images/logo banavih.png" alt=""></p>
+                            </div>
+                            </div>
+                            <p align="center">RIF G-G20000085-6 | <a href="http://www.banavih.gob.ve/" rel="nofollow" target="_blank">www.banavih.gob.ve</a><br>
+                            Para hacer uso de la Intranet se recomienda utilizar el navegador web &nbsp;<a href="https://www.mozilla.org/es-ES/firefox/new/" rel="nofollow" target="_blank"><img style="height:50px; width:133px" src="../../images/firefox.png" alt="Descargue Firefox"></a></p>
+<!--                            <p align="center">Optimizado para todas las resoluciones de pantalla y dispositivos móviles.</p>-->
+                            
+                            <p align="center">
+                                En caso de cualquier duda puede escribirnos a la siguente dirección de correo<br>
+                                <img src="../../images/Icono extras/arrobaa.png" width="25" ><a href="">msuarez@banavih.gob.ve</a><br>
+                                <img src="../../images/Icono extras/telefono.png" width="25" ><a>0212.957.16.44 - Ext 1644</a>
+                            </p>
+                        </div>                 
+                       
+                    </div>
+                </div>            
+            </div>
+            
+        </div>
+        
+    </body>
+
+</html>
+<!-- END: main -->

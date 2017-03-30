@@ -20,7 +20,6 @@ Yii::app()->clientScript->registerScript('desarollo', "
     });  
 ");
 
-
 ?>
 
 
@@ -160,7 +159,8 @@ Yii::app()->clientScript->registerScript('desarollo', "
     <div class="col-md-3">
         <?php
         echo $form->textFieldGroup($model, 'nro_vivienda', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 limpiar', 'maxlength' => 8,
-                    'onblur' => "Viviendas($('#Vivienda_unidad_habitacional_id').val(),$('#Vivienda_nro_piso').val(),$(this).val())"))));
+                    'onblur' => "Viviendas($('#Vivienda_unidad_habitacional_id').val(),$('#Vivienda_tipo_vivienda_id').val() ,$('#Vivienda_nro_piso').val(),$(this).val())"))));
+                    //'onblur' => "Viviendas($('#Vivienda_unidad_habitacional_id').val(),$('#Vivienda_nro_piso').val(),$(this).val())"))));
         ?>
         <?php echo $form->error($model, 'nro_vivienda'); ?>
     </div>

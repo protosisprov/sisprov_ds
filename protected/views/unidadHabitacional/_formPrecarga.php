@@ -180,7 +180,6 @@ $Validacion = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/
         ?>
     </div>
 
-
 </div>
 <div class="row">
     <div class="col-md-6">

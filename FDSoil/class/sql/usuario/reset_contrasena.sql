@@ -1,0 +1,1 @@
+SELECT seguridad.reset_clave('{fld:id_user}', '{fld:clave}', '{fld:correo}', '{fld:pregunta}', '{fld:respuesta}');

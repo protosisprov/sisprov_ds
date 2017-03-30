@@ -1,0 +1,1 @@
+SELECT u.id_rol AS rol,u.id_usuario,u.usuario,u.clave,u.nombre,u.apellido,u.status,e.rif,e.razon_social AS raz_soc,e.email_emp AS correo  FROM sistema.usuario u, empresa.empresa e WHERE e.id_empresa= u.id_empresa

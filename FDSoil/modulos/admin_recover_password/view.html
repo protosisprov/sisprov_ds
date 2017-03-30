@@ -1,0 +1,146 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <!-- CONTENIDO DEL MODELO  -->
+        <script src="../../../{APP}/config/app.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js"></script>
+        <script src="js/reqs.js"></script>
+    </head>
+    <body onload="inicio();">
+        <div id="content">
+            <div id="titulo" style="display:none" ></div>
+            <div id="access" align="center">
+                <form name="reg" id="id_reg" action="recover.php" method="POST">
+                    <input name="usuario" id="id_usuario" type="hidden" />
+                    <table border="0" width="90%" align="center">
+                        <tr>
+                            <td class="lineavertcal" width="60%">
+                                <fieldset>
+                                    <img src="../../../{APP}/img/principal/logo.png" alt="">
+                                </fieldset>
+                                <br>
+                                <fieldset>
+                                    <legend>Recuperar Contraseña</legend>
+                                </fieldset>
+                                <div class=divGroupField id="div_login" >
+                                    <div id="div_user_name">
+                                        *
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-user"></i></span>
+                                            <input type="text" maxlength="20" class="input-xlarge form-control" name="user" id="id_user" autocomplete="off" placeholder='Usuario...' />
+                                        </div>
+                                        <br />
+                                        *
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-envelope"></i></span>
+                                            <input type="text" maxlength="40" class="input-xlarge form-control" name="correo" id="correo" autocomplete="off" placeholder='Correo...' />
+                                        </div>
+                                    </div>
+                                    *
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-lock"></i></span>
+                                        <input type="password" size="26" maxlength="50" class="input-xlarge form-control" name="clave" id="id_clave" autocomplete="off" placeholder='Nueva Contraseña...' />
+                                    </div>
+                                    <br />
+                                    *
+                                    <div class="input-prepend">
+                                        <span class="add-on"><i class="icon-lock"></i></span>
+                                        <input type="password" size="26" maxlength="50" class="input-xlarge form-control" name="clave2" id="id_clave2" autocomplete="off" placeholder='Confirmar Contraseña...' />
+                                    </div>
+                                    <br />
+                                    <div>
+                                        *
+                                        <b style="color:#9B5150;">Pregunta de Seguridad</b><br />
+                                        <select id="pregunta" name="pregunta" style="margin-left: 10px; width: 295px">
+                                            <option value="">Seleccione...</option>
+                                            <!-- BEGIN: pregunta -->
+                                                <option value="{descripcion}">{descripcion}</option>
+                                            <!-- END: pregunta -->
+                                        </select>
+                                    </div>
+                                    <div>
+                                        *
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-tag"></i></span>
+                                            <input type="text" maxlength="20" class="input-xlarge form-control" name="respuesta" id="id_respuesta" autocomplete="off" placeholder='Respuesta...' />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="alert alert-info">
+                                    (*) Campos obligatorios.
+                                </div>
+                                <p id="div_webUserRow">
+                                    <button type="button" onClick="validar_formulario();" class="btn btn-success btn-small" style="margin-top: 20px;">Resetear Contraseña</button>
+                                    <a href='../admin_acceso'><button type="button" class="btn btn-danger btn-small" style="margin-top: 20px;">Volver al Login</button></a>
+                                </p>
+                            </td>
+                            <td>
+                                <div id="id_contact">
+                                    <table width="90%" align="center" >
+                                        <tr style="display: none">
+                                            <td class='titulo_contacto' align='center'>
+                                                <div id="id_register">
+                                                    <div>
+                                                        <h5>¿A&uacute;n no est&aacute; registrado?</h5>
+                                                        <a href='../admin_usuario_row_web/index.php'><button type="button" class="btn btn-danger btn-small">Registrarse</button></a>
+                                                    </div>
+                                                </div>
+                                                <span style="font-weight:bold;">En caso de cualquier duda puede escribirnos a </span>
+                                            </td>
+                                        </tr>
+                                        <tr style="display: none">
+                                            <td align="center" >
+                                                <table id="id_contact_table">
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../../images/mail.png" width="35" height="35" vspace="5">
+                                                        </td>
+                                                        <td id='id_email' class='titulo_contacto'></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../../images/telefono.png" width='30' height='30' vspace="5" hspace="2">
+                                                        </td>
+                                                        <td id='id_telefon' class='titulo_contacto'></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" colspan="2" >
+                                                <div class="panel panel-default">
+                                                    <div class="panel-body">
+                                                        <B>Para hacer uso del sistema se recomienda utilizar el navegador Web</b>
+                                                    </div>
+                                                    <div id="id_register">
+                                                        <div>
+                                                            <a href="http://www.mozilla.com/firefox" target="_blank" title='Firefox-Moxila'><img id="id_firefox" src="../../images/firefox.png" width='60' height='60' vspace="5"></a>
+<!--                                                            <h5>¿A&uacute;n no est&aacute; registrado?</h5>
+                                                            <a href='../admin_usuario_row_web/index.php'><button type="button" class="btn btn-success btn-small">Registrarse</button></a>-->
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="panel-footer">
+                                                        
+                                                        En caso de cualquier duda puede escribirnos a la siguente dirección de correo<br>
+                                                        <img src="../../images/Icono extras/arrobaa.png" width="25" ><a href="mailto:mpptaasistemas@mpptaa.gob.ve">mpptaasistema@mpptaa.gob.ve</a><br>
+                                                        <img src="../../images/Icono extras/telefono.png" width="25" ><a>0212 - 274.55.53 - Ext 3553</a>
+                                                    </div>
+                                                </div>
+                                            </td> 
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div></div>
+                    <footer class="bg-footer" style="display: none">
+                        <div id="id_firma" ></div>
+                    </footer>
+                </form>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

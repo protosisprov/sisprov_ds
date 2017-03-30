@@ -185,12 +185,29 @@ class ViviendaController extends Controller {
                 $model->fecha_creacion = 'now';
                 $model->fecha_actualizacion = 'now';
                 $model->usuario_id_creacion = Yii::app()->user->id;
-
+//die(var_dump($_POST));
                     if ($model->save()){  
 
                         if (isset($_POST['cargar_inmueble'])) {
 
-                            $this->redirect(array('vivienda/precarga/'.$model->id_vivienda));
+                            //$this->redirect(array('vivienda/precarga/'.$unidad));
+//                            $this->redirect(array('vivienda/precarga/'.$unidad, 'sms'=>2));
+                            $model = new Vivienda;
+                            $unidad_habitacional = UnidadHabitacional::model()->findByAttributes(array('id_unidad_habitacional'=> $id));        
+                            $estado = new Tblestado;
+                            $municipio = new Tblmunicipio;
+                            $parroquia = new Tblparroquia;
+                            $desarrollo = new Desarrollo;
+                            
+                            $this->render('precarga', array(
+                                'model' => $model, 
+                                'estado' => $estado,
+                                'municipio' => $municipio, 
+                                'parroquia' => $parroquia,
+                                'desarrollo' => $desarrollo,
+                                'unidad_habitacional' => $unidad_habitacional,
+                                'sms' => 2
+                            ));
                             Yii::app()->end();
 
                         }else{
@@ -201,10 +218,12 @@ class ViviendaController extends Controller {
 
                     } 
             } else {
-                $this->render('create', array(
+                $this->render('precarga', array(
                     'model' => $model, 'estado' => $estado,
-                    'municipio' => $municipio, 'parroquia' => $parroquia,
+                    'municipio' => $municipio, 
+                    'parroquia' => $parroquia,
                     'desarrollo' => $desarrollo,
+                    'unidad_habitacional' => $unidad_habitacional,
                     'sms' => 1
                 ));
                 Yii::app()->end();

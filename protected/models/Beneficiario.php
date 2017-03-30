@@ -36,6 +36,12 @@
  * @property integer $beneficiario_temporal_id
  * @property string $observacion
  * @property integer $documento_beneficiario
+ * 
+ * 
+ * @property integer $cedula_rel
+ * @property integer $estado_rel
+ * @property integer $unidad_multifamiliar_rel
+ * @property integer $n_vivienda_piso_rel
  *
  * The followings are the available model relations:
  * @property BeneficiarioTemporal $beneficiarioTemporal
@@ -78,6 +84,12 @@ class Beneficiario extends CActiveRecord {
     public $parroquia;
     public $nombre_desarrollo;
     public $estatus; // ESTE CAMPO SE CREA PARA IDENTIFICAR EL ESTATUS PARA EL PROCESO DE ASIGNACION
+    
+    public $cedula_rel; //PARA HACER EL COMPARE EN CUANDO VENGA DEL GRIDVIEW
+    public $estado_rel; //PARA HACER EL COMPARE EN CUANDO VENGA DEL GRIDVIEW
+    public $desarrollo_rel; //PARA HACER EL COMPARE EN CUANDO VENGA DEL GRIDVIEW
+    public $unidad_multifamiliar_rel; //PARA HACER EL COMPARE EN CUANDO VENGA DEL GRIDVIEW
+    public $n_vivienda_piso_rel;
 
     /*   ---------------------------------------------------------------- */
 
@@ -108,6 +120,7 @@ class Beneficiario extends CActiveRecord {
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id_beneficiario,estatus, persona_id, rif, condicion_trabajo_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, nombre_empresa, direccion_empresa, telefono_trabajo, gen_cargo_id, ingreso_mensual, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, direccion_anterior, parroquia_id, urban_barrio, av_call_esq_carr, zona, fecha_ultimo_censo, protocolizado, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus_beneficiario_id, codigo_trab, condicion_laboral, beneficiario_temporal_id, observacion, ingreso_mensual_nuevo, documento_beneficiario', 'safe', 'on' => 'search'),
+            array('id_beneficiario,estatus, persona_id, rif, condicion_trabajo_id, fuente_ingreso_id, relacion_trabajo_id, sector_trabajo_id, nombre_empresa, direccion_empresa, telefono_trabajo, gen_cargo_id, ingreso_mensual, ingreso_declarado, ingreso_promedio_faov, cotiza_faov, direccion_anterior, parroquia_id, urban_barrio, av_call_esq_carr, zona, fecha_ultimo_censo, protocolizado, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, estatus_beneficiario_id, codigo_trab, condicion_laboral, beneficiario_temporal_id, observacion, ingreso_mensual_nuevo, documento_beneficiario, cedula_rel, estado_rel, desarrollo_rel, unidad_multifamiliar_rel, n_vivienda_piso_rel, estatus_msj', 'safe', 'on' => 'searchBeneficiariosDocumentacion'),
         );
     }
 
@@ -133,6 +146,7 @@ class Beneficiario extends CActiveRecord {
             'reasignacionViviendas' => array(self::HAS_MANY, 'ReasignacionVivienda', 'beneficiario_id_anterior'),
             'reasignacionViviendas1' => array(self::HAS_MANY, 'ReasignacionVivienda', 'beneficiario_id_actual'),
             'fkParroquia' => array(self::BELONGS_TO, 'Tblparroquia', 'parroquia_id'),
+            'vsw_sector' => array(self::BELONGS_TO, 'VswSector', '','on'=>'t.parroquia_id=vsw_sector.cod_parroquia'),
         );
     }
 
@@ -254,9 +268,9 @@ class Beneficiario extends CActiveRecord {
 //        return new CActiveDataProvider($this, array(
 //            'criteria' => $criteria,
 //        ));
-        
+
         $criteria = new CDbCriteria;
-//        $criteria->order = 'id_beneficiario DESC';
+        //$criteria->order = 'id_beneficiario DESC';        
         $criteria->compare('id_beneficiario', $this->id_beneficiario);
         $criteria->compare('persona_id', $this->persona_id);
         $criteria->compare('rif', $this->rif, true);
@@ -276,7 +290,7 @@ class Beneficiario extends CActiveRecord {
         $criteria->compare('parroquia_id', $this->parroquia_id);
         $criteria->compare('urban_barrio', $this->urban_barrio, true);
         $criteria->compare('av_call_esq_carr', $this->av_call_esq_carr, true);
-        $criteria->compare('zona', $this->zona, true);
+//        $criteria->compare('zona', $this->zona, true);
         $criteria->compare('fecha_ultimo_censo', $this->fecha_ultimo_censo, true);
         $criteria->compare('protocolizado', $this->protocolizado);
         $criteria->compare('fecha_creacion', $this->fecha_creacion, true);
@@ -289,7 +303,47 @@ class Beneficiario extends CActiveRecord {
         $criteria->compare('beneficiario_temporal_id', $this->beneficiario_temporal_id);
         $criteria->compare('observacion', $this->observacion, true);
         $criteria->compare('estatus', $this->estatus, true);
+        $criteria->compare('t.estatus_msj', $this->estatus_msj, true);
         $criteria->compare('documento_beneficiario',$this->documento_beneficiario);
+        
+//        if(!empty($this->cedula_rel))
+//        {
+//            $criteria->with = array('beneficiarioTemporal');
+//            $criteria->compare('cedula',$this->cedula_rel);
+//        }
+//        
+//        if(!empty($this->estado_rel))
+//        {
+//            $criteria->with = array('vsw_sector'=>array('select'=>''));
+//            $criteria->compare('cod_estado',$this->estado_rel);
+//        }
+//        
+//        if(!empty($this->desarrollo_rel))
+//        {
+//            $criteria->with = array('beneficiarioTemporal.desarrollo');
+//            $criteria->compare('id_desarrollo', $this->desarrollo_rel);
+//        }
+//            
+//        if(!empty($this->unidad_multifamiliar_rel))
+//        {
+//            $criteria->with = array('beneficiarioTemporal.unidadHabitacional');
+//            $criteria->compare('id_unidad_habitacional', $this->unidad_multifamiliar_rel);
+//        }
+        
+        $criteria->with = array('beneficiarioTemporal','vsw_sector'=>array('select'=>''),'beneficiarioTemporal.desarrollo','beneficiarioTemporal.unidadHabitacional');
+        $criteria->compare('cedula',$this->cedula_rel);
+        $criteria->compare('cod_estado',$this->estado_rel);
+        $criteria->compare('id_desarrollo', $this->desarrollo_rel);
+        $criteria->compare('id_unidad_habitacional', $this->unidad_multifamiliar_rel);
+        
+//        if(!empty($this->n_vivienda_piso_rel))
+//        {
+//            
+//        }
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
     }
 
     /**

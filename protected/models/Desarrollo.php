@@ -45,6 +45,8 @@
  * @property integer $folio_real
  * @property string $num_matricula
  * @property integer $num_protocolo
+ 
+ * * @property integer $estado_rel
  *
  * The followings are the available model relations:
  * @property EnteEjecutor $enteEjecutor
@@ -67,6 +69,7 @@
  */
 class Desarrollo extends CActiveRecord {
 
+    public $estado_rel;
     /**
      * @return string the associated database table name
      */
@@ -96,7 +99,7 @@ class Desarrollo extends CActiveRecord {
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id_desarrollo, nombre, parroquia_id, descripcion, urban_barrio, av_call_esq_carr, zona, lindero_norte, lindero_sur, lindero_este, lindero_oeste, coordenadas, lote_terreno_mt2, fuente_financiamiento_id, id_fuente_financiamiento_obra, ente_ejecutor_id, titularidad_del_terreno, matricula, total_viviendas, total_viviendas_protocolizadas, fecha_transferencia, fuente_datos_entrada_id, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, programa_id, total_unidades, estatus, modalidad_documento_id, propiedad_terreno_id, ente_titular_terreno_id, 
-                 registro_publico_id, tipo_documento_id, fecha_registro, tomo, ano, nro_documento, asiento_registral,folio_real, num_matricula, num_protocolo ', 'safe', 'on' => 'search'),
+                 registro_publico_id, tipo_documento_id, fecha_registro, tomo, ano, nro_documento, asiento_registral,folio_real, num_matricula, num_protocolo, estado_rel', 'safe', 'on' => 'search'),
         );
     }
 
@@ -124,6 +127,7 @@ class Desarrollo extends CActiveRecord {
             'fknumProtocolo' => array(self::BELONGS_TO, 'Maestro', 'num_protocolo'),
             'fktipoDocumentoId' => array(self::BELONGS_TO, 'Maestro', 'tipo_documento_id'),
             'fkregistroPublico' => array(self::BELONGS_TO, 'RegistroPublico', 'registro_publico_id'),
+            'vsw_sector' => array(self::BELONGS_TO, 'VswSector', '','on'=>'t.parroquia_id=vsw_sector.cod_parroquia'),
         );
     }
 
@@ -239,6 +243,9 @@ class Desarrollo extends CActiveRecord {
         $criteria->compare('folio_real', $this->folio_real);
         $criteria->compare('num_matricula', $this->num_matricula);
         $criteria->compare('num_protocolo', $this->num_protocolo);
+        
+        $criteria->with = array('vsw_sector'=>array('select'=>''));
+        $criteria->compare('cod_estado', $this->estado_rel);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

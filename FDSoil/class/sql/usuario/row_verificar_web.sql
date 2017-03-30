@@ -1,0 +1,1 @@
+select seguridad.validar_usaurio('{fld:usuario}');

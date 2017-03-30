@@ -1,0 +1,19 @@
+.img_show {
+    background-image:url("../../../../appOrg/images/write.png");
+    cursor:pointer;
+    height:70px;
+    width:70px;
+    background-size:100%;
+    border:none;
+}
+
+.img_hide {
+    background-image:url("../../../../appOrg/images/denied.png");
+    cursor:pointer;
+    height:70px;
+    width:70px;
+    background-size:100%;
+    border:none;
+}
+                                 
+                                 

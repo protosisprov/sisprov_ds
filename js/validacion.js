@@ -25,6 +25,9 @@ function Terreno() {
     } else {
         $('#Desarrollo_fecha_transferencia').val('');
         $('#Desarrollo_ente_titular_terreno_id').val('');
+        $('#Desarrollo_registro_publico_id').val('');
+        $('#Desarrollo_fecha_registro').val('');
+        $('#Desarrollo_nro_documento').val('');
 //        $('#matricula').bootstrapSwitch('state', true);
         $('.fecha').hide('fade');
         $('.col1').hide('fade');
@@ -61,10 +64,15 @@ function Matricula() {
     if ($('.matri').is(":checked")) {
         $('.col1').show('fade');
         $('.col2').hide('fade');
+        $('#Desarrollo_tomo').val('');
+        $('#Desarrollo_ano').val('');
+        $('#Desarrollo_num_protocolo').val('');
     } else {
-        
         $('.col1').hide('fade');
         $('.col2').show('fade');
+        $('#Desarrollo_asiento_registral').val('');
+        $('#Desarrollo_folio_real').val('');
+        $('#Desarrollo_num_matricula').val('');
         
     }
 }  

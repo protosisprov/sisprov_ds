@@ -86,7 +86,6 @@ Yii::app()->clientScript->registerScript('unidadHabitacional', "
         });
 
 
-
         ");
 
 $form = $this->beginWidget('booster.widgets.TbActiveForm', array(

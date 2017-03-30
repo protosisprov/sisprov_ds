@@ -1,0 +1,1 @@
+SELECT COUNT(id) FROM seguridad.usuario WHERE id={fld:usuario} AND clave='{fld:clave}';

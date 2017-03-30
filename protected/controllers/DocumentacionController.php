@@ -107,13 +107,16 @@ class DocumentacionController extends Controller {
 //                    where doc.fk_usuario_asignado = 3';
 //          $result = Yii::app()->db->createCommand($SLQ)->queryAll();
         //    var_dump($result);Die;
-        $model = new Beneficiario('search');
+        $model = new VswDocumentacionBeneficiario('search');
+        
         $model->unsetAttributes();  // clear any default values
 // $llaves = implode('["id_beneficiario"]=>', $ids);
 //    var_dump($ids);
 //die;
-        if (isset($_GET['Beneficiario']))
-            $model->attributes = $_GET['Beneficiario'];
+        if (isset($_GET['VswDocumentacionBeneficiario'])){
+            $model->attributes = $_GET['VswDocumentacionBeneficiario'];
+            
+        }
         $this->render('adminbeneficiario', array(
             'model' => $model, 'asignaciones' => $asignaciones,
         ));
@@ -121,7 +124,7 @@ class DocumentacionController extends Controller {
     
     public function actionAdminbeneficiarioFiltro() {
         $asignaciones = new Asignaciones;
-        $model = new Beneficiario('search');
+        $model = new Beneficiario('searchBeneficiariosDocumentacion');
         $model->unsetAttributes();  // clear any default values
 
         if (isset($_GET['Beneficiario']))
@@ -1465,4 +1468,40 @@ class DocumentacionController extends Controller {
             }
         }
     }
+
+    public function actionMultifamiliarGuardar($id) {
+        if (isset($id)) {
+            $buscarDocumentoDevuelto = Documentacion::model()->findByAttributes(array('fk_beneficiario' => $id, 'es_activo' => 1, 'estatus' => 295, 'es_multi' => 1, 'ente_documento' => 311));
+            if (!empty($buscarDocumentoDevuelto)) {
+                Documentacion::model()->updateByPk($buscarDocumentoDevuelto->id_documentacion, array(
+                    'estatus' => 54, //ESTATUS INACTIVO
+                    'fecha_actualizacion' => 'now()',
+                    'usuario_id_actualizacion' => Yii::app()->user->id,
+                    'es_activo' => false,
+                    'doc_primera_vez' => false,
+                        )
+                );
+            }
+            $documento = new Documentacion;
+            $documento->tipo_documento_id = $buscarDocumentoDevuelto['tipo_documento_id'];
+            $documento->documento = $buscarDocumentoDevuelto['documento'];
+            $documento->estatus = 295; //ESTATUS ACTIVO
+            $documento->fecha_creacion = 'now()';
+            $documento->fecha_actualizacion = 'now()';
+            $documento->usuario_id_creacion = Yii::app()->user->id;
+            $documento->fk_beneficiario = $id;
+            $documento->es_multi = true;
+            $documento->ente_documento = 311;
+            if ($documento->save()) {
+                $desarrollo = UnidadHabitacional::model()->findByPk($id);
+                $desarrollo->estatus_msj = 'DEVUELTO POR SAREN (EN ESPERA DE BANAVIH)';
+                $desarrollo->fecha_actualizacion = 'now()';
+                $desarrollo->usuario_id_actualizacion = Yii::app()->user->id;
+                $desarrollo->update();
+            }
+        }
+        $this->redirect(array('/documentacion/adminmultifamiliar'));
+        $this->render('multifamiliar', array('model' => $model, 'modell' => $modell));
+    }
+
 }

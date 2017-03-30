@@ -1,0 +1,61 @@
+<!-- BEGIN: main -->
+<html>
+    <head>
+        {HEAD}
+        <!--Archivo JS-->
+        <script src="../../js/app.js" type="text/javascript" language="javascript"></script> 
+        <script src="../../js/relocate.js" type="text/javascript" language="javascript"></script>
+        <script src="../../js/numero.js" type="text/javascript" language="javascript"></script>
+        <script src="js/validar.js" type="text/javascript" language="javascript"></script>
+    </head>  
+    <body onload="firma();">
+        <div id="content">
+            <!-- ENCABEZADO DE LA PAGINA-->
+            <header class="header white-bg">
+                <div id="titulo" style="display: none"></div>
+		<img src="../../../{APP}/img/logo_sy.png" class="logo">                
+<
+                <div id="encabezadoMenu">
+                    Usuario:<b>{NOMBRE_APELLIDO}</b>&nbsp;
+                    <br>
+                    Último acceso:<b>{ULT}</b>
+                    <a onclick="exit('logout.php')" style="color: #fff">Salir</a>
+                </div>
+            </header>
+            <!-- MENU DE LA PAGINA-->
+            <div id="left" class="nav-collapse" tabindex="5000">
+                <div id="menu"></div>
+            </div>
+            <!-- INFORMACION DE LA PAGINA-->
+            <div id="center">
+                <div id="wrapper-center">
+                    <fieldset>
+                        <legend >
+                            <img src="../../images/principal/actualizar.png">
+                            <b>Mensaje del Sistema</b>
+                        </legend>
+                    </fieldset>
+                    <div class='ventana_modal_msj'>
+                        <table class="table table-bordered" style="width: 100%; " >
+                            <th>{TITLE}</th>
+                            <!-- BEGIN: row -->
+                            <tr class={CLASS_TR}>
+                                <td style="font-size: 15px; " align='center'>{MSG}</td>
+                            </tr>
+                            <!-- END: row -->
+                        </table>
+                        <div class='botonera'>
+                            <button class="btn btn-danger btn-medium" id=id_continuar type=button value='Continuar' onClick="goToPag('{NUM_PAG}');">Continuar</button>
+                        </div>
+                    </div>
+                    <div class='fondo_opaco_msj'></div>
+                </div>
+            </div>
+            <!-- PIE DE LA PAGINA-->
+            <div id="footer">
+                <div id="id_firma" class="bg-footer"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- END: main -->

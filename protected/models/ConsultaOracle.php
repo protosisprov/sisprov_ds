@@ -327,7 +327,46 @@ class ConsultaOracle extends CActiveRecord {
         }
     }
 
-    /*  =========================================== */
+    /* Buscar a las personas en Oracle para que no inserte solo consulta===== */
+    
+     public function BuscarPersona($array) {
+//         echo '888';die;
+        if (empty($array)) {
+            return false;
+        } else {
+            $select = array();
+            $valor = array();
+            foreach ($array as $key => $value) {
+                if ($key == 'FECHA_NACIMIENTO') {
+                    array_push($select, $key);
+                    array_push($valor, "to_date('" . $value . "','DD/MM/RR')");
+                } else {
+                    array_push($select, $key);
+                    if (is_numeric($value)) {
+                        array_push($valor, $value);
+                    } else {
+                        array_push($valor, "'" . $value . "'");
+                    }
+                }
+            }
+            $select = implode(',', $select);
+            $valor = implode(',', $valor);
+            
+            
+            $SQL1 = "SELECT ID FROM TABLAS_COMUNES.PERSONA WHERE NACIONALIDAD = " . (int) $array['NACIONALIDAD'] . " AND CEDULA = " . (int) $array['CEDULA'];
+            $ExistePersona = Yii::app()->dbOarcle->createCommand($SQL1)->queryRow();
+
+                if (empty($ExistePersona)) {
+                    return false;
+                } else {
+                    return $ExistePersona['ID'];
+                }
+
+        }
+    }  
+    
+    /*  =========================================== */    
+    
 
     public function updatePersona($array, $id_persona) {
 

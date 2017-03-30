@@ -1,0 +1,212 @@
+#divMenu{ 
+    margin-top: 15px;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    margin-left: -65px;
+    margin-top: -1.5%;
+    position: relative;
+    top:20px;
+    left:65px;
+}
+
+#pcm{display:none;}
+ul.pureCssMenu ul{display:none;}
+ul.pureCssMenu li:hover>ul{display:block}
+ul.pureCssMenu ul{position: absolute;left:-1px;top:98%;z-index:1;}
+ul.pureCssMenu ul ul{position: absolute;left:98%;top:-2px;z-index:1;}
+ul.pureCssMenu,ul.pureCssMenu ul {
+    margin:0px;
+    /*margin-top: -3%;*/
+    list-style:none;
+    padding:0px 193px 2px 0px;
+    /*background-color:#FFFAFA;*/
+    background-color:#1B5A90 ;/* #BA3131 #B10408, #BA3131;*/
+    background-repeat:repeat;
+    border-color:#AAAAAA;
+    border-width:1px;
+    border-style:none;
+    -webkit-border-radius: 5px 5px;  /* Safari  */
+    -moz-border-radius: 5px 5px;     /* Firefox */
+    /*-moz-box-shadow: 1px 2px 3px #000000;*/
+    /*-webkit-box-shadow: 1px 2px 3px #000000;*/
+    /*box-shadow: 1px 2px 3px #000000;*/ 
+    width: 98.5%;
+}
+ul.pureCssMenu table {border-collapse:collapse}
+ul.pureCssMenu {
+    display:block;
+    zoom:1;
+    float: left;
+}
+ul.pureCssMenu ul{
+    width:auto;
+}
+ul.pureCssMenu li{
+    display:block;
+    margin:0px 6px 0px 6px;
+    font-size:0px;
+}
+ul.pureCssMenu a:active, ul.pureCssMenu a:focus {
+    outline-style:none;
+}
+ul.pureCssMenu a, ul.pureCssMenu li.dis a:hover, ul.pureCssMenu li.sep a:hover {
+    display:block;
+    vertical-align:middle;
+    /*background-color:#FFFAFA;*/
+    border-width:0px;
+    border-color:#222931;/*#DC5764;*/
+    border-style:solid;
+    text-align:left;
+    text-decoration:none;
+    padding:4px;
+    _padding-left:0;
+    font: bold 14px arial;/*15px*/
+    color: #FFFFFF;
+    /*color: #444444;*/
+    text-decoration:none;
+    cursor:default;
+    /*-webkit-border-radius: 5px 5px;   Safari  */
+    /*-moz-border-radius: 5px 5px;      Firefox */
+    /* Efecto forma */ 
+    /*-webkit-transform: translate(2px,0);
+    -moz-transform: translate(2px,0);
+    -o-transform: translate(2px, 0);
+            
+    -moz-transition: -moz-transform .2s ease-in;
+    -o-transition: -o-transform .2s ease-in;
+    -webkit-transition: -webkit-transform .2s ease-in;*/
+    /*fin efecto forma*/
+}
+ul.pureCssMenu span{
+    overflow:auto;
+}
+ul.pureCssMenu li {
+    float:left;
+}
+ul.pureCssMenu ul li {
+    float:none;
+}
+ul.pureCssMenu ul a {
+    text-align:left;
+    white-space:nowrap;
+}
+ul.pureCssMenu li.sep{
+    text-align:center;
+    padding:0px;
+    line-height:0;
+    height:100%;
+}
+ul.pureCssMenu li.sep span{
+    float:none;	padding-right:0;
+    width:5;
+    height:16;
+    display:inline-block;
+    background-color:#AAAAAA;
+    background-image:none;
+}
+
+ul.pureCssMenu ul li.sep span{
+    width:100%;
+    height:3;
+}
+
+ul.pureCssMenu li:hover{
+    position:relative;
+}
+
+ul.pureCssMenu li:hover>a{
+    background-color:#222931;/*#B10408;*/
+    border-color:#222931;/*#665500;*/
+    font: bold 14px arial;/*15px*/
+    border-style:solid;
+    font:normal 15px Verdana;
+    color: #FFFFFF;
+    height: auto;
+    cursor: pointer;
+    width:auto;
+    font: bold 14px arial;/*15px*/
+    text-decoration:none;
+}
+
+ul.pureCssMenu li a:hover{
+    position:relative;
+    background-color:#222931;/*#B10408;*/
+    border-color:#665500;
+    border-style:solid;
+    font:bold 13px arial;
+    color: #FFFFFF;
+    text-decoration:none;
+    /* Efecto de sombreado animado*/
+    border-radius: 3px;
+    position: relative;
+    opacity: 0.85;
+    /*-moz-box-shadow: 1px 2px 3px #000000;*/
+    /*-webkit-box-shadow: 1px 2px 3px #000000;*/
+    /*box-shadow: 1px 2px 3px #000000;*/
+    /*-webkit-transform: translate(13px,-1px);*/
+    /*-moz-transform: translate(13px,-1px);*/
+    /*-o-transform: translate(13px,-1px);*/
+    /*-moz-transition: -moz-transform .3s ease-in;*/
+    /*-o-transition: -o-transform .3s ease-in;*/
+    /*-webkit-transition: -webkit-transform .3s ease-in;*/ 
+    /*fin efecto*/
+}
+
+ul.pureCssMenu li.dis a {
+    color: #AAAAAA !important;
+}
+
+ul.pureCssMenu img {
+    border: none;
+    float:left;
+    _float:none;
+    margin-right:4px;
+    width:15px;
+    height:15px;
+}
+
+ul.pureCssMenu ul img {
+    width:100px;
+    height:15px;
+}
+
+ul.pureCssMenu img.over{display:none}
+ul.pureCssMenu li.dis a:hover img.over{display:none !important}
+ul.pureCssMenu li.dis a:hover img.def {display:inline !important}
+ul.pureCssMenu li:hover > a img.def  {display:none}
+ul.pureCssMenu li:hover > a img.over {display:inline}
+ul.pureCssMenu a:hover img.over,ul.pureCssMenu a:hover ul img.def,ul.pureCssMenu a:hover a:hover ul img.def,ul.pureCssMenu a:hover a:hover a:hover ul img.def,ul.pureCssMenu a:hover a:hover img.over,ul.pureCssMenu a:hover a:hover a:hover img.over,ul.pureCssMenu a:hover a:hover a:hover a:hover img.over{display:inline}
+ul.pureCssMenu a:hover img.def,ul.pureCssMenu a:hover ul img.over,ul.pureCssMenu a:hover a:hover ul img.over,ul.pureCssMenu a:hover a:hover a:hover ul img.over,ul.pureCssMenu a:hover a:hover img.def,ul.pureCssMenu a:hover a:hover a:hover img.def,ul.pureCssMenu a:hover a:hover a:hover a:hover img.def{display:none}
+ul.pureCssMenu a:hover ul,ul.pureCssMenu a:hover a:hover ul,ul.pureCssMenu a:hover a:hover a:hover ul{display:block}
+ul.pureCssMenu a:hover ul ul,ul.pureCssMenu a:hover a:hover ul ul{display:none}
+ul.pureCssMenu span{
+    display:block;
+/*    background-image:url(../images/double_arrow_down.gif);*/
+    background-image:url(../images/double_arrow_down.png);
+    background-position:right center;
+    background-repeat: no-repeat;
+    padding-right:11px;}
+ul.pureCssMenu li:hover>a>span{	
+/*    background-image:url(../images/double_arrow_left.gif);*/
+    background-image:url(../images/double_arrow_left.png);
+}
+ul.pureCssMenu a:hover span{	
+/*    _background-image:url(../images/double_arrow_down.gif)*/
+    _background-image:url(../images/double_arrow_down.png);
+}
+ul.pureCssMenu ul span,ul.pureCssMenu a:hover table span{
+/*    background-image:url(../images/double_arrow_down.gif)*/
+    background-image:url(../images/double_arrow_down.png);
+}
+ul.pureCssMenu ul li:hover > a span{	
+    /*background-image:url(../images/double_arrow_left.gif);*/
+    background-image:url(../images/double_arrow_left.png);
+}
+ul.pureCssMenu table a:hover span,ul.pureCssMenu table a:hover a:hover span,ul.pureCssMenu table a:hover a:hover a:hover span{
+    /*background-image:url(../images/double_arrow_left.gif)*/
+    background-image:url(../images/double_arrow_left.png);
+}
+ul.pureCssMenu table a:hover table span,ul.pureCssMenu table a:hover a:hover table span{
+    /*background-image:url(../images/double_arrow_left.gif)*/
+    background-image:url(../images/double_arrow_left.png);
+}

@@ -1,0 +1,1 @@
+SELECT id, id_menu_2, titulo FROM seguridad.menu_3 ORDER BY id_menu_2,orden;
