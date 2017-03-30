@@ -16,6 +16,7 @@ function conMayusculas(field) {
 }
 
 $(document).ready(function () {
+    
     valor = parseInt(0);
     $('.a').each(function () {
         valor = valor + 1;
@@ -268,8 +269,82 @@ function MostrarFlat() {
     }
 }
         
+function EstatusImprimir(){
+    alert('LLego');
+}
+
+function ImprimirMasivo (){
+
+        var valor = new Array(); 
+
+        $("input:checkbox:checked").each(function() {
+            valor.push($(this).val());
+        });
+        
+        var checked = valor;
+        var count = checked.length;
+        
+        if (count == 0) {        
+            bootbox.alert('Seleccione los Documentos a Imprimir Masivo');
+        return false;
+        }
+        
+        
+        if (valor[0] == 1){ count = count-1 } //Si selecciona todos trae el valor 1 y lo suprimimos para la cuenta
+    
+        if (count > 0 && confirm('Ha seleccionado  ' + count + ' items.  ¿Está seguro de imprimir?')) {
+        $('.loaderr').fadeIn('slow');
+        $.ajax({
+            url: baseUrl + "/Documentacion/pdfmasivo",
+            async: true,
+            type: 'POST',
+            data: '&checked=' + checked,
+            dataType: 'json',
+            success: function (data) { //true              
+                    if (data) {
+
+                        bootbox.confirm({
+                            message: " Los archivos se generaron correctamente, desea Descargarlos",
+                            buttons: {
+                                confirm: {
+                                    label: 'SI',
+                                    className: 'btn-success'
+                                },
+                                cancel: {
+                                    label: 'NO',
+                                    className: 'btn-danger'
+                                }
+                            },
+                            callback: function (result) {
+                                console.log('This was logged in the callback: ' + result);
+
+                                if (result == true){
+                                    //bootbox.alert('/sisprov_ds/pdf/'+data);
+                                    var myTempWindow = window.open('/sisprov_ds/pdf/'+data,'','left=10000,screenX=10000');
+                                    myTempWindow.document.execCommand('SaveAs','null','download.pdf');
+                                    myTempWindow.close();
+                                    
+                                }else{
+                                    bootbox.alert('Descarga Cancelada');
+                                    $('.loaderr').fadeOut('slow');
+                                }
+                            }
+                        });
 
 
+                    $('.loaderr').fadeOut('slow');
+                    return false;
+                    }    
+            },
+            error: function (data) { //false
+                bootbox.alert('Ocurrio un error');
+                $('.loaderr').fadeOut('slow');
+            }
+        })
+    }
+    
+            
+}
 
 function   AsignacionAnalista(asignado, caso, checked) {
     
@@ -298,7 +373,7 @@ function   AsignacionAnalista(asignado, caso, checked) {
         
         if (valor[0] == 1){ count = count-1 }
 
-        alert(count);
+        //alert(count);
          
     }
    
