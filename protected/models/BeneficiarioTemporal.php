@@ -44,7 +44,7 @@ class BeneficiarioTemporal extends CActiveRecord {
     public $estado_civil;
     public $telf_habitacion;
     public $telf_celular;
-    public $correo_electronico;
+    //public $correo_electronico;
     public $estado;
     public $municipio;
     public $nomb_edif;
@@ -109,7 +109,7 @@ class BeneficiarioTemporal extends CActiveRecord {
             'fecha_nacimiento'=>'Fecha de Nacimiento',
             'telf_habitacion' => 'Teléfono Habitación',
             'telf_celular' => 'Teléfono Celular',
-            'correo_electronico' => 'Correo Electrónico',
+            //'correo_electronico' => 'Correo Electrónico',
             'nomb_edif' => 'Nombre Edificación',
             'numero' => 'Número',
             'area_vivienda' => 'Área de Vivienda mt2',

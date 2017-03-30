@@ -183,25 +183,26 @@ if (isset($_GET["id"])) {
         <?php
         $this->widget(
                 'booster.widgets.TbSelect2', array('asDropDownList' => false,
-            'name' => CHtml::activeId($model, 'correo_electronico'),
-            'attribute' => 'correo_electronico',
-            'htmlOptions' => array(
-                'onchange' => 'emailCheck(this.value,this.id);',
-                'title' => 'Por favor, Ingrese un correo electrónico',
-                'data-toggle' => 'tooltip', 'data-placement' => 'right',),
-                'options' => array(
-                'tags' => array(),
-                'placeholder' => 'usuario@servidor.dominio POR FAVOR PRESIONE ENTER',
-                'width' => '100%',
-                'tokenSeparators' => array(',', ' '),
-                'multiple' => true,
-                'maximumInputLength' => 150,
-                //'minimumInputLength' => ,
-                'maximumSelectionSize' => 1,
-                'allowClear' => true,
-                'items' => 4,
-            )
-                )
+                                                   // 'name' => CHtml::activeId($model, 'correo_electronico'),
+                                                    'name' => 'correo_electronico',
+                                                    'attribute' => 'correo_electronico',
+                                                    'htmlOptions' => array(
+                                                        'onchange' => 'emailCheck(this.value,this.id);',
+                                                        'title' => 'Por favor, Ingrese un correo electrónico',
+                                                        'data-toggle' => 'tooltip', 'data-placement' => 'right',),
+                                                        'options' => array(
+                                                            'tags' => array(),
+                                                            'placeholder' => 'usuario@servidor.dominio POR FAVOR PRESIONE ENTER',
+                                                            'width' => '100%',
+                                                            'tokenSeparators' => array(',', ' '),
+                                                            'multiple' => true,
+                                                            'maximumInputLength' => 150,
+                                                            //'minimumInputLength' => ,
+                                                            'maximumSelectionSize' => 1,
+                                                            'allowClear' => true,
+                                                            'items' => 4,
+                                                            )   
+                                                    )
         );
         ?>
         <?php

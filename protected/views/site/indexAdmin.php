@@ -105,7 +105,7 @@
                     </div>
                     <div class="col-xs-6 text-left">
                         <div class="huge2">
-                            <a href="../../mapa_s/index.php">Mapa</a>
+                            <a href="../../mapa_s/index.php" target="_blank">Mapa</a>
                             <!--<a href="<?php // echo $this->createUrl('/salarioMinimo/create'); ?>">Mapa</a>-->
                             </div>
                     </div>
