@@ -107,6 +107,22 @@
             </div>
         </div>
     </div>
+<!--    <div class="col-lg-4 col-md-35">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="glyphicon glyphicon-stats" style=" font-size: 25px;"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><?php //echo $count_unidades_habitacionales;     ?></div>
+                        <div><?php //echo CHtml::link('Cantidad de Adjudicados por Fuente de Ingreso', array('estadisticas/beneficiarioFuenteIngreso'));
+?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
     <div class="col-lg-4 col-md-35">
         <div class="panel panel-success">
             <div class="panel-heading">
@@ -116,13 +132,15 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"><?php //echo $count_unidades_habitacionales;     ?></div>
-                        <div><?php echo CHtml::link('Cantidad de Adjudicados por Fuente de Ingreso', array('estadisticas/beneficiarioFuenteIngreso'));
+                        <div><?php echo CHtml::link('Protocolizados por Año', array('estadisticas/ProtocolizadosPorAno'));
 ?></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="col-lg-4 col-md-35">
         <div class="panel panel-success">
             <div class="panel-heading">
