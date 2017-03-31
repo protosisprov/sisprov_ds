@@ -68,6 +68,21 @@
             </div>
         </div>
     </div>
+        <div class="col-lg-4 col-md-35">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="glyphicon glyphicon-stats" style=" font-size: 25px;"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div><?php echo CHtml::link('Cantidad de Desarrollos Habitacionales por Ubicación Geografica', array('estadisticas/desarrollosUbicacionGeografica'));
+?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-lg-6 col-md-40">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -76,7 +91,7 @@
                         <i class="glyphicon glyphicon-stats" style=" font-size: 25px;"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div><?php echo CHtml::link('Cantidad de Unidades Multifamiliares Disponibles (No Adjudicados), con Censo Parciales (No Completos) ó sin realizar', array('estadisticas/disponibilidadUnidadHabitacional'));
+                        <div><?php echo CHtml::link('Comparativo de Viviendas Censadas por Años', array('estadisticas/ViviendasPorAno'));
 ?>
                         </div>
                     </div>
@@ -132,7 +147,7 @@
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"><?php //echo $count_unidades_habitacionales;     ?></div>
-                        <div><?php echo CHtml::link('Protocolizados por Año', array('estadisticas/ProtocolizadosPorAno'));
+                        <div><?php echo CHtml::link('Comparativo de Protocolizados por Año', array('estadisticas/ProtocolizadosPorAno'));
 ?></div>
                     </div>
                 </div>

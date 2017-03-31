@@ -95,7 +95,7 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
             . 'que representa el <b>" + Highcharts.numberFormat((this.y*100/1000), 2) + "%</b> del <b>"+ this.series.name+"</b>" ; }'
         ),
         'yAxis' => array(
-            'title' => array('text' => "N° Protocolizados "),
+            'title' => array('text' => "Cantidad de ".$tipo),
             'min' => 0
         ),
         'series' => array(

@@ -62,6 +62,176 @@ class EstadisticasController extends Controller {
         $subtitulo = "Fecha " . date("d/m/Y");
 
         $consulta_periodos = Yii::app()->db->createCommand("
+            select max(date_part('year',ac.fecha_protocolizacion)) maxima, 
+                   max(date_part('year',ac.fecha_protocolizacion))- 1 intermedio, 
+                   max(date_part('year',ac.fecha_protocolizacion))-2 minima
+              FROM beneficiario b, beneficiario_temporal bt, desarrollo d,
+                 unidad_habitacional uh, vsw_sector vs, vivienda V, analisis_credito ac
+           WHERE b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+             AND bt.desarrollo_id = d.id_desarrollo
+             AND uh.id_unidad_habitacional = bt.unidad_habitacional_id
+             AND d.parroquia_id = vs.cod_parroquia
+             AND v.id_vivienda = bt.vivienda_id
+             AND v.id_vivienda = ac.vivienda_id   
+             AND bt.estatus = 80
+           ")->queryAll();
+
+        $total = 0;
+        //Consulto los valores del maximo año...
+        $consulta_maxima = Yii::app()->db->createCommand("SELECT to_char(ac.fecha_protocolizacion,'MM') descripcion,
+                count(*) fecha     
+                FROM beneficiario b, beneficiario_temporal bt, desarrollo d, maestro m,
+                     unidad_habitacional uh, vsw_sector vs, vivienda V, analisis_credito ac
+               WHERE b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+                 AND bt.desarrollo_id = d.id_desarrollo
+                 AND uh.id_unidad_habitacional = bt.unidad_habitacional_id
+                 AND d.parroquia_id = vs.cod_parroquia
+                 AND v.id_vivienda = bt.vivienda_id
+                 AND v.id_vivienda = ac.vivienda_id   
+                 AND bt.estatus = 80
+                 and m.padre = 319
+                 and to_char(ac.fecha_protocolizacion,'MM') = m.descripcion
+                 and date_part('year',ac.fecha_protocolizacion) = ".$consulta_periodos[0]['maxima']." --Si lo quieres por año
+               group by 1
+              UNION	    
+              SELECT x.descripcion, 0 fecha
+                               from maestro x
+                               where x.padre = 319
+                               and not exists (SELECT 'x' 
+                                                 FROM beneficiario b, beneficiario_temporal bt, desarrollo d, maestro m,
+                                                      unidad_habitacional uh, vsw_sector vs, vivienda V, analisis_credito ac
+                                                WHERE b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+                                                  AND bt.desarrollo_id = d.id_desarrollo
+                                                  AND uh.id_unidad_habitacional = bt.unidad_habitacional_id
+                                                  AND d.parroquia_id = vs.cod_parroquia
+                                                  AND v.id_vivienda = bt.vivienda_id
+                                                  AND v.id_vivienda = ac.vivienda_id   
+                                                  AND bt.estatus = 80
+                                                  and m.padre = x.padre
+                                                  and to_char(ac.fecha_protocolizacion,'MM') = x.descripcion
+                                                  and date_part('year',ac.fecha_protocolizacion) = ".$consulta_periodos[0]['maxima'].")
+              order by 1 ")->queryAll();
+        
+        //Consulto los valores del año intermedio ...
+        $consulta_intermedio = Yii::app()->db->createCommand("SELECT to_char(ac.fecha_protocolizacion,'MM') descripcion,
+                    count(*) fecha     
+            FROM beneficiario b, beneficiario_temporal bt, desarrollo d, maestro m,
+                 unidad_habitacional uh, vsw_sector vs, vivienda V, analisis_credito ac
+           WHERE b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+             AND bt.desarrollo_id = d.id_desarrollo
+             AND uh.id_unidad_habitacional = bt.unidad_habitacional_id
+             AND d.parroquia_id = vs.cod_parroquia
+             AND v.id_vivienda = bt.vivienda_id
+             AND v.id_vivienda = ac.vivienda_id   
+             AND bt.estatus = 80
+             and m.padre = 319
+             and to_char(ac.fecha_protocolizacion,'MM') = m.descripcion
+             and date_part('year',ac.fecha_protocolizacion) = ".$consulta_periodos[0]['intermedio']." --Si lo quieres por año
+           group by 1
+          UNION	    
+          SELECT x.descripcion, 0 fecha
+                           from maestro x
+                           where x.padre = 319
+                           and not exists (SELECT 'x' 
+                                             FROM beneficiario b, beneficiario_temporal bt, desarrollo d, maestro m,
+                                                  unidad_habitacional uh, vsw_sector vs, vivienda V, analisis_credito ac
+                                            WHERE b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+                                              AND bt.desarrollo_id = d.id_desarrollo
+                                              AND uh.id_unidad_habitacional = bt.unidad_habitacional_id
+                                              AND d.parroquia_id = vs.cod_parroquia
+                                              AND v.id_vivienda = bt.vivienda_id
+                                              AND v.id_vivienda = ac.vivienda_id   
+                                              AND bt.estatus = 80
+                                              and m.padre = x.padre
+                                              and to_char(ac.fecha_protocolizacion,'MM') = x.descripcion
+                                              and date_part('year',ac.fecha_protocolizacion) = ".$consulta_periodos[0]['intermedio'].")
+          order by 1")->queryAll();
+        
+        //Consulto los valores del año minimo ...
+        $consulta_minima = Yii::app()->db->createCommand("SELECT to_char(ac.fecha_protocolizacion,'MM') descripcion,
+       count(*) fecha     
+        FROM beneficiario b, beneficiario_temporal bt, desarrollo d, maestro m,
+             unidad_habitacional uh, vsw_sector vs, vivienda V, analisis_credito ac
+       WHERE b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+         AND bt.desarrollo_id = d.id_desarrollo
+         AND uh.id_unidad_habitacional = bt.unidad_habitacional_id
+         AND d.parroquia_id = vs.cod_parroquia
+         AND v.id_vivienda = bt.vivienda_id
+         AND v.id_vivienda = ac.vivienda_id   
+         AND bt.estatus = 80
+         and m.padre = 319
+         and to_char(ac.fecha_protocolizacion,'MM') = m.descripcion
+         and date_part('year',ac.fecha_protocolizacion) = ".$consulta_periodos[0]['minima']." --Si lo quieres por año
+       group by 1
+      UNION	    
+      SELECT x.descripcion, 0 fecha
+                       from maestro x
+                       where x.padre = 319
+                       and not exists (SELECT 'x' 
+                                         FROM beneficiario b, beneficiario_temporal bt, desarrollo d, maestro m,
+                                              unidad_habitacional uh, vsw_sector vs, vivienda V, analisis_credito ac
+                                        WHERE b.beneficiario_temporal_id = bt.id_beneficiario_temporal
+                                          AND bt.desarrollo_id = d.id_desarrollo
+                                          AND uh.id_unidad_habitacional = bt.unidad_habitacional_id
+                                          AND d.parroquia_id = vs.cod_parroquia
+                                          AND v.id_vivienda = bt.vivienda_id
+                                          AND v.id_vivienda = ac.vivienda_id   
+                                          AND bt.estatus = 80
+                                          and m.padre = x.padre
+                                          and to_char(ac.fecha_protocolizacion,'MM') = x.descripcion
+                                          and date_part('year',ac.fecha_protocolizacion) = ".$consulta_periodos[0]['minima'].")
+      order by 1")->queryAll();
+
+        foreach ($consulta_maxima as $id => $item_maximo) {
+            
+            $categorias_maxima[$id] = $item_maximo["descripcion"];
+            //$series_maxima[$id] = array('y' => (int) $item_maximo["fecha"]);
+            $series_maxima[$id] = $item_maximo["fecha"];
+            $total_maxima = $total + $item_maximo["fecha"];
+        }
+        
+        foreach ($consulta_intermedio as $id => $item_intermedio) {
+            
+            $categorias_intermedio[$id] = $item_intermedio["descripcion"];
+            //$series_intermedio[$id] = array('y' => (int) $item_intermedio["fecha"]);
+            $series_intermedio[$id] = $item_intermedio["fecha"];
+            $total_intermedio = $total + $item_intermedio["fecha"];
+        }
+        
+        foreach ($consulta_minima as $id => $item_minima) {
+            
+            $categorias_minima[$id] = $item_minima["descripcion"];
+            //$series_minima[$id] = array('y' => (int) $item_minima["fecha"]);
+            $series_minima[$id] =  $item_minima["fecha"];
+            $total_minima = $total + $item_minima["fecha"];
+        }
+        
+    
+        
+        
+        $s_minima = array('name'=> $consulta_periodos[0]['minima'], 'data'=> $series_minima);
+        $s_intermedio = array('name'=> $consulta_periodos[0]['intermedio'], 'data'=> $series_intermedio);
+        $s_maxima = array('name'=> $consulta_periodos[0]['maxima'], 'data'=>  $series_maxima);
+       
+ 
+        $event = array('events' => array('click' => 'js:function() {location.href= this.options.url;}'));
+        
+                
+        $this->render('porAno', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
+            
+            'categorias' => $categorias_minima, 's_minima'=> $s_minima, 's_intermedio'=> $s_intermedio, 's_maxima'=> $s_maxima, 'total' => $total, 'event' => $event, 'br'=>true, 'tipo'=>'Protocolizados'));
+      
+                
+    }
+    
+     public function actionViviendasPorAno() {
+            
+            
+        $titulo1 = "N° de Viviendas de los Ultimos 3 Años";
+        $titulo = "Viviendas de los Ultimos 3 Años";
+        $subtitulo = "Fecha " . date("d/m/Y");
+
+        $consulta_periodos = Yii::app()->db->createCommand("
             select max(date_part('year',v.fecha_creacion)) maxima, max(date_part('year',v.fecha_creacion))- 1 intermedio, max(date_part('year',v.fecha_creacion))-2 minima
 	      from vivienda v, maestro m
 	     where v.estatus_vivienda_id = m.id_maestro
@@ -165,10 +335,11 @@ class EstadisticasController extends Controller {
                 
         $this->render('porAno', array('titulo1' => $titulo1, 'titulo' => $titulo, 'subtitulo' => $subtitulo,
             
-            'categorias' => $categorias_minima, 's_minima'=> $s_minima, 's_intermedio'=> $s_intermedio, 's_maxima'=> $s_maxima, 'total' => $total, 'event' => $event, 'br'=>true));
+            'categorias' => $categorias_minima, 's_minima'=> $s_minima, 's_intermedio'=> $s_intermedio, 's_maxima'=> $s_maxima, 'total' => $total, 'event' => $event, 'br'=>true, 'tipo'=>'Viviendas'));
       
                 
     }
+    
     
     
     
