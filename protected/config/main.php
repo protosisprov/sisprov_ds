@@ -127,7 +127,7 @@ return array(
             'errorAction' => 'site/error',
         ),
               'db' => array(
-            'connectionString' => 'pgsql:host=192.168.1.148;dbname=protocolizacion', //cambiar host
+            'connectionString' => 'pgsql:host=192.168.1.148;dbname=sisprov_prueba2', //cambiar host
             'emulatePrepare' => false,
             'username' => 'postgres',
             'password' => 'postgres',

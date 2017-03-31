@@ -26,53 +26,16 @@
                    
                         <!--<legend style="font-size: 20px;">Mapa Informativo</legend>-->
                         <input name="id_estado_path" id="id_estado_path" value="" type="hidden">
-                        <input name="cant_desarrollo_conteo" id="cant_desarrollo_conteo" value="{desa}" type="hidden">
                         <input name="nombre_estado" id="nombre_estado" value="" type="hidden">
                         <input name="id_rol" id="id_rol" value="{ROL}" type="hidden">
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                 <div id="lienzo" style="margin-left:5%; margin-top: -12%;"></div>
-                                <div id="div_estado" style="margin-top: -37%; width: 50%" class="alert alert-success">Seleccione un Estado</div>
-                            </div>
-                            <div class="col-md-4" style="width: 30%;">
-                                <h4 style="width: 50%; margin-left: 25%; width: 40%;">Meta del año 2017: <b>540.000 Viviendas</b></h4>
-                                <p class="alert alert-warning" style="width: 52%; margin-left: 20%; ">Total de Protocolizados: <br><strong>({prot})</strong> Viviendas</p>
-                                <p class="alert alert-success" style="width: 52%;  margin-left: 20%">Total de Desarrollos Habitacionales:<br><strong>({desa})</strong> Desarrollos; <strong>({unh})</strong> Unidad Habitacional</p>
-                            </div>
-                            <div class="col-md-4" style="width: 30%; margin-top: -5%;">
-                                <fieldset>
-                                    <legend>Cantidad de Desarrollos Habitacionales a Nivel Nacional</legend>
-  
-                                    <table class="table-striped " >
-                                    <tr>
-                                        <th>Estado</th>
-                                        <th>Cant. de Desarrollos</th>
-                                        <th style="padding-left: 34px;">Porcentaje</th>
-                                    </tr>
-                                    <!-- BEGIN: conteo_desarrollo_nac -->
-                                    <tr> 
-                                         <td>{des_estado}</td>
-                                         <td align="center">{des_conteo}</td>
-                                         <!--<td align="center"><a style="cursor:pointer;" onclick="imprimir_pdf_prin(3,'{des_estado}');">{des_conteo}</a></td>-->
-                                         <td align="center" style="padding-left: 34px;">{des_por}</td>
-                                    </tr>
-                                   
-                                    <!-- END: conteo_desarrollo_nac -->
-                                     <tr>
-                                        <th>Total</th>
-                                        <td align="center" >{desa}</td>
-                                        <td align="center" style="padding-left: 34px;">100 %</td>
-                                    </tr>
-                                </table>
-                                    </fieldset>
-                                <hr>
-                            </div>
-                          </div>
-
+                        <h4 style="width: 20%; margin-left: 40%">Meta del año 2017: <b>540.000 Viviendas</b></h4>
+<!--                        <p class="alert alert-success" ></p>-->
+<p class="alert alert-warning" style="width: 20%; margin-left: 40%; ">Total de Protocolizados: <br><strong>({prot})</strong> Viviendas</p>
+                        <p class="alert alert-success" style="width: 20%;  margin-left: 40%">Total de Desarrollos Habitacionales:<br><strong>({desa})</strong> Desarrollos; <strong>({unh})</strong> Unidad Habitacional</p>
+                        
                         <!--<input name="id_estado" id="id_estado" value="" type="text">-->
-                       
+                        <div id="lienzo" style="margin-left:5%; margin-top: -12%;"></div>
+                        <div id="div_estado" style="margin-top: -15%; width: 15%" class="alert alert-success">Seleccione un Estado</div>
                      <!--</fieldset>-->
                 </div>
                 <div id="mostrar_info" style="display:none">
@@ -115,28 +78,9 @@
                                 </table>
                                 <br>
                                 <fieldset>
-                                    <legend>Desarrollo por Municipio y Parroquia</legend>
-                                    <div>
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th>Municipio</th>
-                                                <th>Parroquia</th>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <select name="municipio_desarrollo" id="municipio_desarrollo" onchange="send_mostar_select_parroquia()">
-                                                        <option value="0">--TODOS--</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select name="parroquia_desarrollo" id="parroquia_desarrollo" onchange="send_mostar_desarrollo_parroquia()">
-                                                        <option value="">--TODOS--</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <hr>
-                                    </div>
+                                    <legend>Desarrollo por Municipio y Parroquia
+                                    
+                                    </legend>
                                     <table class="table table-bordered" style='width:100%' id="desarrollo_p" name="desarrollo_p"></table>
                                 </fieldset>
                             </div>

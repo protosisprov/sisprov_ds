@@ -4,6 +4,7 @@
     include_once ('../../class/reporte_pdf_model.php');
     include_once ('../../class/mapa_model.php');
 
+    
     //Variables utilizadas --------------------------------------
 //    print_r($_GET);die;
     $_GET['estado'] = $_GET['estado'];
@@ -48,9 +49,9 @@
     }
     //*********************************************************************************************************
     
-    $titulo = "Desarrollos Habitacionales por Estado";
+    $titulo = "Desarrollos Habitacionales en el Esatdo";
     
-    $cuadro =$obj->mostrar_desarrollo_parroquia($_GET);              
+    $cuadro =$obj->mostrar_desarrollo_resumen($_GET);              
     $c1 = $obj->resultToArrayRegistro($cuadro);
 
     
@@ -58,7 +59,16 @@
 //    $id['fecha1'] = $_POST['fecha_compa1'];
 //    $id['fecha2'] = $_POST['fecha_compa2'];
     if ($c1[0]=="") {
-        echo "<h3>NO EXISTEN DATOS</h3>";die;
+//        echo "<>NO EXISTEN DATOS</h3>";die;
+        
+         echo "<p style='color: #3c763d;
+                background-color: #dff0d8; padding: 15px;
+                margin-bottom: 20px;
+                border: 1px solid transparent;
+                border-radius: 4px;
+                border-color: #d6e9c6;'><strong>NO EXISTEN DATOS A RELACIONAR EN EL PDF</strong>
+                <button type='button' onclick='window.close()'>Cerrar</button>
+                </p>";die;
     }
 
     $pdf = new reporte_pdf('L', 'pt', 'Letter');
@@ -83,32 +93,29 @@
     $pdf->SetFillColor(255, 255, 255);
     $pdf->SetTextColor(0, 116, 136);
     $pdf->SetFont('Arial', 'B', 14);
-//    $pdf->Multicell(755, 15, ("Desarrollo Habitacionales "), 0, 'C', false);
+    $pdf->Multicell(755, 15, ("En el Estado: ".utf8_decode($_GET['estado'])), 0, 'C', false);
     $pdf->ln(20);   
 
     $pdf->SetFillColor(0,152,192);
     $pdf->SetTextColor(255, 255, 255);
     $pdf->SetFont('Arial', 'B', 10);
-    $pdf->SetAligns(array('C','C','C','C'));
+    $pdf->SetAligns(array('C','C','C','C','C','C','C'));
     $pdf->SetX($Xaux);
-    $pdf->SetWidths(array(350,200,150));
-    $pdf->Row(array('Municipios','Parroquias','Desarrollos'), false, 'DF');
+    $pdf->SetWidths(array(100,100,150,150,60,60,100));
+    $pdf->Row(array('Nombre del Desarrollo','Descripción','Desarrollo Habitacional'), false, 'DF');
     $pdf->SetTextColor(0, 0, 0);
     $pdf->SetFillColor(255,255,255);
     $pdf->SetFont('Arial', '', 10);
-    $pdf->SetAligns(array('L','C','C','C'));
-
-    $cuadro =$obj->mostrar_desarrollo_parroquia($_GET);                     
+    $pdf->SetAligns(array('L','L','L','L','C','C','C'));
+    //Difinicion de las variables de acumulacion
+   
+    $cuadro =$obj->mostrar_desarrollo_resumen($_GET); 
     while ($c1 = $obj->extraer_arreglo($cuadro)){
-        $c_nombre[] = $c1['municipio'];
-        $c_cantidad[] = $c1['parroquia'];
-//        $c_cantidad+= $c1['count'];
-       
-                
+    
         $pdf->SetX($Xaux);
-        $pdf->Row(array(utf8_decode($c1['municipio']),utf8_decode($c1['parroquia']),$c1['count']), false, 'DF');
-        
+        $pdf->Row(array(utf8_decode($c1['nombre']),utf8_decode($c1['descripcion']),utf8_decode($c1['direccion'])), false, 'DF');
     }
     
-    $pdf->Output('Resumen por desarrollo.pdf', 'I'); 
+    
+    $pdf->Output('Deatalles de los desarrollos.pdf', 'I'); 
 ?>

@@ -33,15 +33,12 @@ function inicio(strArrayMenu) {
 
 $(function() {
     var default_attributes = {
-         fill: '#d5cdcd',
+//         fill: '#f2ded7',
+        fill: '#d5cdcd',
 //         fill: '#f3cbcb',
          stroke: '#000000',
          'stroke-width': 1,
-     };
-     if (document.getElementById('id_rol').value==4){
-         document.getElementById('tipo_usuario').style.display="none";
-     }
-//     
+     };  
    var $munictxt = $('#div_estado');
    var $id_estado = $('#id_estado_path');
    var $nombre_estado = $('#nombre_estado');
@@ -62,14 +59,15 @@ $(function() {
 
             munic.hover(function() {
               if (document.getElementById('nombre_estado').value!=''){
-                
+                var pathGatoGNU = rjs.path('m 234.02458,396.16011 c ...-3.20489 z');
+pathGatoGNU.attr({fill: '#000000',stroke: '#3C0600','stroke-width': 1});
                 var text = "Estado: ";
                 if (typeof(estados_data[pid])!=='undefined'){
-                  this.animate({ fill: '#FF7474' }); 
+                  this.animate({ fill: '#cc4343' }); 
                   text+= "<b>"+estados_data[pid]+"<br />";
-              }else{
-                  text+="Zona en Reclamación";
-              }
+                }else{
+                    text+="Zona en Reclamación";
+                }
               }
 //                       text+="("+$(this).attr('id')+")";
               $munictxt.html(text);
@@ -90,8 +88,7 @@ $(function() {
                     send_mostar_desarrollo();                   
             });
             });
-          
-        }
+                  }
     });
 });
 

@@ -414,7 +414,7 @@ class reporte_pdf extends FPDF {
         
         $this->SetY(-30);
         $this->SetX(55);
-        $this->Write(5, utf8_decode('Banco Nacional de Vivienda y Hábitat (BANAVIH). RIF.G-20010006-0'));
+        $this->Write(5, utf8_decode('BAnco Nacional de Vivienda y Habitad (BANAVIH). RIF.G-20010006-0'));
         // Print centered page number
         $this->AliasNbPages();
         $this->Cell(360, 10, 'Pagina ' . $this->PageNo().'/{nb}', 0, 0, 'R');

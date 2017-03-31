@@ -44,10 +44,52 @@ class mapa extends menu {
 //        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
         return $this->exeQryFile('../../class/sql/mostrar/mostrar_documentos_protocolizado__.sql', $id); 
     }
-    //LISTAR LAS PERSONAS BENEFICIADAS
+    //LISTAR EL TOTAL DE DOCUMENTOS PROTOCOLIZADOS A NIVEL NACIONAL
     function mostrar_protocolizado_nacional(){ 
 //        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
         return $this->exeQryFile('../../class/sql/mostrar/mostrar_protocolizado_nacional__.sql', null); 
     }
+    //LISTAR EL TOTAL DE LOS DESARROLLOS HABITACIONALES A NIVEL NACIONAL
+    function mostrar_desarrollo_nacional(){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/mostrar_desarrollo_nacional__.sql', null); 
+    }
+    //LISTAR EL TOTAL DE LAS UNIDADES HABITACIONALES A NIVEL NACIONAL
+    function mostrar_unidad_familiar_nacional(){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/mostrar_unidad_familiar_nacional__.sql', null); 
+    }
+    //LISTAR EL TOTAL DE LAS UNIDADES HABITACIONALES A NIVEL NACIONAL
+    function mostrar_desarrollo_torres($id){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/mostrar_desarrollo_torres__.sql', $id); 
+    }
+    //LISTAR EL TOTAL DE LAS UNIDADES HABITACIONALES A NIVEL NACIONAL
+    function mostrar_viviendas_censadas($id){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_viviendas_censadas__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/mostrar_viviendas_censadas__.sql', $id); 
+    }
+    
+    //LISTAR LAS MUNICIPIO EN EL SELECT
+    function mostrar_select_municipio($id){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/mostrar_select_municipio__.sql', $id); 
+    }
+    
+    function mostrar_select_parroquia($id){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/mostrar_select_parroquia__.sql', $id); 
+    }
+    
+    function mostrar_conteo_desarrollo_nacional($id){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/conteo_desarrollo_nacional__.sql', $id); 
+    }
+     //LISTAR Detalle de cada Desarrollo
+    function mostrar_desarrollo_resumen($id){ 
+//        echo $this->printQryFile('../../class/sql/mostrar/mostrar_oficinas_estado__.sql', $id);die();
+        return $this->exeQryFile('../../class/sql/mostrar/mostrar_desarrollo_resumen_estado__.sql', $id); 
+    }
+    
 
 }

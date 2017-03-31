@@ -27,16 +27,35 @@ session_start();
 //    $xtpl->assign('IP', $_SERVER['REMOTE_ADDR']);
 //    $xtpl->assign('id_rol', $_SESSION['id_rol']);
     $xtpl->parse('main.idrol'); 
-    //SECTOR TERRESTRE
-   
-//    $id['sector']=3;
+
     $protocolizado_nivel_nacional= $obj->mostrar_protocolizado_nacional();
      while($row = $obj->extraer_arreglo($protocolizado_nivel_nacional)){
         $xtpl->assign('prot', $row[0]); 
         $xtpl->parse('main.prot');
-    };;
-//    $terrestre = substr ($terrestre, 0, -2);
-//    $xtpl->assign('terrestre_variable', $terrestre); 
+    };
+    
+    $desarrollo_habitacional_nivel_nacional= $obj->mostrar_desarrollo_nacional();
+     while($row = $obj->extraer_arreglo($desarrollo_habitacional_nivel_nacional)){
+        $xtpl->assign('desa', $row[0]); 
+         $id['id'] = $row[0];
+        $xtpl->parse('main.desa');
+    };
+    
+    $desarrollo_unidad_familiar_nivel_nacional= $obj->mostrar_unidad_familiar_nacional();
+     while($row = $obj->extraer_arreglo($desarrollo_unidad_familiar_nivel_nacional)){
+        $xtpl->assign('unh', $row[0]); 
+        $xtpl->parse('main.unh');
+    };
+    
+    $desarrollo_nivel_nacional= $obj->mostrar_conteo_desarrollo_nacional($id);
+     while($row = $obj->extraer_arreglo($desarrollo_nivel_nacional)){
+        $xtpl->assign('des_estado', $row[0]); 
+        $xtpl->assign('des_conteo', $row[1]); 
+        $xtpl->assign('des_por', $row[2]); 
+        $xtpl->assign('des_idestado', $row[3]); 
+        $xtpl->parse('main.conteo_desarrollo_nac');
+    };
+
       
     $xtpl->parse('main');
     $xtpl->out('main');
