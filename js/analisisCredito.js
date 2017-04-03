@@ -16,7 +16,6 @@ function conMayusculas(field) {
 }
 
 $(document).ready(function () {
-    
     valor = parseInt(0);
     $('.a').each(function () {
         valor = valor + 1;
@@ -72,6 +71,7 @@ $(document).ready(function () {
  * verificar calculo
  * 
  *  */
+
 /*
  * FUNCTION QUE RECALCULA LA TAZA DE INTERE4S APLICABLE SEGUN TABLA DEL SUELDO
  */

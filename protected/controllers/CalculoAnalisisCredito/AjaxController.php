@@ -50,7 +50,10 @@ class AjaxController extends Controller {
 
     public function actionTipoInterresAplicable() {
         $SalarioFamiliar = (float) $_POST['SalarioFamiliar'];
-        $SueldoMinimo = str_replace(".", "", Maestro::model()->findByAttributes(array('padre' => 237, 'es_activo' => TRUE))->descripcion);
+//        $SueldoMinimo = str_replace(".", "", Maestro::model()->findByAttributes(array('padre' => 237, 'es_activo' => TRUE))->descripcion);
+        $SueldoMinimo = str_replace(".", ",", SalarioMinimo::model()->findByAttributes(array('es_activo' => TRUE))->valor_salario);
+
+
         $cantidadSalarios = round($SalarioFamiliar / $SueldoMinimo);
 
         switch ($cantidadSalarios) {

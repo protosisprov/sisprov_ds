@@ -47,10 +47,18 @@ class FaspController extends Controller {
 
     public function actionSubsidio($capacidadPago, $costoVivienda, $idUnidadFamiliar, $ingresoFamiliar) {
 
-        $SM = Maestro::model()->findByAttributes(array('padre' => 237, 'es_activo' => TRUE))->descripcion; //SELECCION EL SUELDO MINIMO DE LA TABLA MAESTRO 9648,18
-        $SM = str_replace('.', '', $SM); // REEMPLAZA  EL (.)  9.000.00 EL UN '' QUEDANDO 9000,00
-        $SM = (float) str_replace(',', '.', $SM); // REEMPLAZA  EL (,)  9.000.00 EL UN '' QUEDANDO 9000.00
-        // INICIO DE LAS CONDICIONES PARA VERIFICARA SI APLICA O NO SUBSIDIO
+//        $SM2 = Maestro::model()->findByAttributes(array('padre' => 237, 'es_activo' => TRUE))->descripcion; //SELECCION EL SUELDO MINIMO DE LA TABLA MAESTRO 9648,18
+        $SM = SalarioMinimo::model()->findByAttributes(array('es_activo' => 'true'))->valor_salario;
+
+         
+//        $SM = str_replace('.', '', $SM); // REEMPLAZA  EL (.)  9.000.00 EL UN '' QUEDANDO 9000,00
+//        $SM2 = str_replace('.', '', $SM2); // REEMPLAZA  EL (.)  9.000.00 EL UN '' QUEDANDO 9000,00
+//        $SM = (float) str_replace(',', '.', $SM); // REEMPLAZA  EL (,)  9.000.00 EL UN '' QUEDANDO 9000.00
+        $SM = (float) $SM; // REEMPLAZA  EL (,)  9.000.00 EL UN '' QUEDANDO 9000.00
+//        $SM2 = (float) str_replace(',', '.', $SM2); // REEMPLAZA  EL (,)  9.000.00 EL UN '' QUEDANDO 9000.00
+        //
+
+        // INICIO DE LAS CONDICIONES PARA VERIFICARA SI APLICA O NO SUBSIDIO a > b a mayor a be
         if ($capacidadPago >= $costoVivienda) {
             // EN CASO QUE LA CAPACIDAD DE PAGO SEA MAYOR QUE EL COSTO DE LA VIVIENDA
             return '0';

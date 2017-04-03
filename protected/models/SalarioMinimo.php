@@ -14,6 +14,7 @@
  * @property string $fecha_actualizacion
  * @property integer $usuario_id_creacion
  * @property integer $usuario_id_actualizacion
+ * @property boolean $es_activo
  */
 class SalarioMinimo extends CActiveRecord
 {
@@ -35,10 +36,10 @@ class SalarioMinimo extends CActiveRecord
 		return array(
 			array('gaceta,decreto,fecha_vigencia,valor_salario', 'required'),
 			array('usuario_id_creacion, usuario_id_actualizacion', 'numerical', 'integerOnly'=>true),
-			array('gaceta, decreto, fecha_vigencia, valor_salario, observacion, fecha_creacion, fecha_actualizacion', 'safe'),
+			array('gaceta, decreto, fecha_vigencia, valor_salario, observacion, fecha_creacion, fecha_actualizacion, es_activo', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_salario_minimo, gaceta, decreto, fecha_vigencia, valor_salario, observacion, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion', 'safe', 'on'=>'search'),
+			array('id_salario_minimo, gaceta, decreto, fecha_vigencia, valor_salario, observacion, fecha_creacion, fecha_actualizacion, usuario_id_creacion, usuario_id_actualizacion, es_activo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +70,7 @@ class SalarioMinimo extends CActiveRecord
 			'fecha_actualizacion' => 'Fecha Actualizacion',
 			'usuario_id_creacion' => 'Usuario Id Creacion',
 			'usuario_id_actualizacion' => 'Usuario Id Actualizacion',
+			'es_activo' => 'Es Activo',
 		);
 	}
 
@@ -100,6 +102,7 @@ class SalarioMinimo extends CActiveRecord
 		$criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);
 		$criteria->compare('usuario_id_creacion',$this->usuario_id_creacion);
 		$criteria->compare('usuario_id_actualizacion',$this->usuario_id_actualizacion);
+		$criteria->compare('es_activo',$this->es_activo);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
