@@ -78,36 +78,32 @@ echo $form->hiddenField($model, 'unidad_familiar_id');
 
 
 
-                <!--<td>-->
+                <td>
 
                     <?php
                     
-//                    //var_dump($beneficiario);die;
-//                    $this->widget('booster.widgets.TbEditableField', array(
-//                            
-//                        'type' => 'text',
-//                        'model' => $beneficiario,
-//                        'attribute' => 'ingreso_mensual_nuevo',
-//                        'url' => $this->createUrl('Beneficiario/Actualizar'),
-//                        'placement' => 'right',
-//                        'emptytext' => '0.00',
-//                       
-//
-//                        
-//                        'onSave' => 'js: function(event, params) {
-//                            setTimeout("location.reload()", 0);
-//                         }'
-//                    ));
+                    //var_dump($beneficiario);die;
+                    $this->widget('booster.widgets.TbEditableField', array(
                     
+                        'type' => 'text',
+                        'model' => $beneficiario,
+                        'attribute' => 'ingreso_mensual_nuevo',
+                        'url' => $this->createUrl('Beneficiario/Actualizar'),
+                        'placement' => 'right',
+                        'emptytext' => '0.00',
            
                     
                     
+                        'onSave' => 'js: function(event, params) {
+                            setTimeout("location.reload()", 0);
+                         }'
+                    ));
                     
                     
                     ?>         
-                    <!--<input type="radio" name="opciones_0" id="opciones"   value="<?php echo $beneficiario->ingreso_mensual_nuevo; ?>">-->
+                    <input type="radio" name="opciones_0" id="opciones"   value="<?php echo $beneficiario->ingreso_mensual_nuevo; ?>">
 
-                <!--</td>-->
+                </td>
                 </tr>
 
 
