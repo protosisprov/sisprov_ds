@@ -2,12 +2,17 @@
 
 function nacionalidadCedula($selec, $select2, $iD) {
     $saime = ConsultaOracle::getNacionalidadCedulaPersonaByPk($selec, $select2, (int) $iD);
+//echo '<pre>1';
+//var_dump($saime);
+//die;
     return $saime['NACIONALIDAD'] . " - " . $saime['CEDULA'];
 }
 
-$persona = (object) ConsultaOracle::getPersonaBeneficiario($model->nacionalidad, $model->cedula);
+
+//$persona = (object) ConsultaOracle::getPersonaBeneficiario($model->nacionalidad, $model->cedula);
+ $persona = Persona::model()->findByAttributes(array('nacionalidad' => $model->nacionalidad, 'cedula' => $model->cedula));
 //echo '<pre>';
-//var_dump($persona);
+//var_dump($model);
 //die;
 ?>
 
@@ -19,11 +24,11 @@ $persona = (object) ConsultaOracle::getPersonaBeneficiario($model->nacionalidad,
                 <blockquote>
                     <p>
                         <b>  Nombre y Apellido:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $model->nombre_completo; ?><br/>
-                        <b>Cédula de Identidad:</b> &nbsp;&nbsp;<?php echo nacionalidadCedula('NACIONALIDAD', 'CEDULA', $model->persona_id); ?><br>
-                        <b>Fecha de Nacimiento:</b> <?php if($persona->FECHANACIMIENTO == null){ echo "No Posee"; }else{ echo $persona->FECHANACIMIENTO; } ?><br>
-                        <b>Teléfono Habitación:</b>&nbsp;&nbsp;&nbsp;<?php  if($persona->TELEFONOHAB == null){ echo "No Posee"; }else{ echo $persona->TELEFONOHAB; } ?> <br>
-                        <b>Teléfono Celular: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if($persona->TELEFONOMOVIL == null){ echo "No Posee"; }else{ echo $persona->TELEFONOMOVIL; } ?><br>
-                        <b>Correo Electrónico:&nbsp;&nbsp;&nbsp;</b> <?php if($persona->CORREO == null){ echo "No Posee"; }else{ echo $persona->CORREO; }   ?>
+                        <b>Cédula de Identidad:</b> &nbsp;&nbsp;<?php if($persona->nacionalidad == 97){ $nac= "V"; }else{ $nac= "E"; } echo $nac.'-'.$persona->cedula ?><br>
+                        <b>Fecha de Nacimiento:</b> <?php if($persona->fecha_nacimiento == null){ echo "No Posee"; }else{ echo  Yii::app()->dateFormatter->format("d/MM/y", strtotime($persona->fecha_nacimiento)); } ?><br>
+                        <b>Teléfono Habitación:</b>&nbsp;&nbsp;&nbsp;<?php  if($persona->telf_habitacion == null){ echo "No Posee"; }else{ echo $persona->telf_habitacion; } ?> <br>
+                        <b>Teléfono Celular: </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if($persona->telf_celular == null){ echo "No Posee"; }else{ echo $persona->telf_celular; } ?><br>
+                        <b>Correo Electrónico:&nbsp;&nbsp;&nbsp;</b> <?php if($persona->correo_electronico == null){ echo "No Posee"; }else{ echo $persona->correo_electronico; }   ?>
                     </p>
                 </blockquote>
             </div>

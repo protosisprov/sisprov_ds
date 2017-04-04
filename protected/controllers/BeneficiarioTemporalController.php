@@ -55,17 +55,20 @@ class BeneficiarioTemporalController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-   public function actionCreate() {
+         public function actionCreate() {
         $model = new BeneficiarioTemporal;
         $desarrollo = new Desarrollo;
         $estado = new Tblestado;
         $municipio = new Tblmunicipio;
         $parroquia = new Tblparroquia;
-
+        $persona = new Persona;
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
         // var_dump($_POST); // die();
+//        var_dump($_POST); 
+//        exit;
+//      echo $_POST["correo_electronico"];
         if (isset($_POST['BeneficiarioTemporal'])) {
 
             switch ($_POST["BeneficiarioTemporal"]['estado_civil']) {
@@ -93,9 +96,9 @@ class BeneficiarioTemporalController extends Controller {
                 $telemovi = str_replace('-', '', $_POST["BeneficiarioTemporal"]["telf_celular"]);
                 $codigo_movil = substr($telemovi, 0, 4);
                 $telf_movil = substr($telemovi, 4, 11);
-                
 
-                $idPersona = ConsultaOracle::insertPersona(array(
+
+                $idPersona = ConsultaOracle::BuscarPersona(array(
                             'CEDULA' => $_POST["BeneficiarioTemporal"]["cedula"],
                             'NACIONALIDAD' => ($_POST["BeneficiarioTemporal"]['nacionalidad'] == 97) ? 1 : 0,
                             'PRIMER_NOMBRE' => trim(strtoupper($_POST["BeneficiarioTemporal"]['primer_nombre'])),
@@ -109,7 +112,7 @@ class BeneficiarioTemporalController extends Controller {
                             'TELEFONO_HAB' => (string) $telf_habitacion,
                             'CODIGO_MOVIL' => (string) $codigo_movil,
                             'TELEFONO_MOVIL' => (string) $telf_movil,
-                            //'CORREO_PRINCIPAL' => $_POST['BeneficiarioTemporal_correo_electronico'],
+                                //'CORREO_PRINCIPAL' => $_POST['BeneficiarioTemporal_correo_electronico'],
                                 )
                 );
             } else {
@@ -139,7 +142,7 @@ class BeneficiarioTemporalController extends Controller {
                             'TELEFONO_HAB' => (string) $telf_habitacion,
                             'CODIGO_MOVIL' => (string) $codigo_movil,
                             'TELEFONO_MOVIL' => (string) $telf_movil,
-                           // 'CORREO_PRINCIPAL' => $_POST['BeneficiarioTemporal_correo_electronico'],
+                                //'CORREO_PRINCIPAL' => $_POST['BeneficiarioTemporal_correo_electronico'],
                                 ), $idPersona
                 );
 
@@ -156,7 +159,36 @@ class BeneficiarioTemporalController extends Controller {
             /*   - - - - - - - -- - - - - - - - - */
 
 
-            /*  - - - -- Beneficiario - - -- - - - */
+             $persona = new Persona;
+                /// var_dump($persona); die();
+                $persona->persona_id_faov = (int) $_POST["BeneficiarioTemporal"]["persona_id"];
+                $persona->nacionalidad = (int) $_POST["BeneficiarioTemporal"]["nacionalidad"];
+                $persona->cedula = (int) $_POST["BeneficiarioTemporal"]["cedula"];
+                $persona->primer_nombre = $_POST["BeneficiarioTemporal"]["primer_nombre"];
+                $persona->segundo_nombre = $_POST["BeneficiarioTemporal"]["segundo_nombre"];
+                $persona->primer_apellido = $_POST["BeneficiarioTemporal"]["primer_apellido"];
+                $persona->segundo_apellido = $_POST["BeneficiarioTemporal"]["segundo_apellido"];
+                $persona->fecha_nacimiento = $_POST["BeneficiarioTemporal"]["fecha_nacimiento"];
+                $persona->fk_sexo = $_POST["BeneficiarioTemporal"]["sexo"];
+                $persona->fk_estado_civil = $_POST["BeneficiarioTemporal"]["estado_civil"];
+                $persona->telf_habitacion = $_POST["BeneficiarioTemporal"]["telf_habitacion"];
+                $persona->telf_celular = $_POST["BeneficiarioTemporal"]["telf_celular"];
+                $persona->correo_electronico = $_POST["correo_electronico"];
+                $persona->fecha_creacion = 'now()';
+                $persona->fecha_actualizacion = 'now()';
+                $persona->usuario_id_creacion = Yii::app()->user->id;
+                $persona->usuario_id_actualizacion = Yii::app()->user->id;
+            
+
+            // var_dump($beneficiarioTemp); // die();
+
+
+            if ($persona->save()) {
+                
+                $id_persona=$persona->id_persona;//id persona de SISPROV
+                
+                
+               /*  - - - -- Beneficiario - - -- - - - */
 
             $beneficiarioTemp = new BeneficiarioTemporal;
 
@@ -165,7 +197,8 @@ class BeneficiarioTemporalController extends Controller {
             $nombre_completo .= $_POST["BeneficiarioTemporal"]["primer_nombre"] . ' ';
             $nombre_completo .= $_POST["BeneficiarioTemporal"]["segundo_nombre"];
 
-            $beneficiarioTemp->persona_id = (int) $idPersona;
+            $beneficiarioTemp->persona_id = (int) $id_persona;
+            
             $beneficiarioTemp->desarrollo_id = (int) $_POST["Desarrollo"]["id_desarrollo"];
             $beneficiarioTemp->unidad_habitacional_id = (int) $_POST["BeneficiarioTemporal"]["unidad_habitacional_id"];
             $beneficiarioTemp->vivienda_id = (int) $_POST["BeneficiarioTemporal"]["vivienda_nro"];
@@ -180,23 +213,21 @@ class BeneficiarioTemporalController extends Controller {
 
             $beneficiarioTemp->estatus = 221;
 
-            // var_dump($beneficiarioTemp); // die();
-
-
-            if ($beneficiarioTemp->save()) {
-                if (isset($_POST['CARGAR_OTRO'])) {
-                    $this->render('create', array(
-                        'model' => $model,
-                        'desarrollo' => $desarrollo, 'municipio' => $municipio,
-                        'estado' => $estado, 'parroquia' => $parroquia,
-                            )
-                    );
-                    Yii::app()->end();
-                } else {
-                    $id_beneficiarioTemp = $beneficiarioTemp->id_beneficiario_temporal;
-                    Yii::app()->user->setFlash('success', "Beneficiario Temporal " . $nombre_completo . " Registrado !!");
-                    $this->redirect(array('admin'));
-                    Yii::app()->end();
+                if ($beneficiarioTemp->save()) {
+                    if (isset($_POST['CARGAR_OTRO'])) {
+                        $this->render('create', array(
+                            'model' => $model,
+                            'desarrollo' => $desarrollo, 'municipio' => $municipio,
+                            'estado' => $estado, 'parroquia' => $parroquia,
+                                )
+                        );
+                        Yii::app()->end();
+                    } else {
+                        $id_beneficiarioTemp = $beneficiarioTemp->id_beneficiario_temporal;
+                        Yii::app()->user->setFlash('success', "Beneficiario Temporal " . $nombre_completo . " Registrado !!");
+                        $this->redirect(array('admin'));
+                        Yii::app()->end();
+                    }
                 }
             }
         }
