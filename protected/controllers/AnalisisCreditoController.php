@@ -232,7 +232,7 @@ if ($desarrollo->fuente_financiamiento_id == 2) {
         if (isset($_POST['AnalisisCredito'])) {
 
 
-            if ($_POST['Desarrollo']['fuente_financiamiento_id'] = 3) {
+            if ($_POST['Desarrollo']['fuente_financiamiento_id'] == 3) {
                 if (empty($_POST['AnalisisCredito']['sub_vivienda_perdida']) && !isset($_POST['cuota_extraordinarias'])) {
                     $tipo_documen = 266; //PERSONA NATURAL
                 } else if (isset($_POST['cuota_extraordinarias'])) {
