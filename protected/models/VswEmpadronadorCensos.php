@@ -20,7 +20,12 @@
  * @property string $empadronador_usuario
  */
 class VswEmpadronadorCensos extends CActiveRecord {
-
+    
+    public $nombre_desarrollo;
+    public $nombre_unidad_multifamiliar;
+    public $nombre_adjudicado;
+    public $iduser;
+    public $Emp;
     /**
      * @return string the associated database table name
      */
@@ -74,7 +79,7 @@ class VswEmpadronadorCensos extends CActiveRecord {
             'nro_piso' => 'Nro Piso',
             'nro_vivienda' => 'Nro Vivienda',
             'iduser' => 'Iduser',
-            'empadronador_usuario' => 'Empadronador Usuario',
+            'empadronador_usuario' => 'Empadronador',
         );
     }
 

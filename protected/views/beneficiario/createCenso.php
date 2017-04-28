@@ -21,8 +21,8 @@ Yii::app()->clientScript->registerScript('Beneficiariocenso', "
     nacionalidad = '" . $beneficiarioTmp->nacionalidad . "';
         buscarBeneficiarioTemporal(nacionalidad, cedula);
         
-         $('#Beneficiario_telf_habitacion').mask('02AA-BBBBBBB', {translation: { 'A': {pattern: /[0-9]/}, 'B':{pattern: /[0-9]/}}, clearIfNotMatch: true});
-         $('#Beneficiario_telf_celular').mask('04AA-BBBBBBB', {translation: { 'A': {pattern: /[0-9]/}, 'B':{pattern: /[0-9]/}}, clearIfNotMatch: true});
+         $('#Beneficiario_telf_habitacion').mask('02AABBBBBBB', {translation: { 'A': {pattern: /[0-9]/}, 'B':{pattern: /[0-9]/}}, clearIfNotMatch: true});
+         $('#Beneficiario_telf_celular').mask('04AABBBBBBB', {translation: { 'A': {pattern: /[0-9]/}, 'B':{pattern: /[0-9]/}}, clearIfNotMatch: true});
          $('#Beneficiario_rif').mask('A-BBBBBBBB-9', {translation: { 'A': {pattern: /[VEve]/}, 'B':{pattern: /[0-9]/}}, clearIfNotMatch: true});
          $('#Beneficiario_cedula').numeric();
          $('#Beneficiario_cedula').val(cedula).attr('readonly', true);

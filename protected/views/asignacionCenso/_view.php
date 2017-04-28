@@ -19,6 +19,17 @@ $fecha_asignacion = substr($model->fecha_asignacion, 0, 10);
 $invert = explode("-", $fecha_asignacion);
 
 $fecha_invert = $invert[2] . "-" . $invert[1] . "-" . $invert[0];
+
+
+//$asignacionCenso= AsignacionCenso::model()->findAllByAttributes(array('id_asignacion_censo' => $id));
+      //  $persona= Persona::model()->findAllByAttributes(array('id_persona' => $model->persona_id)) ;      investigar
+       $persona = Persona::model()->findByAttributes(array('id_persona' => $model->persona_id));
+//echo '<pre>';
+//var_dump($persona);
+//die;
+
+
+
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -54,9 +65,9 @@ $fecha_invert = $invert[2] . "-" . $invert[1] . "-" . $invert[0];
         <div class='col-md-8'> 
             <blockquote>
                 <p>
-                    <b>Nombre:</b> <?php echo nombre('PRIMER_NOMBRE', $model->persona_id) ?><br/>
-                    <b>Apellido:</b> <?php echo apellido('PRIMER_APELLIDO', $model->persona_id) ?><br/>
-                    <b>Cedula de Identidad:</b> <?php echo nacionalidadCedula('NACIONALIDAD', 'CEDULA', $model->persona_id) ?>
+                    <b>  Nombre y Apellido:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php  echo "$persona->primer_nombre" .' '. "$persona->primer_apellido" ; ?><br/>
+                    <b>Cédula de Identidad:</b> &nbsp;&nbsp;<?php if($persona->nacionalidad == 97){ $nac= "V"; }else{ $nac= "E"; } echo $nac.'-'.$persona->cedula ?><br>
+                    
                 </p>
             </blockquote>
         </div>
