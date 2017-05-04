@@ -56,7 +56,8 @@ if (isset($_GET["id"])) {
         echo $form->dropDownListGroup($model, 'nacionalidad', array('wrapperHtmlOptions' => array('class' => 'col-sm-12'),
             'widgetOptions' => array(
                 'data' => Maestro::FindMaestrosByPadreSelect(96, 'descripcion DESC'),
-                'htmlOptions' => array('empty' => 'SELECCIONE'),
+                'htmlOptions' => array('empty' => 'SELECCIONE','onChange' => 'limpiarDatosPer("Nuevoadj")'),
+                
             )
                 )
         );
@@ -65,7 +66,7 @@ if (isset($_GET["id"])) {
     </div>
     <div class='col-md-4'>
         <?php
-        echo $form->textFieldGroup($model, 'cedula', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 8,
+        echo $form->textFieldGroup($model, 'cedula', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 Nuevoadj', 'maxlength' => 8,
                     'onblur' => "buscarPersonaBeneficiarioTemp($('#BeneficiarioTemporal_nacionalidad').val(),$(this).val())"
         ))));
 
@@ -83,24 +84,24 @@ if (isset($_GET["id"])) {
 <div class="row">
     <div class='col-md-3'>
         <?php
-        echo $form->textFieldGroup($model, 'primer_nombre', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200))));
+        echo $form->textFieldGroup($model, 'primer_nombre', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 Nuevoadj', 'maxlength' => 200))));
         ?>
     </div>
     <div class='col-md-3'>
         <?php
-        echo $form->textFieldGroup($model, 'segundo_nombre', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200))));
+        echo $form->textFieldGroup($model, 'segundo_nombre', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 Nuevoadj', 'maxlength' => 200))));
         ?>
     </div>
 
 
     <div class='col-md-3'>
         <?php
-        echo $form->textFieldGroup($model, 'primer_apellido', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200))));
+        echo $form->textFieldGroup($model, 'primer_apellido', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 Nuevoadj', 'maxlength' => 200))));
         ?>
     </div>
     <div class='col-md-3'>
         <?php
-        echo $form->textFieldGroup($model, 'segundo_apellido', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 200))));
+        echo $form->textFieldGroup($model, 'segundo_apellido', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 Nuevoadj', 'maxlength' => 200))));
         ?>
     </div>
 
@@ -124,7 +125,8 @@ if (isset($_GET["id"])) {
                     'autoclose' => true,
                 ),
                 'htmlOptions' => array(
-                 'placeholder' => 'Fecha de Nacimiento'
+                 'placeholder' => 'Fecha de Nacimiento',
+                 'class' => 'Nuevoadj'
                 ),
             ),
 //            'prepend' => '<i class="glyphicon glyphicon-calendar"></i>',
@@ -138,7 +140,7 @@ if (isset($_GET["id"])) {
         echo $form->dropDownListGroup($model, 'sexo', array('wrapperHtmlOptions' => array('class' => 'col-sm-12'),
             'widgetOptions' => array(
                 'data' => array('1' => 'FEMENINO', '2' => 'MASCULINO'),
-                'htmlOptions' => array('empty' => 'SELECCIONE'),
+                'htmlOptions' => array('empty' => 'SELECCIONE', 'class' => 'Nuevoadj'),
             )
                 )
         );
@@ -152,7 +154,7 @@ if (isset($_GET["id"])) {
         echo $form->dropDownListGroup($model, 'estado_civil', array('wrapperHtmlOptions' => array('class' => 'col-sm-12'),
             'widgetOptions' => array(
                 'data' => Maestro::FindMaestrosByPadreSelect(162, 'descripcion ASC'),
-                'htmlOptions' => array('empty' => 'SELECCIONE'),
+                'htmlOptions' => array('empty' => 'SELECCIONE','class' => 'Nuevoadj'),
             )
                 )
         );
@@ -165,12 +167,12 @@ if (isset($_GET["id"])) {
 
 <div class='col-md-4'>
         <?php
-        echo $form->textFieldGroup($model, 'telf_habitacion', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 12, 'readonly' => true))));
+        echo $form->textFieldGroup($model, 'telf_habitacion', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 Nuevoadj', 'maxlength' => 12, 'readonly' => true))));
         ?>
     </div>
     <div class='col-md-4'>
         <?php
-        echo $form->textFieldGroup($model, 'telf_celular', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 12, 'readonly' => true))));
+        echo $form->textFieldGroup($model, 'telf_celular', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5 Nuevoadj', 'maxlength' => 12, 'readonly' => true))));
         ?>
     </div>
         
@@ -187,6 +189,7 @@ if (isset($_GET["id"])) {
                                                     'name' => 'correo_electronico',
                                                     'attribute' => 'correo_electronico',
                                                     'htmlOptions' => array(
+                                                         'class' => 'Nuevoadj',
                                                         'onchange' => 'emailCheck(this.value,this.id);',
                                                         'title' => 'Por favor, Ingrese un correo electrónico',
                                                         'data-toggle' => 'tooltip', 'data-placement' => 'right',),
@@ -201,6 +204,7 @@ if (isset($_GET["id"])) {
                                                             'maximumSelectionSize' => 1,
                                                             'allowClear' => true,
                                                             'items' => 4,
+                                                           
                                                             )   
                                                     )
         );

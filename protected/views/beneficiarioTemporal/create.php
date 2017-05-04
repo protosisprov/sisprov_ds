@@ -20,7 +20,7 @@ $mascara = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/jqu
          $('#BeneficiarioTemporal_telf_habitacion').mask('02AA-BBBBBBB', {translation: { 'A': {pattern: /[0-9]/}, 'B':{pattern: /[0-9]/}}, clearIfNotMatch: true});
          $('#BeneficiarioTemporal_telf_celular').mask('04AA-BBBBBBB', {translation: { 'A': {pattern: /[0-9]/}, 'B':{pattern: /[0-9]/}}, clearIfNotMatch: true});
     }); 
-        $('#guardar').click(function(){
+        $('.guardarD').click(function(){
             if( $('#BeneficiarioTemporal_nacionalidad').val() == ''){
                 bootbox.alert('Seleccione la Nacionalidad .');
                 return false;
@@ -91,24 +91,8 @@ $this->widget(
 <div class="row">
     <div class="col-md-12">
         <?php
-        /* ------------  Datos Beneficiario  --------- */
-
-
-
-        $this->widget(
-                'booster.widgets.TbPanel', array(
-            'title' => 'Beneficiario',
-            'context' => 'primary',
-            'headerIcon' => 'user',
-            'headerHtmlOptions' => array('style' => 'background-color: #1fb5ad !important;color: #FFFFFF !important;'),
-            'content' => $this->renderPartial('_form', array('form' => $form, 'model' => $model), TRUE),
-                #'content' => $this->renderPartial('_form', array('model'=>$model),TRUE),
-                )
-        );
-        echo '<br>';
-        /*  ------------------------------------------ */
-
-        /*         * ******  Caracteristicas del Desarrollo   ****** */
+        
+                /*         * ******  Caracteristicas del Desarrollo   ****** */
 
 
         $this->widget(
@@ -127,6 +111,27 @@ $this->widget(
         );
 
         /*         * ********************************************** */
+        
+          echo '<br>';
+        
+        /* ------------  Datos Beneficiario  --------- */
+
+
+
+        $this->widget(
+                'booster.widgets.TbPanel', array(
+            'title' => 'Beneficiario',
+            'context' => 'primary',
+            'headerIcon' => 'user',
+            'headerHtmlOptions' => array('style' => 'background-color: #1fb5ad !important;color: #FFFFFF !important;'),
+            'content' => $this->renderPartial('_form', array('form' => $form, 'model' => $model), TRUE),
+                #'content' => $this->renderPartial('_form', array('model'=>$model),TRUE),
+                )
+        );
+      
+        /*  ------------------------------------------ */
+
+
 
 
         /*  +++++++++++++  Grupo Familiar    +++++++++ */
@@ -153,6 +158,9 @@ $this->widget(
                 'id' => 'guardar',
                 'context' => 'success',
                 'label' => 'Guardar',
+                'htmlOptions' => array(
+                'class' => 'guardarD'
+        ),
             ));
             ?>
             <?php
@@ -163,7 +171,7 @@ $this->widget(
                 'id' => 'guardar',
                 'context' => 'primary',
                 'label' => 'Guardar y Agregar Nuevo Registro',
-                'htmlOptions' => array('name' => 'CARGAR_OTRO', 'value' => '1')
+                'htmlOptions' => array('name' => 'CARGAR_OTRO', 'value' => '1',  'class' => 'guardarD')
             ));
             ?>           
 

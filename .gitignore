@@ -1,5 +1,7 @@
 /protected/config/*
 /protected/config/
+/protected/config
 /assets/*
 /protected/runtime/
+/protected/runtime/application.log
 /nbproject/*

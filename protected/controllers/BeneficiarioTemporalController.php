@@ -65,10 +65,10 @@ class BeneficiarioTemporalController extends Controller {
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
-        // var_dump($_POST); // die();
-//        var_dump($_POST); 
+//         var_dump($_POST);  die();
+//        var_dump($_POST); die,
 //        exit;
-//      echo $_POST["correo_electronico"];
+//      echo $_POST["BeneficiarioTemporal"];
         if (isset($_POST['BeneficiarioTemporal'])) {
 
             switch ($_POST["BeneficiarioTemporal"]['estado_civil']) {
@@ -215,6 +215,8 @@ class BeneficiarioTemporalController extends Controller {
 
                 if ($beneficiarioTemp->save()) {
                     if (isset($_POST['CARGAR_OTRO'])) {
+                        
+                        
                         $this->render('create', array(
                             'model' => $model,
                             'desarrollo' => $desarrollo, 'municipio' => $municipio,
@@ -222,6 +224,8 @@ class BeneficiarioTemporalController extends Controller {
                                 )
                         );
                         Yii::app()->end();
+                    
+//                        echo '<pre>';
                     } else {
                         $id_beneficiarioTemp = $beneficiarioTemp->id_beneficiario_temporal;
                         Yii::app()->user->setFlash('success', "Beneficiario Temporal " . $nombre_completo . " Registrado !!");

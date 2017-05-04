@@ -103,8 +103,10 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
         echo '<select class="form-control" id="EmpadronadorCenso_empadronador_usuario_id" name="EmpadronadorCenso[empadronador_usuario_id]"  placeholder="Empadronador">';
         echo '<option value="">SELECCIONE</option>';
         foreach ($n as $result):
-            if ($result->iduser != 1 && $result->iduser != 2) {
-                echo '<option value="' . $result->iduser . '">' . $result->username . '</option>';
+            if ($result->iduser != 1 && $result->iduser != 2 ) {
+                 if ($result->state !=2){
+                    echo '<option value="' . $result->iduser . '">' . $result->username . '</option>';
+                }
             }
         endforeach;
         echo '</select>';

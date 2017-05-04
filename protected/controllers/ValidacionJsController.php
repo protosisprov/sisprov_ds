@@ -112,7 +112,7 @@ class ValidacionJsController extends Controller {
                 }
             } else {
 
-                //echo '<pre>';var_dump($result);die;
+//                echo '<pre>';var_dump($result);die;
                 echo CJSON::encode($result);
             }
         } else {
