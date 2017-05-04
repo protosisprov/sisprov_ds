@@ -142,7 +142,6 @@ class BeneficiarioController extends Controller {
     //PRECARGADO DE DATOS PARA INICIO DE CENSO EN VIEW EMPADRONADOR
     
     public function actionCreateCenso($id) {
-        
         $model = new Beneficiario;
         $desarrollo = new Desarrollo;
         $vivienda = new Vivienda;
@@ -152,6 +151,7 @@ class BeneficiarioController extends Controller {
         $parroquia = new Tblparroquia;
 
         $beneficiarioTmp = BeneficiarioTemporal::model()->findByPk($id);
+        // var_dump($beneficiarioTmp);  die();
 
 
 
@@ -159,10 +159,11 @@ class BeneficiarioController extends Controller {
 // $this->performAjaxValidation($model);
 
         if (isset($_POST['Beneficiario'])) {
-            
+            //echo 'paso2';  die();
             $model->attributes = $_POST['Beneficiario'];
             $Existe = BeneficiarioTemporal::model()->findByPk($model->beneficiario_temporal_id);
             
+        
             if (empty($Existe)) {
                 $this->render('create', array(
                     'model' => $model, 'desarrollo' => $desarrollo, 'municipio' => $municipio, 'estado' => $estado, 'parroquia' => $parroquia, 'unidad_familiar' => $unidad_familiar, 'vivienda' => $vivienda, 'error' => 1
@@ -259,6 +260,7 @@ class BeneficiarioController extends Controller {
                 }
             }
         }
+        //echo 'paso3';  die();
         $this->render('createCenso', array('beneficiarioTmp' => $beneficiarioTmp,
             'model' => $model, 'desarrollo' => $desarrollo, 'municipio' => $municipio, 'estado' => $estado, 'parroquia' => $parroquia, 'unidad_familiar' => $unidad_familiar, 'vivienda' => $vivienda
         ));

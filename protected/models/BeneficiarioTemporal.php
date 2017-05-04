@@ -143,20 +143,22 @@ class BeneficiarioTemporal extends CActiveRecord {
     
     /* --------------------------------------------- */
 
-    public function getBeneficiarioTemp($nacionalidad, $cedula) {
-
-        $SLQ = "select bt.desarrollo_id,bt.vivienda_id,bt.nacionalidad,bt.cedula,uh.nombre As nombre_unidad,des.nombre As Desarrollo from beneficiario_temporal bt 
-inner join unidad_habitacional uh on bt.unidad_habitacional_id = uh.id_unidad_habitacional
-left  join desarrollo des on uh.desarrollo_id = des.id_desarrollo
-inner join vivienda on bt.vivienda_id = vivienda.id_vivienda WHERE bt.nacionalidad ='" . $nacionalidad . "' AND bt.cedula = " . $cedula;
-        $result = Yii::app()->dbOarcle->createCommand($SLQ)->queryRow();
-
-        if (empty($result)) {
-            return 1;
-        } else {
-            return $result;
-        }
-    }
+//    public function getBeneficiarioTemp($nacionalidad, $cedula) {
+//
+//        $SLQ = "select bt.desarrollo_id,bt.vivienda_id,bt.nacionalidad,bt.cedula,uh.nombre As nombre_unidad,des.nombre As Desarrollo from beneficiario_temporal bt 
+//inner join unidad_habitacional uh on bt.unidad_habitacional_id = uh.id_unidad_habitacional
+//left  join desarrollo des on uh.desarrollo_id = des.id_desarrollo
+//inner join vivienda on bt.vivienda_id = vivienda.id_vivienda WHERE bt.nacionalidad ='" . $nacionalidad . "' AND bt.cedula = " . $cedula;
+//        
+//        
+//        $result = Yii::app()->dbOarcle->createCommand($SLQ)->queryRow();
+//
+//        if (empty($result)) {
+//            return 1;
+//        } else {
+//            return $result;
+//        }
+//    }
 
     /* ---------------------------------------------- */
 

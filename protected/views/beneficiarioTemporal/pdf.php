@@ -12,7 +12,14 @@
 	    return $saime['NACIONALIDAD']." - ".$saime['CEDULA'];
 	}
 
-    $persona = (object) ConsultaOracle::getPersonaBeneficiario($model->nacionalidad, $model->cedula);
+    $persona = Persona::model()->findByAttributes(array('nacionalidad' => $model->nacionalidad, 'cedula' => $model->cedula));
+    if($persona->fecha_nacimiento == null){ $nac="No Posee"; }else{    $nac=Yii::app()->dateFormatter->format("d/MM/y", strtotime($persona->fecha_nacimiento)); } 
+    if($persona->telf_habitacion == null){ $tlf_h = "No Posee"; }else{$persona->telf_habitacion; }
+    if($persona->telf_celular == null){ $tlf_c = "No Posee"; }else{$persona->telf_celular; }
+    if($persona->correo_electronico == null){ $correo = "No Posee"; }else{$persona->correo_electronico; };
+    
+    
+    
 ?>
 
 <?php
@@ -23,7 +30,7 @@ $cabecera = '<img src="' . Yii::app()->request->baseUrl . '/images/cintillo.jpg"
 
 $html.="<table align='right' width='100%' border='0'>       
     <tr >
-                <td colspan='3' align='center'><b><font size='6' color='#B40404'>Beneficiario:</font><font size='6'> ".nombre('PRIMER_NOMBRE',$model->persona_id)." ".apellido('PRIMER_APELLIDO',$model->persona_id)." /" . date('d-m-Y') ." </font></td>
+                
         <br/>
                 <br/>
                 </td>
@@ -39,12 +46,12 @@ $html.="<table align='right' width='100%' border='0'>
             </tr>
             <tr>
                     <td>
-                            <span class='subtitulo'>Nombre:</span> &nbsp;&nbsp;&nbsp;&nbsp;".nombre('PRIMER_NOMBRE',$model->persona_id)."<br>
-                            <span class='subtitulo'>Apellido:</span> &nbsp;&nbsp; ".apellido('PRIMER_APELLIDO',$model->persona_id)."<br>
-                            <span class='subtitulo'>Cédula de Identidad:</span> &nbsp;".nacionalidadCedula('NACIONALIDAD','CEDULA', $model->persona_id)."<br>
-                            <span class='subtitulo'>Teléfono Habitación:</span> &nbsp;".$persona->TELEFONOHAB."<br>
-                            <span class='subtitulo'>Teléfono Celular:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$persona->TELEFONOMOVIL."<br>
-                            <span class='subtitulo'>Correo Electrónico:</span> &nbsp;&nbsp;&nbsp;".$persona->CORREO."<br>
+                            <span class='subtitulo'>Nombres y Apellidos:</span> ".$model->nombre_completo."<br>
+                            <span class='subtitulo'>Cédula de Identidad:</span> &nbsp;&nbsp;".$persona->cedula."<br>
+                            <span class='subtitulo'>Fecha de Nacimiento:</span> &nbsp;".$nac."<br>
+                            <span class='subtitulo'>Teléfono Habitación:</span> &nbsp;&nbsp;".$persona->telf_habitacion."<br>  
+                            <span class='subtitulo'>Teléfono Celular:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$persona->telf_celular."<br> 
+                            <span class='subtitulo'>Correo Electrónico:</span> &nbsp;&nbsp;&nbsp;&nbsp;".$persona->correo_electronico."<br>        
                     </td>
                     
             </tr>

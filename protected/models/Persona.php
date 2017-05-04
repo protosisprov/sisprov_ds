@@ -44,7 +44,7 @@ class Persona extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('persona_id_faov, nacionalidad, cedula, primer_nombre, primer_apellido, fk_sexo, telf_habitacion, fecha_creacion, fecha_actualizacion, usuario_id_creacion', 'required'),
+			array('persona_id_faov, nacionalidad, cedula, primer_nombre, primer_apellido, fecha_creacion, fecha_actualizacion, usuario_id_creacion', 'required'),
 			array('persona_id_faov, nacionalidad, cedula, fk_sexo, fk_estado_civil, usuario_id_creacion, usuario_id_actualizacion', 'numerical', 'integerOnly'=>true),
 			array('primer_nombre, segundo_nombre, primer_apellido, segundo_apellido', 'length', 'max'=>20),
 			array('telf_habitacion, telf_celular', 'length', 'max'=>12),

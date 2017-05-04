@@ -166,7 +166,7 @@ $this->widget('booster.widgets.TbGridView', array(
                     'label' => 'Ver Crédito',
                     'icon' => 'glyphicon glyphicon-link',
                     'size' => 'medium',
-                    'visible' => '((Yii::app()->user->checkAccess("action_analisiscredito_create")))',
+                    'visible' => '((Yii::app()->user->checkAccess("action_analisiscredito_create")) && (VswAsignacionesCasos::buscarEstatus($data->id_beneficiario) == "ANALIZADO") || (VswAsignacionesCasos::buscarEstatus($data->id_beneficiario) == "ENVIADO A DOCUMENTACION") || $data->estatus == "ANALIZADO"  || $data->estatus == "ENVIADO A DOCUMENTACION" )',
                     'url' => 'Yii::app()->createUrl("/analisisCredito/ViewAnalisisCredito", array("id"=>$data->id_beneficiario))',
 //                    'visible' => 'traza($data->id_beneficiario)==100'
                 ),
@@ -176,7 +176,7 @@ $this->widget('booster.widgets.TbGridView', array(
                     'size' => 'medium',
                     'visible' => '((Yii::app()->user->checkAccess("action_analisiscredito_create")) && $data->estatus == "ASIGNADO"  || $data->estatus == "DEVUELTO")',
                     'url' => 'Yii::app()->createUrl("/analisisCredito/create", array("id"=>$data->id_beneficiario))',
-//                    'visible' => 'traza($data->id_beneficiario)==100'
+//                   'visible' => 'traza($data->id_beneficiario)==100'
                 ),
                 'alterfuentefinan' => array(
                     'label' => 'Cambiar Fuente de Financiamiento',

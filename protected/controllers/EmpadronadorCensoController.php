@@ -34,10 +34,10 @@ class EmpadronadorCensoController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate($id) {
-        $vistaEmpadronador= new VswEmpadronadorCensos;
+        $vistaEmpadronador = new VswEmpadronadorCensos;
         $model = new EmpadronadorCenso;
         $asignacionC = AsignacionCenso::model()->findByPk($id);
-        
+
         $model->Des = $asignacionC->desarrollo->nombre;
         $model->parqDes = $asignacionC->desarrollo->fkParroquia->strdescripcion;
         $model->munDes = $asignacionC->desarrollo->fkParroquia->clvmunicipio0->strdescripcion;
@@ -57,7 +57,7 @@ class EmpadronadorCensoController extends Controller {
 
         $this->render('create', array(
             'model' => $model, 'asignacionC' => $asignacionC,
-            'unidadHab' => $unidadHab, 'vistaEmpadronador'=>$vistaEmpadronador
+            'unidadHab' => $unidadHab, 'vistaEmpadronador' => $vistaEmpadronador
         ));
     }
 
@@ -66,6 +66,28 @@ class EmpadronadorCensoController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
+    public function actionReasignacionEmpadronador($id, $iduser, $idasignacioncenso) {
+        $vswEmpadronador = VswEmpadronadorCensos::model()->findByAttributes(array('id_beneficiario_temporal' => $id));
+        $EmpadronadorCenso = EmpadronadorCenso::model()->findByAttributes(array('asignacion_censo_id' => $idasignacioncenso));
+        $model = new VswEmpadronadorCensos;
+        $model->nombre_desarrollo = $vswEmpadronador->nombre_desarrollo;
+        $model->nombre_unidad_multifamiliar = $vswEmpadronador->nombre_unidad_multifamiliar;
+        $model->nombre_adjudicado = $vswEmpadronador->nombre_adjudicado;
+        $model->iduser = $vswEmpadronador->iduser;
+        $model->Emp = $vswEmpadronador->empadronador_usuario;
+        if (isset($_POST['VswEmpadronadorCensos'])) {
+            EmpadronadorCenso::model()->updateByPk($EmpadronadorCenso->id_empadronador_censo, array(
+                'empadronador_usuario_id' => $_POST['EmpadronadorCenso']['empadronador_usuario_id'],
+                'fecha_actualizacion' => 'now()',
+                    )
+            );
+            $this->redirect(array('/empadronadorCenso/create/', 'id' => $_GET['idasignacioncenso']));
+        }
+        $this->render('reasignacionEmpadronador', array(
+            'model' => $model, 'vswEmpadronador' => $vswEmpadronador
+        ));
+    }
+
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
 

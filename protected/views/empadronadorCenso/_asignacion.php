@@ -159,8 +159,24 @@ Yii::app()->clientScript->registerScript('grupoFamiliar', "
                     'name' => 'empadronador_usuario',
                     'value' => '$data->empadronador_usuario',
                 ),
+                array(
+                    'class' => 'booster.widgets.TbButtonColumn',
+                    'header' => 'Acciones',
+                    'htmlOptions' => array('width' => '85', 'style' => 'text-align: center;'),
+                    'template' => '{reasignacionEmpadronador}',
+                    'buttons' => array(
+                    'reasignacionEmpadronador' => array(
+                    'label' => 'Re-Asignación Empadronador',
+                    'icon' => 'glyphicon glyphicon-new-window',
+                    'size' => 'medium',
+                    'url' => 'Yii::app()->createUrl("empadronadorCenso/reasignacionEmpadronador/", array("id"=>$data->id_beneficiario_temporal, "iduser" => $data->iduser, "idasignacioncenso" => '.$asignacionC->id_asignacion_censo.' ))',
+                ),                
+                    ),
+            ),
+                
             ),
         ));
+        
         ?>
     </div>
 </div>
