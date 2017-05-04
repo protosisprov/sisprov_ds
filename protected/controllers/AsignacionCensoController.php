@@ -113,84 +113,27 @@ class AsignacionCensoController extends Controller {
             'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia
         ));
     }
-
-    /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
-//    public function actionUpdate($id) {
-//        $model = $this->loadModel($id);
-//        $model->fecha_asignacion = date('d/m/Y', strtotime($model->fecha_asignacion));
-//        $estado = new Tblestado;
-//        $municipio = new Tblmunicipio;
-//        $parroquia = new Tblparroquia;
-//// Uncomment the following line if AJAX validation is needed
-//// $this->performAjaxValidation($model);
-//        $consulta = ConsultaOracle::BuscarPersona('nacionalidad,cedula,primer_nombre, segundo_nombre,primer_apellido, segundo_apellido', $model->persona_id);
-//        $model->nacionalidad = ($consulta['NACIONALIDAD'] == 1) ? 97 : 98;
-//        $model->cedula = $consulta['CEDULA'];
-//        $model->primer_nombre = $consulta['PRIMER_NOMBRE'];
-//        $model->segundo_nombre = $consulta['SEGUNDO_NOMBRE'];
-//        $model->primer_apellido = $consulta['PRIMER_APELLIDO'];
-//        $model->segundo_apellido = $consulta['SEGUNDO_APELLIDO'];
-//        if (isset($_POST['AsignacionCenso'])) {
-//            if (empty($_POST['AsignacionCenso']['persona_id'])) {
-//                $idAsignacion = ConsultaOracle::insertPersona(array(
-//                            'CEDULA' => $_POST['AsignacionCenso']['cedula'],
-//                            'NACIONALIDAD' => ($_POST['AsignacionCenso']['nacionalidad'] == 97) ? 1 : 0,
-//                            'PRIMER_NOMBRE' => trim(strtoupper($_POST['AsignacionCenso']['primer_nombre'])),
-//                            'SEGUNDO_NOMBRE' => trim(strtoupper($_POST['AsignacionCenso']['segundo_nombre'])),
-//                            'PRIMER_APELLIDO' => trim(strtoupper($_POST['AsignacionCenso']['primer_apellido'])),
-//                            'SEGUNDO_APELLIDO' => trim(strtoupper($_POST['AsignacionCenso']['segundo_apellido'])),
-//                            'FECHA_NACIMIENTO' => $_POST['AsignacionCenso']['fecha_nac'],
-//                                )
-//                );
-//            } else {
-//                $idAsignacion = $_POST['AsignacionCenso']['persona_id'];
-//            }
-////            $ExisteAsignacion = AsignacionCensoController::FindByIdPersona($idAsignacion);
-////            echo '<pre>';
-////            var_dump($ExisteAsignacion);
-////            die();
-////            if (empty($ExisteAsignacion)) {
-//            $model->persona_id = $idAsignacion;
-//            $model->fecha_asignacion = Generico::formatoFecha($_POST['AsignacionCenso']['fecha_asignacion']);
-//            $model->observaciones = trim(strtoupper($_POST['AsignacionCenso']['observaciones']));
-//            $model->fecha_actualizacion = 'now()';
-//            $model->usuario_id_creacion = Yii::app()->user->id;
-//
-//            if ($model->save()) {
-//                $this->redirect(array('view', 'id' => $model->id_asignacion_censo));
-////                    $this->render(array('admin'));
-//            }
-//        }
-//        $this->render('update', array(
-//            'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia
-//        ));
-//    }
-
-    
-    
+ 
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         $model->fecha_asignacion = date('d/m/Y', strtotime($model->fecha_asignacion));
         $estado = new Tblestado;
         $municipio = new Tblmunicipio;
         $parroquia = new Tblparroquia;
+        
+        //var_dump($model); die();
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
-        $consulta = ConsultaOracle::setPersona('nacionalidad,cedula,primer_nombre, segundo_nombre,primer_apellido, segundo_apellido', $model->persona_id);
-        $model->nacionalidad = ($consulta['NACIONALIDAD'] == 1) ? 97 : 98;
-        $model->cedula = $consulta['CEDULA'];
-        $model->primer_nombre = $consulta['PRIMER_NOMBRE'];
-        $model->segundo_nombre = $consulta['SEGUNDO_NOMBRE'];
-        $model->primer_apellido = $consulta['PRIMER_APELLIDO'];
-        $model->segundo_apellido = $consulta['SEGUNDO_APELLIDO'];
+        $consulta = Persona::model()->findByAttributes(array('id_persona' => $model->persona_id));
+        $model->nacionalidad = ($consulta['nacionalidad'] == 97) ? 97 : 98;
+        $model->cedula = $consulta['cedula'];
+        $model->primer_nombre = $consulta['primer_nombre'];
+        $model->segundo_nombre = $consulta['segundo_nombre'];
+        $model->primer_apellido = $consulta['primer_apellido'];
+        $model->segundo_apellido = $consulta['segundo_apellido'];
         if (isset($_POST['AsignacionCenso'])) {
-//        var_dump($_POST); die();
             if ($_POST['AsignacionCenso']['persona_id'] == '') {
-                $idPersona = ConsultaOracle::BuscarPersona(array(
+                $idPersona = ConsultaOracle::updatePersona(array(
                             'CEDULA' => $_POST['AsignacionCenso']['cedula'],
                             'NACIONALIDAD' => ($_POST['AsignacionCenso']['nacionalidad'] == 97) ? 1 : 0,
                             'PRIMER_NOMBRE' => trim(strtoupper($_POST['AsignacionCenso']['primer_nombre'])),
@@ -202,6 +145,8 @@ class AsignacionCensoController extends Controller {
                 );
             } else {
                 $idPersona = $_POST['AsignacionCenso']['persona_id'];
+                $idAsignacion = $_POST['AsignacionCenso']['persona_id'];
+                /// var_dump($model); die();      
             }
 
             $model->persona_id = $idAsignacion;
@@ -219,16 +164,14 @@ class AsignacionCensoController extends Controller {
             'model' => $model, 'estado' => $estado, 'municipio' => $municipio, 'parroquia' => $parroquia
         ));
     }
-    
-    
+
     //FUNCION PARA LA REASIGNACION DE OFICINA 
     public function actionCreateReasignacion($id) {
         $model = new AsignacionCenso;
         $estado = new Tblestado;
         $municipio = new Tblmunicipio;
         $parroquia = new Tblparroquia;
-
-
+        $persona = new Persona;
 
         $model = $this->loadModel($id);
         $model->fecha_asignacion = date('d/m/Y', strtotime($model->fecha_asignacion));
@@ -236,52 +179,80 @@ class AsignacionCensoController extends Controller {
         $municipio = new Tblmunicipio;
         $parroquia = new Tblparroquia;
 
-        $consulta = ConsultaOracle::setPersona('nacionalidad,cedula,primer_nombre, segundo_nombre,primer_apellido, segundo_apellido', $model->persona_id);
-        $model->nacionalidad = ($consulta['NACIONALIDAD'] == 1) ? 97 : 98;
-        $model->cedula = $consulta['CEDULA'];
-        $model->primer_nombre = $consulta['PRIMER_NOMBRE'];
-        $model->segundo_nombre = $consulta['SEGUNDO_NOMBRE'];
-        $model->primer_apellido = $consulta['PRIMER_APELLIDO'];
-        $model->segundo_apellido = $consulta['SEGUNDO_APELLIDO'];
-        if (isset($_POST['AsignacionCenso'])) {
-            if (empty($_POST['AsignacionCenso']['persona_id'])) {
-                $idAsignacion = ConsultaOracle::insertPersona(array(
-                            'CEDULA' => $_POST['AsignacionCenso']['cedula'],
-                            'NACIONALIDAD' => ($_POST['AsignacionCenso']['nacionalidad'] == 97) ? 1 : 0,
-                            'PRIMER_NOMBRE' => trim(strtoupper($_POST['AsignacionCenso']['primer_nombre'])),
-                            'SEGUNDO_NOMBRE' => trim(strtoupper($_POST['AsignacionCenso']['segundo_nombre'])),
-                            'PRIMER_APELLIDO' => trim(strtoupper($_POST['AsignacionCenso']['primer_apellido'])),
-                            'SEGUNDO_APELLIDO' => trim(strtoupper($_POST['AsignacionCenso']['segundo_apellido'])),
-                            'FECHA_NACIMIENTO' => $_POST['AsignacionCenso']['fecha_nac'],
+        $consulta = Persona::model()->findByAttributes(array('id_persona' => $model->persona_id));
+        $model->nacionalidad = ($consulta['nacionalidad'] == 97) ? 97 : 98;
+        $model->cedula = $consulta['cedula'];
+        $model->primer_nombre = $consulta['primer_nombre'];
+        $model->segundo_nombre = $consulta['segundo_nombre'];
+        $model->primer_apellido = $consulta['primer_apellido'];
+        $model->segundo_apellido = $consulta['segundo_apellido'];
+
+        if (isset($_POST['AsignacionCenso'])) { // es el post- traigo datos  
+            if ($id == '') { //si no esta registro en persona TABLA ASIGNACIONCENSO   
+            } else { //si esta cambio estatus inactivo y registro de nuevo
+//                 $modelddd = AsignacionCenso::model()->findByPk($id);
+                $modelUpdate = AsignacionCenso::model()->updateByPk($model->id_asignacion_censo, array(
+                    'estatus' => 12,
+                    'usuario_id_creacion' => Yii::app()->user->id,
+                    'fecha_actualizacion' => 'now()'
+                ));
+            }
+            //// aqui empiezo a insertat persona
+            $consultaNuevaPersona = Persona::model()->findByAttributes(array('nacionalidad' => $_POST["AsignacionCenso"]["nacionalidad"], 'cedula' => $_POST["AsignacionCenso"]["cedula"]));
+            if (isset($consultaNuevaPersona)) { // si tiene datos es que la persona esta registrada y tiene su ID TABAL PERSONA
+                $id_persona = $consultaNuevaPersona->id_persona;
+            } else {
+                $idPersonaFaov = ConsultaOracle::BuscarPersona(array(
+                            'CEDULA' => $_POST["AsignacionCenso"]["cedula"],
+                            'NACIONALIDAD' => ($_POST["AsignacionCenso"]['nacionalidad'] == 97) ? 1 : 0,
+                            'PRIMER_NOMBRE' => trim(strtoupper($_POST["AsignacionCenso"]['primer_nombre'])),
+                            'SEGUNDO_NOMBRE' => trim(strtoupper($_POST["AsignacionCenso"]['segundo_nombre'])),
+                            'PRIMER_APELLIDO' => trim(strtoupper($_POST["AsignacionCenso"]['primer_apellido'])),
+                            'SEGUNDO_APELLIDO' => trim(strtoupper($_POST["AsignacionCenso"]['segundo_apellido'])),
                                 )
                 );
-            } else {
-                $idAsignacion = $_POST['AsignacionCenso']['persona_id'];
+                $persona = new Persona;
+                
+                $persona->persona_id_faov = (isset($idPersonaFaov)) ? $idPersonaFaov : 0;
+                $persona->nacionalidad = (int) $_POST["AsignacionCenso"]["nacionalidad"];
+                $persona->cedula = (int) $_POST["AsignacionCenso"]["cedula"];
+                $persona->primer_nombre = $_POST["AsignacionCenso"]["primer_nombre"];
+                $persona->segundo_nombre = $_POST["AsignacionCenso"]["segundo_nombre"];
+                $persona->primer_apellido = $_POST["AsignacionCenso"]["primer_apellido"];
+                $persona->segundo_apellido = $_POST["AsignacionCenso"]["segundo_apellido"];
+                $persona->fecha_nacimiento = $_POST["AsignacionCenso"]["fecha_nac"];
+                $persona->fecha_creacion = 'now()';
+                $persona->fecha_actualizacion = 'now()';
+                $persona->usuario_id_creacion = Yii::app()->user->id;
+                $persona->usuario_id_actualizacion = Yii::app()->user->id;
+                if ($persona->save()) {
+                    $id_persona = $persona->id_persona; //id persona de SISPROV
+                    //registramos persona
+                } else {
+                    echo "<pre>";
+                    var_dump($persona->Errors);
+                    exit;
+                }
             }
-
-            $model->fecha_actualizacion = 'now()';
-            $model->usuario_id_creacion = Yii::app()->user->id;
-            $model->estatus = 12;
-
-            $nuevoInsert = new AsignacionCenso;
-
-            if ($model->save()) {
-
-
-                $nuevoInsert->persona_id = $idAsignacion;
-                $nuevoInsert->desarrollo_id = $_POST['AsignacionCenso']['desarrollo_id'];
-                $nuevoInsert->fecha_asignacion = Generico::formatoFecha($_POST['AsignacionCenso']['fecha_asignacion']);
-                $nuevoInsert->observaciones = trim(strtoupper($_POST['AsignacionCenso']['observaciones']));
-                $nuevoInsert->oficina_id = $_POST['AsignacionCenso_oficina_id'];
-                $nuevoInsert->censado = isset($_POST['censado']) ? true : false;
-                $nuevoInsert->fecha_creacion = 'now()';
-                $nuevoInsert->fecha_actualizacion = 'now()';
-                $nuevoInsert->usuario_id_creacion = Yii::app()->user->id;
-                $nuevoInsert->estatus = 11;
-
-                if ($nuevoInsert->save()) {
-
-                    $this->redirect(array('view', 'id' => $nuevoInsert->id_asignacion_censo));
+            if (isset($id_persona)) {
+                $model->attributes = $_POST['AsignacionCenso'];
+                $model->desarrollo_id = $_POST['AsignacionCenso']['desarrollo_id'];
+                $model->persona_id = $id_persona;
+                $model->oficina_id = $_POST['AsignacionCenso_oficina_id'];
+                $model->censado = isset($_POST['censado']) ? true : false;
+                $model->fecha_asignacion = Generico::formatoFecha($_POST['AsignacionCenso']['fecha_asignacion']);
+                $model->observaciones = $_POST['AsignacionCenso']['observaciones'];
+                $model->censado = isset($_POST['censado']) ? true : false;
+                $model->fecha_creacion = 'now()';
+                $model->fecha_actualizacion = 'now()';
+                $model->usuario_id_creacion = Yii::app()->user->id;
+                $model->estatus = 11;
+                if ($model->save()) {
+                    $this->redirect(array('view', 'id' => $model->id_asignacion_censo));
+                } else {
+                    echo "<pre>";
+                    var_dump($model->Errors);
+                    exit;
                 }
             }
         }
@@ -355,12 +326,16 @@ class AsignacionCensoController extends Controller {
     }
 
     public function actionPdf($id) {
+        $model = $this->loadModel($id);
+        $consultaNuevaPersona = Persona::model()->findByAttributes(array('id_persona' => $model->persona_id));
+//        var_dump($consultaNuevaPersona); die();
         $estado = new Tblestado;
         $municipio = new Tblmunicipio;
         $this->render('pdf', array(
-            'model' => $this->loadModel($id),
+            'model' => $model,
             'estado' => $estado,
             'municipio' => $municipio,
+            'consultaNuevaPersona' => $consultaNuevaPersona,
         ));
     }
 

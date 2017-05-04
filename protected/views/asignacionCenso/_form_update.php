@@ -114,18 +114,19 @@
 
     <div class='col-md-3'>
         <?php
-        echo $form->dropDownListGroup($model, 'nacionalidad', array('wrapperHtmlOptions' => array('class' => 'col-sm-12'),
+        echo $form->dropDownListGroup($model, 'nacionalidad', array('wrapperHtmlOptions' => array('class' => 'col-sm-12 limpiar'),
             'widgetOptions' => array(
                 'data' => Maestro::FindMaestrosByPadreSelect(96, 'descripcion DESC'),
-                'htmlOptions' => array('empty' => 'SELECCIONE'),
+                'htmlOptions' => array('empty' => 'SELECCIONE', 'disabled' => true),
+               
             )
                 )
         );
-        ?>
+        ?> 
     </div>
     <div class='col-md-3'>
         <?php
-        echo $form->textFieldGroup($model, 'cedula', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'maxlength' => 8,
+        echo $form->textFieldGroup($model, 'cedula', array('widgetOptions' => array('htmlOptions' => array('class' => 'span5', 'readonly' => true, 'maxlength' => 8,
                     'onblur' => "buscarPersonaAsignacionCenso($('#AsignacionCenso_nacionalidad').val(),$(this).val())"
         ))));
         ?>

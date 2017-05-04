@@ -15,6 +15,12 @@ function nacionalidadCedula($selec, $select2, $iD) {
     return $saime['NACIONALIDAD'] . " - " . $saime['CEDULA'];
 }
 
+
+    if($consultaNuevaPersona->fecha_nacimiento == null){ $nac="No Posee"; }else{    $nac=Yii::app()->dateFormatter->format("d/MM/y", strtotime($consultaNuevaPersona->fecha_nacimiento)); } 
+    if($consultaNuevaPersona->telf_habitacion == null){ $tlf_h = "No Posee"; }else{$tlf_h =$consultaNuevaPersona->telf_habitacion; }
+    if($consultaNuevaPersona->telf_celular == null){ $tlf_c = "No Posee"; }else{$tlf_c=$consultaNuevaPersona->telf_celular; }
+    if($consultaNuevaPersona->correo_electronico == null){ $correo = "No Posee"; }else{$correo =$consultaNuevaPersona->correo_electronico; };
+
 ?>
 <?php
 
@@ -36,7 +42,7 @@ $html.="<table align='right' width='100%' border='0'>
                                         <tr><td colspan='3'></td></tr><tr><td colspan='3'></td></tr>
             
                              <tr>
-                                        <td colspan='3' align='center'><b>Lugar a Censar</b></td>
+                                        <td colspan='3' align='center'><b>LUGAR A CENSAR</b></td>
                              </tr>
 			<tr>
 				<td>
@@ -59,17 +65,19 @@ $html.="<table align='right' width='100%' border='0'>
                                 <br/>
                                 <br/>
 			<tr>
-                                 <td colspan='3' align='center'><b>Persona Asignada</b></td>
+                                 <td colspan='3' align='center'><b>PERSONA ASIGNADA</b></td>
 			</tr>
                         <br/>
                                 <br/>
 			<tr>
-				<td>
-					<span class='subtitulo'><b>Nombre:</b></span> " . nombre('PRIMER_NOMBRE', $model->persona_id) . "
-					<br>
-					<span class='subtitulo'><b>Apellido:</b></span> " . apellido('PRIMER_APELLIDO', $model->persona_id) . "
-					<br>
-					<span class='subtitulo'><b>Cedula de Identidad:</b></span> " . nacionalidadCedula('NACIONALIDAD', 'CEDULA', $model->persona_id) . "
+				<td>                                   
+                                        <span class='subtitulo'>Nombres:</span> ".$consultaNuevaPersona->primer_nombre." ".$consultaNuevaPersona->segundo_nombre."<br>
+                                        <span class='subtitulo'>Apellidos:</span> ".$consultaNuevaPersona->primer_apellido." ".$consultaNuevaPersona->segundo_apellido."<br>
+                                        <span class='subtitulo'>Cédula de Identidad:</span> &nbsp;&nbsp;".$consultaNuevaPersona->cedula."<br>
+                                        <span class='subtitulo'>Fecha de Nacimiento:</span> &nbsp;".$nac."<br>
+                                        <span class='subtitulo'>Teléfono Habitación:</span> &nbsp;&nbsp;".$tlf_h."<br>  
+                                        <span class='subtitulo'>Teléfono Celular:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$tlf_c."<br> 
+                                        <span class='subtitulo'>Correo Electrónico:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$correo ."<br>  
 				</td>
 				
 				

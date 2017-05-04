@@ -1,19 +1,19 @@
 <?php
 
-function nombre($selec, $iD) {
-    $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
-    return $saime['PRIMER_NOMBRE'];
-}
-
-function apellido($selec, $iD) {
-    $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
-    return $saime['PRIMER_APELLIDO'];
-}
-
-function nacionalidadCedula($selec, $select2, $iD) {
-    $saime = ConsultaOracle::getNacionalidadCedulaPersonaByPk($selec, $select2, (int) $iD);
-    return $saime['NACIONALIDAD'] . " - " . $saime['CEDULA'];
-}
+//function nombre($selec, $iD) {
+//    $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
+//    return $saime['PRIMER_NOMBRE'];
+//}
+//
+//function apellido($selec, $iD) {
+//    $saime = ConsultaOracle::getPersonaByPk($selec, (int) $iD);
+//    return $saime['PRIMER_APELLIDO'];
+//}
+//
+//function nacionalidadCedula($selec, $select2, $iD) {
+//    $saime = ConsultaOracle::getNacionalidadCedulaPersonaByPk($selec, $select2, (int) $iD);
+//    return $saime['NACIONALIDAD'] . " - " . $saime['CEDULA'];
+//}
 
 $fecha_asignacion = substr($model->fecha_asignacion, 0, 10);
 $invert = explode("-", $fecha_asignacion);
@@ -28,9 +28,8 @@ $fecha_invert = $invert[2] . "-" . $invert[1] . "-" . $invert[0];
 //var_dump($persona);
 //die;
 
-
-
 ?>
+
 <div class="row">
     <div class="col-md-12">
         <h4><i class="glyphicon glyphicon-globe"></i> Lugar a Censar</h4>
@@ -74,6 +73,19 @@ $fecha_invert = $invert[2] . "-" . $invert[1] . "-" . $invert[0];
         <div class='col-md-4'> 
             <blockquote>
                 <b>Fecha de Asignación:</b> <?php echo Yii::app()->dateFormatter->format("d/M/y - hh:mm a", strtotime($model->fecha_asignacion)) ?><br/>
+                </p>
+            </blockquote>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4><i class="glyphicon glyphicon-user"></i> Observaciones del Analista</h4>
+        <div class='col-md-8'> 
+            <blockquote>
+                <p>
+                    <b>  Observaciones:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo "$model->observaciones" ?><br/>
+                    
                 </p>
             </blockquote>
         </div>

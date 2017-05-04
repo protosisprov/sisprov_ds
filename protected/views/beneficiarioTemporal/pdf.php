@@ -14,9 +14,9 @@
 
     $persona = Persona::model()->findByAttributes(array('nacionalidad' => $model->nacionalidad, 'cedula' => $model->cedula));
     if($persona->fecha_nacimiento == null){ $nac="No Posee"; }else{    $nac=Yii::app()->dateFormatter->format("d/MM/y", strtotime($persona->fecha_nacimiento)); } 
-    if($persona->telf_habitacion == null){ $tlf_h = "No Posee"; }else{$persona->telf_habitacion; }
-    if($persona->telf_celular == null){ $tlf_c = "No Posee"; }else{$persona->telf_celular; }
-    if($persona->correo_electronico == null){ $correo = "No Posee"; }else{$persona->correo_electronico; };
+    if($persona->telf_habitacion == null){ $tlf_h = "No Posee"; }else{$tlf_h =$persona->telf_habitacion; }
+    if($persona->telf_celular == null){ $tlf_c = "No Posee"; }else{$tlf_c =$persona->telf_celular; }
+    if($persona->correo_electronico == null){ $correo = "No Posee"; }else{$correo =$persona->correo_electronico; };
     
     
     
@@ -49,9 +49,9 @@ $html.="<table align='right' width='100%' border='0'>
                             <span class='subtitulo'>Nombres y Apellidos:</span> ".$model->nombre_completo."<br>
                             <span class='subtitulo'>Cédula de Identidad:</span> &nbsp;&nbsp;".$persona->cedula."<br>
                             <span class='subtitulo'>Fecha de Nacimiento:</span> &nbsp;".$nac."<br>
-                            <span class='subtitulo'>Teléfono Habitación:</span> &nbsp;&nbsp;".$persona->telf_habitacion."<br>  
-                            <span class='subtitulo'>Teléfono Celular:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$persona->telf_celular."<br> 
-                            <span class='subtitulo'>Correo Electrónico:</span> &nbsp;&nbsp;&nbsp;&nbsp;".$persona->correo_electronico."<br>        
+                            <span class='subtitulo'>Teléfono Habitación:</span> &nbsp;&nbsp;".$tlf_h->telf_habitacion."<br>  
+                            <span class='subtitulo'>Teléfono Celular:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$tlf_c->telf_celular."<br> 
+                            <span class='subtitulo'>Correo Electrónico:</span> &nbsp;&nbsp;&nbsp;&nbsp;".$correo->correo_electronico."<br>    
                     </td>
                     
             </tr>
