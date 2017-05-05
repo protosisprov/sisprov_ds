@@ -44,6 +44,10 @@ $mascara = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/jqu
                     bootbox.alert('Por favor indique la cedula');
                     return false;
                 }
+                if ($('#AsignacionCenso_oficina_id').val()==''){
+                    bootbox.alert('Por favor seleccione la oficina');
+                    return false;
+                }
             });
              
     $(document).ready(function(){
@@ -67,7 +71,8 @@ $mascara = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/jqu
 
 ") ?>
 
-<h1 class="text-center">Re-Asignación de Censo</h1>
+
+<center><h2>Re-Asignación de Censo<br> <?php echo $model->oficina->nombre; ?></h2></center>
 
 <?php #echo $this->renderPartial('_form', array('model'=>$model)); ?>
 
@@ -97,7 +102,9 @@ $this->widget(
     );
     ?>
 </div>
-
+<p>
+    <b>Nota: Nombre de la Oficina Asignada Actualmente:</b> <?php echo $model->oficina->nombre ?><br/>
+</p>
 <div class="well">
     <div class="pull-center" style="text-align: right;">
         <?php
