@@ -14,6 +14,7 @@ $form = $this->beginWidget('booster.widgets.TbActiveForm', array(
 $baseUrl = Yii::app()->baseUrl;
 $numeros = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/js_jquery.numeric.js');
 $mascara = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/jquery.mask.min.js');
+$Validaciones = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/validacion.js');
 ?>
 <?php Yii::app()->clientScript->registerScript('BeneficiarioTemporal', "
      $(document).ready(function(){
@@ -73,7 +74,95 @@ $mascara = Yii::app()->getClientScript()->registerScriptFile($baseUrl . '/js/jqu
         });
 
         "); ?>
+<?php
+$prue='';
+if (!empty($desarrollo->id_desarrollo)) {
+    
+    $id_unidad = $vivienda->unidad_habitacional_id;
+    $tipo_vivienda_id = $vivienda->tipo_vivienda_id;
+    $id_desarrollo = $desarrollo->id_desarrollo;
+ 
+    $id_parroquia = $desarrollo->parroquia_id;
+    //$id_municipio = $unidad_habitacional->desarrollo->fkParroquia->clvmunicipio0->clvcodigo;
+    
+    $id_municipio = $desarrollo->fkParroquia->clvmunicipio0->clvcodigo;
+    $id_estado = $desarrollo->fkParroquia->clvmunicipio0->clvestado0->clvcodigo;
 
+
+
+Yii::app()->clientScript->registerScript('AdjudicadoContinuar', "
+
+
+        $(document).ready(function(){
+        
+                    
+             
+          $.get('" . CController::createUrl('ValidacionJs/ConsultaEstado') . "', {clvcodigo: " . $id_estado . "}, function(data){
+                $('#Tblestado_clvcodigo').html(data);
+            });
+          $.get('" . CController::createUrl('ValidacionJs/ConsultaMunicipios') . "', {clvcodigo: " . $id_municipio . "}, function(data){
+                $('#Tblmunicipio_clvcodigo').html(data);
+            });
+          $.get('" . CController::createUrl('ValidacionJs/ConsultaParroquias') . "', {clvcodigo: " . $id_parroquia . "}, function(data){
+                $('#Tblparroquia_clvcodigo').html(data);
+                 $('#Tblparroquia_clvcodigo').val(" . $id_parroquia . ");
+            });
+          $.get('" . CController::createUrl('ValidacionJs/BuscarDesarrollo') . "', {desarrollo: " . $id_parroquia . "}, function(data){
+                $('#Desarrollo_id_desarrollo').html(data);
+                $('#Desarrollo_id_desarrollo').val(" . $id_desarrollo . ");
+            });
+            $.get('" . CController::createUrl('ValidacionJs/BuscarUnidadHabitacional') . "', {unidad: " . $id_desarrollo . "}, function(data){
+                $('#BeneficiarioTemporal_unidad_habitacional_id').html(data);
+                $('#BeneficiarioTemporal_unidad_habitacional_id').val(" . $id_unidad . ");
+            });
+            $.get('" . CController::createUrl('ValidacionJs/BuscarUnidadHabitacional') . "', {unidad: " . $id_desarrollo . "}, function(data){
+                $('#BeneficiarioTemporal_unidad_habitacional_id').html(data);
+                $('#BeneficiarioTemporal_unidad_habitacional_id').val(" . $id_unidad . ");
+            });
+
+if((".$tipo_vivienda_id."=='94')||(".$tipo_vivienda_id."=='95')){
+    
+        id_unidad_habiatacional = " . $id_unidad . ";
+        $.ajax({
+            url: '" . CController::createUrl('ValidacionJs/BuscarPisoVivienda') . "',
+            async: true,
+            type: 'POST',
+            data: 'id_unidad_habiatacional='+id_unidad_habiatacional,
+            dataType:'json',
+            success: function(datos){
+                if(datos != 'vacio'){
+                  /*  ++ datos del desarollo habitacional  ++  */
+                    html = '<option value>SELECCIONE</option>';
+                    if(datos.tipo == 84){
+                    /***** SI ES PARCELA ****/
+                      $('#BeneficiarioTemporal_piso').html(html);
+                      $('#BeneficiarioTemporal_vivienda_nro').html(datos.select);
+                      $('#piso_vivienda_select').hide();
+                    }else{
+                      $('#BeneficiarioTemporal_piso').html(datos.select);
+                      $('#BeneficiarioTemporal_vivienda_nro').html(html);
+                      $('#piso_vivienda_select').show();
+                    }
+                    
+                    /*   ++  ++  ++  ++  ++  ++  ++  ++  ++ ++ ++  + */
+                }
+            }
+        });
+
+$('#piso_vivienda_select').show();
+}
+
+ $('#Tblestado_clvcodigo').attr('readonly', true);
+ $('#Tblmunicipio_clvcodigo').attr('readonly', true);
+ $('#Tblparroquia_clvcodigo').attr('readonly', true);
+ 
+
+        });
+
+
+     ");
+}
+?>
 
 <h1>Cargar Nuevo Adjudicado</h1>
 <br><br>
@@ -91,7 +180,14 @@ $this->widget(
 <div class="row">
     <div class="col-md-12">
         <?php
+    
         
+        
+        if (isset($carga_otro)){
+//            
+        }else{
+           $carga_otro=''; 
+        }
                 /*         * ******  Caracteristicas del Desarrollo   ****** */
 
 
@@ -105,7 +201,7 @@ $this->widget(
             'content' => $this->renderPartial('_desarrollo', array(
                 'form' => $form, 'model' => $model,
                 'estado' => $estado, 'municipio' => $municipio,
-                'parroquia' => $parroquia, 'desarrollo' => $desarrollo
+                'parroquia' => $parroquia, 'desarrollo' => $desarrollo, 'carga_otro' => $carga_otro
                     ), TRUE),
                 )
         );
@@ -116,7 +212,7 @@ $this->widget(
         
         /* ------------  Datos Beneficiario  --------- */
 
-
+//        }
 
         $this->widget(
                 'booster.widgets.TbPanel', array(

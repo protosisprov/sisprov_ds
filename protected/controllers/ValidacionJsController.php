@@ -92,9 +92,9 @@ class ValidacionJsController extends Controller {
     }
 
     public function actionBuscarPersonasBeneficiarioTemp() {
+
         $cedula = (int) $_POST['cedula'];
         $nacio = (int) $_POST['nacionalidad'];
-
         $existeTemporal = BeneficiarioTemporal::model()->findByAttributes(array('nacionalidad' => $nacio, 'cedula' => $cedula));
 
         if (empty($existeTemporal)) {
@@ -111,12 +111,15 @@ class ValidacionJsController extends Controller {
                     echo CJSON::encode($saime);
                 }
             } else {
-
 //                echo '<pre>';var_dump($result);die;
                 echo CJSON::encode($result);
             }
         } else {
-            echo CJSON::encode(3); // Existe en temporal
+$desarrollo= VswPersonaVivienda::model()->findByAttributes(array('nacionalidad' => $nacio, 'cedula' => $cedula));
+//            var_dump($desarrollo);die;
+             $salida = array('persona' => 3, 'desarrollo' => $desarrollo);
+            
+            echo CJSON::encode($salida); // Existe en temporal
         }
     }
 
@@ -193,6 +196,32 @@ class ValidacionJsController extends Controller {
     }
 
     /*  /////////////////////////////////////////////////////////////////////// */
+    
+            public function actionConsultaEstado() {
+        $Id = (isset($_POST['Tblestado']['clvcodigo']) ? $_POST['Tblestado']['clvcodigo'] : $_GET['clvcodigo']);
+//        $Selected = isset($_GET['municipio']) ? $_GET['municipio'] : '';
+
+        if (!empty($Id)) {
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('t.clvcodigo = :clvcodigo');
+            $criteria->params = array(':clvcodigo' => $Id);
+            $criteria->order = 't.strdescripcion ASC';
+            $criteria->select = 'clvcodigo, strdescripcion';
+
+            $data = CHtml::listData(Tblestado::model()->findAll($criteria), 'clvcodigo', 'strdescripcion');
+
+            foreach ($data as $id => $value) {
+
+                echo CHtml::tag('option', array('value' => $id), CHtml::encode($value), true);
+                
+            }
+            
+        } else {
+         
+            echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
+        }
+    }
+    
 
     public function actionBuscarMunicipios() {
         $Id = (isset($_POST['Tblestado']['clvcodigo']) ? $_POST['Tblestado']['clvcodigo'] : $_GET['clvcodigo']);
@@ -245,6 +274,7 @@ class ValidacionJsController extends Controller {
         }
     }
     
+    
     public function ConsultaUnidadHabitacional() {
         $Id = (isset($_POST['Tblestado']['clvcodigo']) ? $_POST['Tblestado']['clvcodigo'] : $_GET['unidad']);
         $Selected = isset($_GET['unidad']) ? $_GET['unidad'] : '';
@@ -293,6 +323,31 @@ class ValidacionJsController extends Controller {
                 }
             }
         } else {
+            echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
+        }
+    }
+    
+            public function actionConsultaParroquias() {
+        $Id = (isset($_POST['Tblmunicipio']['clvcodigo']) ? $_POST['Tblmunicipio']['clvcodigo'] : $_GET['clvcodigo']);
+        $Selected = isset($_GET['parroquia']) ? $_GET['parroquia'] : '';
+
+        if (!empty($Id)) {
+            $criteria = new CDbCriteria;
+            $criteria->addCondition('t.clvcodigo = :clvcodigo');
+            $criteria->params = array(':clvcodigo' => $Id);
+            $criteria->order = 't.strdescripcion ASC';
+            $criteria->select = 'clvcodigo, strdescripcion';
+
+            $data = CHtml::listData(Tblparroquia::model()->findAll($criteria), 'clvcodigo', 'strdescripcion');
+
+            foreach ($data as $id => $value) {
+
+                echo CHtml::tag('option', array('value' => $id), CHtml::encode($value), true);
+                
+            }
+            
+        } else {
+         
             echo CHtml::tag('option', array('value' => ''), CHtml::encode('SELECCIONE'), true);
         }
     }

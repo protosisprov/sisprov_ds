@@ -215,17 +215,14 @@ class BeneficiarioTemporalController extends Controller {
 
                 if ($beneficiarioTemp->save()) {
                     if (isset($_POST['CARGAR_OTRO'])) {
-                        
-                        
+                         $desarrolloPrecarga = Desarrollo::model()->findByAttributes(array('id_desarrollo'=> $_POST["Desarrollo"]["id_desarrollo"]));  
                         $this->render('create', array(
-                            'model' => $model,
-                            'desarrollo' => $desarrollo, 'municipio' => $municipio,
-                            'estado' => $estado, 'parroquia' => $parroquia,
+                            'model' => $model,'vivienda' => $vivienda,
+                            'desarrollo' => $desarrolloPrecarga, 'municipio' => $municipio,
+                            'estado' => $estado, 'parroquia' => $parroquia,'carga_otro' => $_POST['CARGAR_OTRO'],
                                 )
                         );
                         Yii::app()->end();
-                    
-//                        echo '<pre>';
                     } else {
                         $id_beneficiarioTemp = $beneficiarioTemp->id_beneficiario_temporal;
                         Yii::app()->user->setFlash('success', "Beneficiario Temporal " . $nombre_completo . " Registrado !!");
@@ -243,6 +240,189 @@ class BeneficiarioTemporalController extends Controller {
                 )
         );
     }
+    
+//     public function actionCreate() { /// yely
+//        $model = new BeneficiarioTemporal;
+//        $desarrollo = new Desarrollo;
+//        $estado = new Tblestado;
+//        $municipio = new Tblmunicipio;
+//        $parroquia = new Tblparroquia;
+//        $persona = new Persona;
+//
+//// Uncomment the following line if AJAX validation is needed
+//// $this->performAjaxValidation($model);
+////         var_dump($_POST);  die();
+////        var_dump($_POST); die,
+////        exit;
+////      echo $_POST["BeneficiarioTemporal"];
+//        if (isset($_POST['BeneficiarioTemporal'])) {
+////
+////            switch ($_POST["BeneficiarioTemporal"]['estado_civil']) {
+////                case 164:
+////                    $edoCivil = 2;
+////                    break;
+////                case 165:
+////                    $edoCivil = 4;
+////                    break;
+////                case 163:
+////                    $edoCivil = 1;
+////                    break;
+////                case 166:
+////                    $edoCivil = 3;
+////                    break;
+////            }
+////            //  var_dump($_POST["BeneficiarioTemporal"]["persona_id"]); die();
+////            /*  - - - -- Persona - - -- - - - */
+////            if ($_POST["BeneficiarioTemporal"]["persona_id"] == '') {
+////
+////                $teleHab = str_replace('-', '', $_POST["BeneficiarioTemporal"]["telf_habitacion"]);
+////                $codigo_hab = substr($teleHab, 0, 4);
+////                $telf_habitacion = substr($teleHab, 4, 11);
+////
+////                $telemovi = str_replace('-', '', $_POST["BeneficiarioTemporal"]["telf_celular"]);
+////                $codigo_movil = substr($telemovi, 0, 4);
+////                $telf_movil = substr($telemovi, 4, 11);
+////
+////
+////                $idPersona = ConsultaOracle::BuscarPersona(array(
+////                            'CEDULA' => $_POST["BeneficiarioTemporal"]["cedula"],
+////                            'NACIONALIDAD' => ($_POST["BeneficiarioTemporal"]['nacionalidad'] == 97) ? 1 : 0,
+////                            'PRIMER_NOMBRE' => trim(strtoupper($_POST["BeneficiarioTemporal"]['primer_nombre'])),
+////                            'SEGUNDO_NOMBRE' => trim(strtoupper($_POST["BeneficiarioTemporal"]['segundo_nombre'])),
+////                            'PRIMER_APELLIDO' => trim(strtoupper($_POST["BeneficiarioTemporal"]['primer_apellido'])),
+////                            'SEGUNDO_APELLIDO' => trim(strtoupper($_POST["BeneficiarioTemporal"]['segundo_apellido'])),
+////                            'FECHA_NACIMIENTO' => $_POST["BeneficiarioTemporal"]['fecha_nacimiento'],
+////                            'GEN_SEXO_ID' => $_POST["BeneficiarioTemporal"]['sexo'],
+////                            'GEN_EDO_CIVIL_ID' => $edoCivil,
+////                            'CODIGO_HAB' => (string) $codigo_hab,
+////                            'TELEFONO_HAB' => (string) $telf_habitacion,
+////                            'CODIGO_MOVIL' => (string) $codigo_movil,
+////                            'TELEFONO_MOVIL' => (string) $telf_movil,
+////                                //'CORREO_PRINCIPAL' => $_POST['BeneficiarioTemporal_correo_electronico'],
+////                                )
+////                );
+////            } else {
+////
+////                $idPersona = $_POST["BeneficiarioTemporal"]["persona_id"];
+////                $teleHab = str_replace('-', '', $_POST["BeneficiarioTemporal"]["telf_habitacion"]);
+////                $codigo_hab = substr($teleHab, 0, 4);
+////                $telf_habitacion = substr($teleHab, 4, 11);
+////
+////                $telemovi = str_replace('-', '', $_POST["BeneficiarioTemporal"]["telf_celular"]);
+////                $codigo_movil = substr($telemovi, 0, 4);
+////                $telf_movil = substr($telemovi, 4, 11);
+////
+////
+////                /*   ----------  UPDATE    -------------------  */
+////                $idPersona = ConsultaOracle::updatePersona(array(
+////                            //  'CEDULA'           => $_POST["BeneficiarioTemporal"]["cedula"],
+////                            // 'NACIONALIDAD'     => ($_POST["BeneficiarioTemporal"]['nacionalidad'] == 97) ? 1 : 0,
+////                            'PRIMER_NOMBRE' => trim(strtoupper($_POST["BeneficiarioTemporal"]['primer_nombre'])),
+////                            'SEGUNDO_NOMBRE' => trim(strtoupper($_POST["BeneficiarioTemporal"]['segundo_nombre'])),
+////                            'PRIMER_APELLIDO' => trim(strtoupper($_POST["BeneficiarioTemporal"]['primer_apellido'])),
+////                            'SEGUNDO_APELLIDO' => trim(strtoupper($_POST["BeneficiarioTemporal"]['segundo_apellido'])),
+////                            'FECHA_NACIMIENTO' => $_POST["BeneficiarioTemporal"]['fecha_nacimiento'],
+////                            'GEN_SEXO_ID' => $_POST["BeneficiarioTemporal"]['sexo'],
+////                            'GEN_EDO_CIVIL_ID' => $edoCivil,
+////                            'CODIGO_HAB' => (string) $codigo_hab,
+////                            'TELEFONO_HAB' => (string) $telf_habitacion,
+////                            'CODIGO_MOVIL' => (string) $codigo_movil,
+////                            'TELEFONO_MOVIL' => (string) $telf_movil,
+////                                //'CORREO_PRINCIPAL' => $_POST['BeneficiarioTemporal_correo_electronico'],
+////                                ), $idPersona
+////                );
+////
+////                /*   -----------------------------------------  */
+////            }
+////
+////            /*   -- - -  --  - - - -- - - - - --  */
+////
+////            /*  - - - --  Vivienda  Update  - - -- - - - */
+//            $vivienda = ViviendaController::loadModel($_POST["BeneficiarioTemporal"]["vivienda_nro"]);
+////            $vivienda->asignada = 1; //false true
+////            $vivienda->save();
+////
+////            /*   - - - - - - - -- - - - - - - - - */
+//
+//
+////             $persona = new Persona;
+////                /// var_dump($persona); die();
+////                $persona->persona_id_faov = (int) $_POST["BeneficiarioTemporal"]["persona_id"];
+////                $persona->nacionalidad = (int) $_POST["BeneficiarioTemporal"]["nacionalidad"];
+////                $persona->cedula = (int) $_POST["BeneficiarioTemporal"]["cedula"];
+////                $persona->primer_nombre = $_POST["BeneficiarioTemporal"]["primer_nombre"];
+////                $persona->segundo_nombre = $_POST["BeneficiarioTemporal"]["segundo_nombre"];
+////                $persona->primer_apellido = $_POST["BeneficiarioTemporal"]["primer_apellido"];
+////                $persona->segundo_apellido = $_POST["BeneficiarioTemporal"]["segundo_apellido"];
+////                $persona->fecha_nacimiento = $_POST["BeneficiarioTemporal"]["fecha_nacimiento"];
+////                $persona->fk_sexo = $_POST["BeneficiarioTemporal"]["sexo"];
+////                $persona->fk_estado_civil = $_POST["BeneficiarioTemporal"]["estado_civil"];
+////                $persona->telf_habitacion = $_POST["BeneficiarioTemporal"]["telf_habitacion"];
+////                $persona->telf_celular = $_POST["BeneficiarioTemporal"]["telf_celular"];
+////                $persona->correo_electronico = $_POST["correo_electronico"];
+////                $persona->fecha_creacion = 'now()';
+////                $persona->fecha_actualizacion = 'now()';
+////                $persona->usuario_id_creacion = Yii::app()->user->id;
+////                $persona->usuario_id_actualizacion = Yii::app()->user->id;
+////            
+////
+////            // var_dump($beneficiarioTemp); // die();
+////
+////
+////            if ($persona->save()) {
+////                
+////                $id_persona=$persona->id_persona;//id persona de SISPROV
+//                
+//                
+//               /*  - - - -- Beneficiario - - -- - - - */
+////
+////            $beneficiarioTemp = new BeneficiarioTemporal;
+////
+////            $nombre_completo = $_POST["BeneficiarioTemporal"]["primer_apellido"] . ' ';
+////            $nombre_completo .= $_POST["BeneficiarioTemporal"]["segundo_apellido"] . ' ';
+////            $nombre_completo .= $_POST["BeneficiarioTemporal"]["primer_nombre"] . ' ';
+////            $nombre_completo .= $_POST["BeneficiarioTemporal"]["segundo_nombre"];
+////            $beneficiarioTemp->persona_id = (int) $id_persona;
+////            $beneficiarioTemp->desarrollo_id = (int) $_POST["Desarrollo"]["id_desarrollo"];
+////            $beneficiarioTemp->unidad_habitacional_id = (int) $_POST["BeneficiarioTemporal"]["unidad_habitacional_id"];
+////            $beneficiarioTemp->vivienda_id = (int) $_POST["BeneficiarioTemporal"]["vivienda_nro"];
+////            $beneficiarioTemp->nacionalidad = (int) $_POST["BeneficiarioTemporal"]["nacionalidad"];
+////            $beneficiarioTemp->cedula = (int) $_POST["BeneficiarioTemporal"]["cedula"];
+////            $beneficiarioTemp->nombre_completo = strtoupper($nombre_completo);
+////            $beneficiarioTemp->fecha_creacion = date('Y-m-d H:i:s');
+////            $beneficiarioTemp->usuario_id_creacion = Yii::app()->user->id;
+////            $beneficiarioTemp->usuario_id_actualizacion = Yii::app()->user->id;
+////            $beneficiarioTemp->fecha_actualizacion = date('Y-m-d H:i:s');
+////            $beneficiarioTemp->estatus = 221;
+////
+////                if ($beneficiarioTemp->save()) {
+//                    if (isset($_POST['CARGAR_OTRO'])) {
+//                         $desarrolloPrecarga = Desarrollo::model()->findByAttributes(array('id_desarrollo'=> $_POST["Desarrollo"]["id_desarrollo"]));  
+//                        $this->render('create', array(
+//                            'model' => $model,'vivienda' => $vivienda,
+//                            'desarrollo' => $desarrolloPrecarga, 'municipio' => $municipio,
+//                            'estado' => $estado, 'parroquia' => $parroquia,'carga_otro' => $_POST['CARGAR_OTRO'],
+//                                )
+//                        );
+//                        Yii::app()->end();
+//                    } else {
+//                        $id_beneficiarioTemp = $beneficiarioTemp->id_beneficiario_temporal;
+//                        Yii::app()->user->setFlash('success', "Beneficiario Temporal " . $nombre_completo . " Registrado !!");
+//                        $this->redirect(array('admin'));
+//                        Yii::app()->end();
+//                    }
+//                }
+////            }
+////        }
+//
+//        $this->render('create', array(
+//            'model' => $model,
+//            'desarrollo' => $desarrollo, 'municipio' => $municipio,
+//            'estado' => $estado, 'parroquia' => $parroquia,
+//                )
+//        );
+//    }
+    
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.

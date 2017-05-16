@@ -137,26 +137,48 @@ Yii::app()->clientScript->registerScript('desarollo', "
 ");
 ?>
 <div class="row">
-    <div class='col-md-4'>
-        <?php
-        $criteria = new CDbCriteria;
-        $criteria->order = 'strdescripcion ASC';
-        echo $form->dropDownListGroup($estado, 'clvcodigo', array('wrapperHtmlOptions' => array('class' => 'col-sm-4',),
-            'widgetOptions' => array(
-                'data' => CHtml::listData(Tblestado::model()->findAll($criteria), 'clvcodigo', 'strdescripcion'),
-                'htmlOptions' => array(
-                    'empty' => 'SELECCIONE',
-                    'ajax' => array(
-                        'type' => 'POST',
-                        'url' => CController::createUrl('ValidacionJs/BuscarMunicipios'),
-                        'update' => '#' . CHtml::activeId($municipio, 'clvcodigo'),
+    <?php if ($carga_otro != '') { ?>
+
+        <div class='col-md-4'>
+            <?php
+            echo $form->dropDownListGroup($estado, 'clvcodigo', array('wrapperHtmlOptions' => array('class' => 'col-sm-12',),
+                'widgetOptions' => array(
+                    'htmlOptions' => array(
+                        'ajax' => array(
+                            'type' => 'POST',
+                            'url' => CController::createUrl('ValidacionJs/BuscarMunicipios'),
+                            'update' => '#' . CHtml::activeId($parroquia, 'clvcodigo'),
+                        ),
+                        'empty' => 'SELECCIONE',
                     ),
-                ),
-            )
                 )
-        );
-        ?>
-    </div>
+            ));
+            ?>
+
+        </div> 
+
+    <?php } else { ?>
+        <div class='col-md-4'>
+            <?php
+            $criteria = new CDbCriteria;
+            $criteria->order = 'strdescripcion ASC';
+            echo $form->dropDownListGroup($estado, 'clvcodigo', array('wrapperHtmlOptions' => array('class' => 'col-sm-4',),
+                'widgetOptions' => array(
+                    'data' => CHtml::listData(Tblestado::model()->findAll($criteria), 'clvcodigo', 'strdescripcion'),
+                    'htmlOptions' => array(
+                        'empty' => 'SELECCIONE',
+                        'ajax' => array(
+                            'type' => 'POST',
+                            'url' => CController::createUrl('ValidacionJs/BuscarMunicipios'),
+                            'update' => '#' . CHtml::activeId($municipio, 'clvcodigo'),
+                        ),
+                    ),
+                )
+            ));
+            ?>
+
+        </div>
+    <?php } ?>
     <div class="col-md-4">
         <?php
         echo $form->dropDownListGroup($municipio, 'clvcodigo', array('wrapperHtmlOptions' => array('class' => 'col-sm-12',),
